@@ -65,25 +65,27 @@ body {
 .hamburger-menu {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    width: 26px;
-    height: 20px;
-    padding: 2px;
+    justify-content: center;
+    width: 24px;
+    height: 18px;
+    gap: 3px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .hamburger-line {
-    display: block;
-    width: 22px;
-    height: 3px;
+    width: 100%;
+    height: 2px;
     background-color: #ffffff;
     border-radius: 1px;
     transition: all 0.3s ease;
-    margin: 0;
 }
 
 .hamburger-menu:hover .hamburger-line {
-    background-color: #f3f4f6;
+    background-color: #e5e7eb;
 }
 
 nav ul {
@@ -115,7 +117,7 @@ nav a:hover {
     color: #1f2937;
     transform: translateX(-100%);
     transition: transform 0.3s;
-    z-index: 1000;
+    z-index: 2500;
     overflow-y: auto;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
