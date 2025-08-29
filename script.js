@@ -318,11 +318,6 @@ function updatePrivateHeader() {
     if (currentUser) {
         headerActions.innerHTML = `
             <div class="flex items-center gap-4">
-                <button onclick="toggleSidebar()" class="hamburger-menu-btn">
-                    <div class="hamburger-line"></div>
-                    <div class="hamburger-line"></div>
-                    <div class="hamburger-line"></div>
-                </button>
                 <span class="user-welcome">Bienvenido, ${currentUser.nombre}</span>
                 <div class="flex items-center gap-4">
                     <i class="fas fa-bell"></i>
@@ -331,6 +326,20 @@ function updatePrivateHeader() {
                     </div>
                 </div>
             </div>
+        `;
+    }
+    
+    // Update header logo to include hamburger menu - ALWAYS visible
+    const logo = document.querySelector('#privateSystem .logo');
+    if (logo && currentUser) {
+        logo.innerHTML = `
+            <button onclick="toggleSidebar()" class="hamburger-menu-btn">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <i class="fas fa-shield-alt"></i>
+            <span>Global Capacitación Limitada</span>
         `;
     }
 }
