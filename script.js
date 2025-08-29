@@ -1,10 +1,56 @@
-// Global Capacitación Limitada - JavaScript
+// Global Capacitación Limitada - Integrated JavaScript
 
 // Global state
 let currentUser = null;
 let currentSection = 'home';
 
-// Mock data
+// Mock data for public site
+const cursosCapacitacion = [
+    {
+        nombre: 'Capacitación OS10 Completa',
+        duracion: '120 horas',
+        modalidad: 'Presencial y Online',
+        precio: '$150.000',
+        temario: ['Normativas de Seguridad', 'Procedimientos de Emergencia', 'Manejo de Conflictos', 'Primeros Auxilios']
+    },
+    {
+        nombre: 'Seguridad Privada Avanzada',
+        duracion: '80 horas',
+        modalidad: 'Presencial',
+        precio: '$200.000',
+        temario: ['Técnicas de Vigilancia', 'Control de Accesos', 'Gestión de Riesgos', 'Comunicación Efectiva']
+    },
+    {
+        nombre: 'Liderazgo en Seguridad',
+        duracion: '60 horas',
+        modalidad: 'Online',
+        precio: '$120.000',
+        temario: ['Gestión de Equipos', 'Toma de Decisiones', 'Comunicación Asertiva', 'Resolución de Conflictos']
+    }
+];
+
+const noticias = [
+    {
+        titulo: 'Nueva Certificación OS10 Implementada',
+        fecha: '10 de Enero, 2024',
+        imagen: 'https://placehold.co/300x200/1a3a6e/white?text=Capacitación+OS10',
+        contenido: 'Anunciamos la implementación de la nueva certificación OS10 para nuestros guardias de seguridad...'
+    },
+    {
+        titulo: 'Expansión de Servicios en Región de Coquimbo',
+        fecha: '5 de Enero, 2024',
+        imagen: 'https://placehold.co/300x200/2c5aa0/white?text=Seguridad+Privada',
+        contenido: 'Estamos expandiendo nuestros servicios de seguridad privada en la región de Coquimbo...'
+    },
+    {
+        titulo: 'Nuevo Portal Digital para Colaboradores',
+        fecha: '2 de Enero, 2024',
+        imagen: 'https://placehold.co/300x200/00c853/white?text=Portal+Digital',
+        contenido: 'Presentamos nuestro nuevo portal digital para que nuestros colaboradores puedan gestionar...'
+    }
+];
+
+// Mock data for private system
 const mockData = {
     guardias: [
         { id: 1, nombre: 'Juan Pérez', rut: '12345678-9', email: 'juan@example.com', estado: 'activo', cursosVencen: 15 },
@@ -24,7 +70,7 @@ const mockData = {
     ]
 };
 
-// Menu configurations
+// Menu configurations for private system
 const menuConfig = {
     admin: [
         { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
@@ -49,40 +95,193 @@ const menuConfig = {
     ]
 };
 
+// Initialize app
+document.addEventListener('DOMContentLoaded', function () {
+    // Elements
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const loginBtn = document.getElementById('loginBtn');
+    const modal = document.getElementById('loginModal');
+    const closeModal = document.querySelector('.close-modal');
+    const loginForm = document.getElementById('loginForm');
+    const contactForm = document.getElementById('contactForm');
+    const blogContainer = document.getElementById('blogPosts');
+    const cursosContainer = document.getElementById('cursosList');
+
+    // Initialize public site
+    initPublicSite();
+
+    // Tab functionality
+    if (tabButtons.length > 0) {
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    }
+
+    // Login modal
+    if (loginBtn && modal && closeModal) {
+        loginBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // Contact form
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            alert(`Gracias ${nombre}, hemos recibido tu mensaje. Nos pondremos en contacto contigo pronto.`);
+            contactForm.reset();
+        });
+    }
+
+    // Render blog and courses
+    if (blogContainer) {
+        renderBlog();
+    }
+
+    if (cursosContainer) {
+        renderCursos();
+    }
+
+    // Show notification after delay
+    setTimeout(showNotification, 3000);
+});
+
+// Public site functions
+function initPublicSite() {
+    document.getElementById('publicSite').classList.remove('hidden');
+    document.getElementById('privateSystem').classList.add('hidden');
+}
+
+function renderBlog() {
+    const blogContainer = document.getElementById('blogPosts');
+    if (blogContainer) {
+        blogContainer.innerHTML = noticias.map(nota => `
+            <div class="blog-card">
+                <img src="${nota.imagen}" alt="${nota.titulo}">
+                <div class="blog-card-content">
+                    <h3>${nota.titulo}</h3>
+                    <p class="date">${nota.fecha}</p>
+                    <p>${nota.contenido}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function renderCursos() {
+    const cursosContainer = document.getElementById('cursosList');
+    if (cursosContainer) {
+        cursosContainer.innerHTML = cursosCapacitacion.map(curso => `
+            <div class="card">
+                <h3>${curso.nombre}</h3>
+                <p><strong>Duración:</strong> ${curso.duracion}</p>
+                <p><strong>Modalidad:</strong> ${curso.modalidad}</p>
+                <p><strong>Precio:</strong> ${curso.precio}</p>
+                <ul>
+                    ${curso.temario.map(tema => `<li>${tema}</li>`).join('')}
+                </ul>
+                <button class="btn" onclick="openLoginForEnrollment('${curso.nombre}')">Inscribirse</button>
+            </div>
+        `).join('');
+    }
+}
+
+function showNotification() {
+    const notif = document.createElement('div');
+    notif.innerHTML = `
+        <div style="position: fixed; bottom: 20px; right: 20px; background: #ff6d00; color: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; max-width: 300px; font-family: 'Poppins', sans-serif;">
+            <strong>¡Bienvenido!</strong> Explora nuestros servicios de seguridad y capacitación.
+            <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">×</button>
+        </div>
+    `;
+    document.body.appendChild(notif);
+}
+
 // Authentication functions
-function openLogin() {
-    document.getElementById('loginModal').classList.remove('hidden');
-}
-
-function closeLogin() {
-    document.getElementById('loginModal').classList.add('hidden');
-}
-
 function handleLogin(event) {
     event.preventDefault();
-    const email = document.getElementById('userEmail').value;
+    const email = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
     const role = document.getElementById('userRole').value;
     
-    currentUser = {
-        id: 1,
-        nombre: role === 'admin' ? 'Admin Global' : role === 'guardia' ? 'Juan Pérez' : 'Ana Estudiante',
-        email: email,
-        rol: role
-    };
-    
-    currentSection = role === 'admin' ? 'dashboard' : role === 'guardia' ? 'mi-perfil' : 'mis-cursos';
-    closeLogin();
-    updateUI();
+    if (!role) {
+        alert('Por favor, seleccione un tipo de usuario');
+        return;
+    }
+
+    if (email && password) {
+        currentUser = {
+            id: 1,
+            nombre: role === 'admin' ? 'Admin Global' : role === 'guardia' ? 'Juan Pérez' : 'Ana Estudiante',
+            email: email,
+            rol: role
+        };
+        
+        currentSection = role === 'admin' ? 'dashboard' : role === 'guardia' ? 'mi-perfil' : 'mis-cursos';
+        
+        // Hide modal
+        document.getElementById('loginModal').classList.remove('active');
+        
+        // Switch to private system
+        document.getElementById('publicSite').classList.add('hidden');
+        document.getElementById('privateSystem').classList.remove('hidden');
+        
+        updatePrivateUI();
+    } else {
+        alert('Por favor, complete todos los campos');
+    }
 }
 
 function logout() {
     currentUser = null;
     currentSection = 'home';
+    
+    // Hide sidebar
     toggleSidebar(false);
-    updateUI();
+    
+    // Switch back to public site
+    document.getElementById('privateSystem').classList.add('hidden');
+    document.getElementById('publicSite').classList.remove('hidden');
 }
 
-// UI functions
+// Helper functions for login links
+function openLoginForExam() {
+    document.getElementById('userRole').value = 'estudiante';
+    document.getElementById('loginModal').classList.add('active');
+}
+
+function openLoginForStudents() {
+    document.getElementById('userRole').value = 'estudiante';
+    document.getElementById('loginModal').classList.add('active');
+}
+
+function openLoginForEnrollment(courseName) {
+    document.getElementById('userRole').value = 'estudiante';
+    document.getElementById('loginModal').classList.add('active');
+}
+
+// Private system functions
 function toggleSidebar(show = null) {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
@@ -101,29 +300,22 @@ function toggleSidebar(show = null) {
 
 function navigateToSection(sectionId) {
     currentSection = sectionId;
-    updateUI();
+    updatePrivateUI();
     if (window.innerWidth <= 768) {
         toggleSidebar(false);
     }
 }
 
-function updateUI() {
-    updateHeader();
+function updatePrivateUI() {
+    updatePrivateHeader();
     updateSidebar();
     updateMainContent();
 }
 
-function updateHeader() {
+function updatePrivateHeader() {
     const headerActions = document.getElementById('headerActions');
     
-    if (!currentUser) {
-        headerActions.innerHTML = `
-            <button onclick="openLogin()" class="btn btn-primary">
-                <i class="fas fa-sign-in-alt"></i>
-                Iniciar Sesión
-            </button>
-        `;
-    } else {
+    if (currentUser) {
         headerActions.innerHTML = `
             <div class="flex items-center gap-4">
                 <span>Bienvenido, ${currentUser.nombre}</span>
@@ -137,20 +329,15 @@ function updateHeader() {
         `;
     }
     
-    // Update header logo to include hamburger menu when user is logged in
-    const logo = document.querySelector('.logo');
-    if (currentUser) {
+    // Update header logo to include hamburger menu
+    const logo = document.querySelector('#privateSystem .logo');
+    if (logo && currentUser) {
         logo.innerHTML = `
             <button onclick="toggleSidebar()" class="hamburger-menu" style="background: none; border: none; cursor: pointer; padding: 8px; margin-right: 12px;">
                 <div class="hamburger-line"></div>
                 <div class="hamburger-line"></div>
                 <div class="hamburger-line"></div>
             </button>
-            <i class="fas fa-shield-alt"></i>
-            <span>Global Capacitación Limitada</span>
-        `;
-    } else {
-        logo.innerHTML = `
             <i class="fas fa-shield-alt"></i>
             <span>Global Capacitación Limitada</span>
         `;
@@ -177,10 +364,7 @@ function updateSidebar() {
 function updateMainContent() {
     const mainContent = document.getElementById('mainContent');
     
-    if (!currentUser) {
-        mainContent.innerHTML = renderPublicHome();
-        return;
-    }
+    if (!currentUser) return;
 
     switch (currentSection) {
         case 'dashboard':
@@ -209,67 +393,7 @@ function updateMainContent() {
     }
 }
 
-// Render functions
-function renderPublicHome() {
-    return `
-        <div class="hero">
-            <div class="max-w-6xl mx-auto px-4">
-                <h1>Servicios de Seguridad y Capacitación Profesional</h1>
-                <p>Ofrecemos servicios integrales de seguridad privada y programas de capacitación especializados para formar guardias de seguridad certificados.</p>
-                <div class="flex justify-center gap-4">
-                    <button class="btn btn-primary">
-                        <i class="fas fa-clipboard-list"></i>
-                        Solicitar Presupuesto
-                    </button>
-                    <button class="btn btn-secondary">
-                        <i class="fas fa-book"></i>
-                        Ver Cursos Disponibles
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="services">
-            <div class="max-w-6xl mx-auto px-4">
-                <div class="text-center mb-8">
-                    <h3 class="text-3xl font-bold mb-4">Nuestros Servicios</h3>
-                    <p class="text-xl">Soluciones integrales para su seguridad y capacitación</p>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-8">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-4">Servicios de Seguridad</h4>
-                        <ul class="space-y-4">
-                            <li>• Vigilancia en centros comerciales</li>
-                            <li>• Seguridad corporativa</li>
-                            <li>• Control de acceso</li>
-                            <li>• Rondas de seguridad</li>
-                            <li>• Servicios especiales de eventos</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="service-card green">
-                        <div class="service-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-4">Capacitación OTEC</h4>
-                        <ul class="space-y-4">
-                            <li>• Curso OS-10 (Guardia de Seguridad)</li>
-                            <li>• Seguridad Industrial</li>
-                            <li>• Primeros Auxilios</li>
-                            <li>• Manejo de Crisis</li>
-                            <li>• Certificaciones especializadas</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
+// Render functions for private system
 function renderAdminDashboard() {
     return `
         <h2 class="text-3xl font-bold mb-8">Panel de Control Administrativo</h2>
@@ -756,24 +880,14 @@ function renderSeccionEnDesarrollo() {
     `;
 }
 
-// Initialize the application
-function init() {
-    updateUI();
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            if (currentUser) {
-                sidebar.classList.add('open');
-                mainContent.classList.add('sidebar-open');
-            }
-        } else {
-            toggleSidebar(false);
-        }
-    });
-}
-
-// Start the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+// Initialize window resize handler for private system
+window.addEventListener('resize', () => {
+    if (currentUser && window.innerWidth > 768) {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        sidebar.classList.add('open');
+        mainContent.classList.add('sidebar-open');
+    } else if (currentUser) {
+        toggleSidebar(false);
+    }
+});
