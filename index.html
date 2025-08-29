@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Capacitación Limitada - Sistema Integral</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
 </head>
 <body>
+    <!-- Login Modal -->
     <div id="loginModal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
@@ -26,14 +27,17 @@
                             <option value="admin">Administrador</option>
                         </select>
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label">Email</label>
                         <input type="email" id="userEmail" class="form-input" placeholder="tu@email.com" required>
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label">Contraseña</label>
                         <input type="password" id="userPassword" class="form-input" placeholder="••••••••" required>
                     </div>
+                    
                     <button type="submit" class="btn btn-primary w-full">
                         <i class="fas fa-sign-in-alt"></i>
                         Ingresar
@@ -43,6 +47,7 @@
         </div>
     </div>
 
+    <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <h2 class="font-bold">Global Capacitación</h2>
@@ -51,13 +56,15 @@
             </button>
         </div>
         <ul id="sidebarMenu" class="sidebar-menu">
-            </ul>
+            <!-- Menu items will be populated by JavaScript -->
+        </ul>
         <div class="sidebar-item" onclick="logout()" style="margin-top: auto; border-top: 1px solid #374151;">
             <i class="fas fa-sign-out-alt"></i>
             <span>Cerrar Sesión</span>
         </div>
     </div>
 
+    <!-- Header -->
     <header id="header" class="header">
         <div class="header-content">
             <div class="logo">
@@ -65,12 +72,15 @@
                 <span>Global Capacitación Limitada</span>
             </div>
             <div id="headerActions">
-                </div>
+                <!-- Header actions will be populated by JavaScript -->
+            </div>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main id="mainContent" class="main-content">
-        </main>
+        <!-- Content will be populated by JavaScript -->
+    </main>
 
     <script src="script.js"></script>
 </body>
