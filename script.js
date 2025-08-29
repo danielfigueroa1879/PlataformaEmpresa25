@@ -1,164 +1,30 @@
-// Global Capacitación Limitada - JavaScript Functions
+// Global Capacitación Limitada - JavaScript
 
-// Global state management
+// Global state
 let currentUser = null;
 let currentSection = 'home';
-let documents = [];
-let notifications = [];
 
-// Mock data storage
+// Mock data
 const mockData = {
     guardias: [
-        { 
-            id: 1, 
-            nombre: 'Juan Pérez', 
-            rut: '12345678-9', 
-            email: 'juan.perez@example.com', 
-            estado: 'activo', 
-            cursosVencen: 15,
-            telefono: '+56 9 8765 4321',
-            fechaContratacion: '2024-01-15',
-            certificaciones: [
-                { nombre: 'OS-10', estado: 'vigente', vencimiento: '2025-09-15' },
-                { nombre: 'Primeros Auxilios', estado: 'vigente', vencimiento: '2026-01-20' }
-            ]
-        },
-        { 
-            id: 2, 
-            nombre: 'María González', 
-            rut: '98765432-1', 
-            email: 'maria.gonzalez@example.com', 
-            estado: 'activo', 
-            cursosVencen: 30,
-            telefono: '+56 9 1234 5678',
-            fechaContratacion: '2024-02-01',
-            certificaciones: [
-                { nombre: 'OS-10', estado: 'vigente', vencimiento: '2025-10-15' },
-                { nombre: 'Seguridad Industrial', estado: 'vigente', vencimiento: '2025-12-01' }
-            ]
-        }
+        { id: 1, nombre: 'Juan Pérez', rut: '12345678-9', email: 'juan@example.com', estado: 'activo', cursosVencen: 15 },
+        { id: 2, nombre: 'María González', rut: '98765432-1', email: 'maria@example.com', estado: 'activo', cursosVencen: 30 }
     ],
     cursos: [
-        { 
-            id: 1, 
-            nombre: 'Curso OS-10 Básico', 
-            fechaInicio: '2025-09-15', 
-            duracion: '40 horas', 
-            precio: 150000, 
-            estudiantes: 25,
-            instructor: 'Carlos Mendoza',
-            modalidad: 'Presencial',
-            estado: 'activo'
-        },
-        { 
-            id: 2, 
-            nombre: 'Seguridad Industrial', 
-            fechaInicio: '2025-09-20', 
-            duracion: '60 horas', 
-            precio: 200000, 
-            estudiantes: 18,
-            instructor: 'Ana López',
-            modalidad: 'Mixta',
-            estado: 'activo'
-        },
-        { 
-            id: 3, 
-            nombre: 'Primeros Auxilios', 
-            fechaInicio: '2025-10-01', 
-            duracion: '24 horas', 
-            precio: 85000, 
-            estudiantes: 32,
-            instructor: 'Dr. Roberto Silva',
-            modalidad: 'Presencial',
-            estado: 'activo'
-        }
+        { id: 1, nombre: 'Curso OS-10 Básico', fechaInicio: '2025-09-15', duracion: '40 horas', precio: 150000, estudiantes: 25 },
+        { id: 2, nombre: 'Seguridad Industrial', fechaInicio: '2025-09-20', duracion: '60 horas', precio: 200000, estudiantes: 18 }
     ],
     turnos: [
-        { 
-            id: 1, 
-            fecha: '2025-08-29', 
-            hora: '08:00-20:00', 
-            ubicacion: 'Mall Plaza La Serena', 
-            guardia: 'Juan Pérez', 
-            guardiaId: 1,
-            estado: 'asignado',
-            cliente: 'Mall Plaza S.A.',
-            observaciones: 'Turno diurno, control de acceso principal'
-        },
-        { 
-            id: 2, 
-            fecha: '2025-08-30', 
-            hora: '20:00-08:00', 
-            ubicacion: 'Edificio Corporativo', 
-            guardia: 'María González', 
-            guardiaId: 2,
-            estado: 'asignado',
-            cliente: 'Corporación ABC',
-            observaciones: 'Turno nocturno, rondas cada 2 horas'
-        }
-    ],
-    estudiantes: [
-        {
-            id: 1,
-            nombre: 'Ana Estudiante',
-            rut: '11223344-5',
-            email: 'ana.estudiante@email.com',
-            cursosInscritos: [1, 3],
-            calificaciones: {
-                1: { promedio: 85, examenes: [80, 90, 85] },
-                3: { promedio: 92, examenes: [95, 88, 93] }
-            }
-        }
+        { id: 1, fecha: '2025-08-29', hora: '08:00-20:00', ubicacion: 'Mall Plaza La Serena', guardia: 'Juan Pérez', estado: 'asignado' },
+        { id: 2, fecha: '2025-08-30', hora: '20:00-08:00', ubicacion: 'Edificio Corporativo', guardia: 'María González', estado: 'asignado' }
     ],
     notifications: [
-        { 
-            id: 1, 
-            tipo: 'warning', 
-            mensaje: 'Curso OS-10 de Juan Pérez vence en 15 días', 
-            fecha: '2025-08-28',
-            leida: false
-        },
-        { 
-            id: 2, 
-            tipo: 'info', 
-            mensaje: 'Nuevo estudiante inscrito en Seguridad Industrial', 
-            fecha: '2025-08-28',
-            leida: false
-        },
-        { 
-            id: 3, 
-            tipo: 'success', 
-            mensaje: 'Contrato firmado digitalmente por María González', 
-            fecha: '2025-08-27',
-            leida: true
-        }
-    ],
-    servicios: [
-        {
-            id: 1,
-            nombre: 'Vigilancia en Centros Comerciales',
-            descripcion: 'Servicio especializado de seguridad para centros comerciales',
-            tarifaHora: 8500,
-            disponible: true
-        },
-        {
-            id: 2,
-            nombre: 'Seguridad Corporativa',
-            descripcion: 'Protección integral para edificios corporativos',
-            tarifaHora: 9200,
-            disponible: true
-        },
-        {
-            id: 3,
-            nombre: 'Control de Acceso',
-            descripcion: 'Gestión y control de accesos a instalaciones',
-            tarifaHora: 7800,
-            disponible: true
-        }
+        { id: 1, tipo: 'warning', mensaje: 'Curso OS-10 de Juan Pérez vence en 15 días', fecha: '2025-08-28' },
+        { id: 2, tipo: 'info', mensaje: 'Nuevo estudiante inscrito en Seguridad Industrial', fecha: '2025-08-28' }
     ]
 };
 
-// Menu configurations for different user roles
+// Menu configurations
 const menuConfig = {
     admin: [
         { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
@@ -166,23 +32,19 @@ const menuConfig = {
         { id: 'gestionar-cursos', label: 'Gestionar Cursos', icon: 'fas fa-book' },
         { id: 'turnos', label: 'Gestión de Turnos', icon: 'fas fa-calendar' },
         { id: 'servicios', label: 'Servicios', icon: 'fas fa-briefcase' },
-        { id: 'documentos', label: 'Gestión Documental', icon: 'fas fa-file-alt' },
-        { id: 'notificaciones', label: 'Notificaciones', icon: 'fas fa-bell' },
-        { id: 'reportes', label: 'Reportes', icon: 'fas fa-chart-bar' }
+        { id: 'notificaciones', label: 'Notificaciones', icon: 'fas fa-bell' }
     ],
     guardia: [
         { id: 'mi-perfil', label: 'Mi Perfil', icon: 'fas fa-user' },
         { id: 'mis-turnos', label: 'Mis Turnos', icon: 'fas fa-calendar' },
         { id: 'mis-cursos-guardia', label: 'Mis Cursos', icon: 'fas fa-book' },
         { id: 'ordenes-trabajo', label: 'Órdenes de Trabajo', icon: 'fas fa-tasks' },
-        { id: 'mi-contrato', label: 'Mi Contrato', icon: 'fas fa-file-contract' },
-        { id: 'mis-documentos', label: 'Mis Documentos', icon: 'fas fa-folder' }
+        { id: 'mi-contrato', label: 'Mi Contrato', icon: 'fas fa-file-contract' }
     ],
     estudiante: [
         { id: 'mis-cursos', label: 'Mis Cursos', icon: 'fas fa-book' },
         { id: 'horarios', label: 'Horarios', icon: 'fas fa-calendar' },
         { id: 'calificaciones', label: 'Calificaciones', icon: 'fas fa-trophy' },
-        { id: 'material-estudio', label: 'Material de Estudio', icon: 'fas fa-download' },
         { id: 'examen-practica', label: 'Examen de Práctica OS-10', icon: 'fas fa-clipboard-check' }
     ]
 };
@@ -201,7 +63,6 @@ function handleLogin(event) {
     const email = document.getElementById('userEmail').value;
     const role = document.getElementById('userRole').value;
     
-    // Mock authentication - in real app, this would validate against backend
     currentUser = {
         id: 1,
         nombre: role === 'admin' ? 'Admin Global' : role === 'guardia' ? 'Juan Pérez' : 'Ana Estudiante',
@@ -209,12 +70,9 @@ function handleLogin(event) {
         rol: role
     };
     
-    // Set initial section based on role
     currentSection = role === 'admin' ? 'dashboard' : role === 'guardia' ? 'mi-perfil' : 'mis-cursos';
-    
     closeLogin();
     updateUI();
-    showNotification('success', `Bienvenido ${currentUser.nombre}!`);
 }
 
 function logout() {
@@ -222,10 +80,9 @@ function logout() {
     currentSection = 'home';
     toggleSidebar(false);
     updateUI();
-    showNotification('info', 'Sesión cerrada correctamente');
 }
 
-// UI Management functions
+// UI functions
 function toggleSidebar(show = null) {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
@@ -267,20 +124,14 @@ function updateHeader() {
             </button>
         `;
     } else {
-        const unreadNotifications = mockData.notifications.filter(n => !n.leida).length;
         headerActions.innerHTML = `
             <div class="flex items-center gap-4">
                 <button onclick="toggleSidebar()" class="btn btn-secondary">
                     <i class="fas fa-bars"></i>
                 </button>
-                <span class="hidden md:inline">Bienvenido, ${currentUser.nombre}</span>
+                <span>Bienvenido, ${currentUser.nombre}</span>
                 <div class="flex items-center gap-4">
-                    <div class="relative">
-                        <button onclick="showNotificationsPanel()" class="btn btn-secondary">
-                            <i class="fas fa-bell"></i>
-                            ${unreadNotifications > 0 ? `<span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">${unreadNotifications}</span>` : ''}
-                        </button>
-                    </div>
+                    <i class="fas fa-bell"></i>
                     <div style="width: 32px; height: 32px; background-color: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-user" style="color: white; font-size: 14px;"></i>
                     </div>
@@ -315,124 +166,46 @@ function updateMainContent() {
         return;
     }
 
-    // Route to appropriate content based on current section
-    const contentMap = {
-        'dashboard': renderAdminDashboard,
-        'gestionar-guardias': renderGestionGuardias,
-        'gestionar-cursos': renderGestionCursos,
-        'turnos': renderGestionTurnos,
-        'servicios': renderServicios,
-        'documentos': renderGestionDocumental,
-        'notificaciones': renderNotificaciones,
-        'reportes': renderReportes,
-        'mi-perfil': renderMiPerfil,
-        'mis-turnos': renderMisTurnos,
-        'mis-cursos-guardia': renderMisCursosGuardia,
-        'ordenes-trabajo': renderOrdenesTrabajoGuardia,
-        'mi-contrato': renderMiContrato,
-        'mis-documentos': renderMisDocumentos,
-        'mis-cursos': renderMisCursosEstudiante,
-        'horarios': renderHorarios,
-        'calificaciones': renderCalificaciones,
-        'material-estudio': renderMaterialEstudio,
-        'examen-practica': renderExamenPractica
-    };
-
-    const renderFunction = contentMap[currentSection] || renderSeccionEnDesarrollo;
-    mainContent.innerHTML = renderFunction();
-}
-
-// Notification system
-function showNotification(type, message, duration = 5000) {
-    const toast = document.getElementById('notificationToast');
-    const icon = document.getElementById('notificationIcon');
-    const messageEl = document.getElementById('notificationMessage');
-    
-    // Set icon based on type
-    const iconMap = {
-        'success': 'fas fa-check-circle',
-        'warning': 'fas fa-exclamation-triangle',
-        'error': 'fas fa-times-circle',
-        'info': 'fas fa-info-circle'
-    };
-    
-    icon.className = iconMap[type] || 'fas fa-info-circle';
-    messageEl.textContent = message;
-    
-    toast.classList.remove('hidden');
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        hideNotification();
-    }, duration);
-}
-
-function hideNotification() {
-    const toast = document.getElementById('notificationToast');
-    toast.classList.remove('show');
-    setTimeout(() => {
-        toast.classList.add('hidden');
-    }, 300);
-}
-
-// Document management functions
-function openDocumentModal() {
-    document.getElementById('documentModal').classList.remove('hidden');
-}
-
-function closeDocumentModal() {
-    document.getElementById('documentModal').classList.add('hidden');
-}
-
-function handleDocumentUpload(event) {
-    event.preventDefault();
-    const title = document.getElementById('documentTitle').value;
-    const type = document.getElementById('documentType').value;
-    const file = document.getElementById('documentFile').files[0];
-    const description = document.getElementById('documentDescription').value;
-    
-    if (file && title) {
-        // Simulate document upload
-        const document = {
-            id: documents.length + 1,
-            title,
-            type,
-            fileName: file.name,
-            size: file.size,
-            uploadDate: new Date().toISOString().split('T')[0],
-            description,
-            status: 'uploaded'
-        };
-        
-        documents.push(document);
-        closeDocumentModal();
-        showNotification('success', 'Documento subido correctamente');
-        
-        // Clear form
-        document.getElementById('documentTitle').value = '';
-        document.getElementById('documentDescription').value = '';
-        document.getElementById('documentFile').value = '';
+    switch (currentSection) {
+        case 'dashboard':
+            mainContent.innerHTML = renderAdminDashboard();
+            break;
+        case 'gestionar-guardias':
+            mainContent.innerHTML = renderGestionGuardias();
+            break;
+        case 'gestionar-cursos':
+            mainContent.innerHTML = renderGestionCursos();
+            break;
+        case 'mi-perfil':
+            mainContent.innerHTML = renderMiPerfil();
+            break;
+        case 'mis-turnos':
+            mainContent.innerHTML = renderMisTurnos();
+            break;
+        case 'mis-cursos':
+            mainContent.innerHTML = renderMisCursos();
+            break;
+        case 'examen-practica':
+            mainContent.innerHTML = renderExamenPractica();
+            break;
+        default:
+            mainContent.innerHTML = renderSeccionEnDesarrollo();
     }
 }
 
-function requestDigitalSignature() {
-    showNotification('info', 'Solicitud de firma digital enviada');
-    closeDocumentModal();
-}
-
-// Render functions for different sections
+// Render functions
 function renderPublicHome() {
     return `
         <div class="hero">
             <div class="max-w-6xl mx-auto px-4">
                 <h1>Servicios de Seguridad y Capacitación Profesional</h1>
-                <p>Ofrecemos servicios integrales de seguridad privada y programas de capacitación especializados para formar guardias de seguridad certificados según normativa vigente.</p>
-                <div class="flex justify-center gap-4 mt-8">
-                    <button onclick="navigateToSection('servicios')" class="btn btn-primary">
-                        <i class="fas fa-shield-alt"></i>
-                        Ver Servicios
+                <p>Ofrecemos servicios integrales de seguridad privada y programas de capacitación especializados para formar guardias de seguridad certificados.</p>
+                <div class="flex justify-center gap-4">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-clipboard-list"></i>
+                        Solicitar Presupuesto
                     </button>
-                    <button onclick="navigateToSection('cursos-publicos')" class="btn btn-secondary">
+                    <button class="btn btn-secondary">
                         <i class="fas fa-book"></i>
                         Ver Cursos Disponibles
                     </button>
@@ -459,7 +232,6 @@ function renderPublicHome() {
                             <li>• Control de acceso</li>
                             <li>• Rondas de seguridad</li>
                             <li>• Servicios especiales de eventos</li>
-                            <li>• Monitoreo y videovigilancia</li>
                         </ul>
                     </div>
                     
@@ -474,35 +246,7 @@ function renderPublicHome() {
                             <li>• Primeros Auxilios</li>
                             <li>• Manejo de Crisis</li>
                             <li>• Certificaciones especializadas</li>
-                            <li>• Cursos corporativos a medida</li>
                         </ul>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-12">
-                    <h3 class="text-2xl font-bold mb-6">¿Por qué elegir Global Capacitación?</h3>
-                    <div class="grid grid-cols-3 gap-6">
-                        <div class="text-center">
-                            <div class="text-4xl mb-4" style="color: #3b82f6;">
-                                <i class="fas fa-certificate"></i>
-                            </div>
-                            <h4 class="font-bold mb-2">Certificación Oficial</h4>
-                            <p class="text-sm">Cursos certificados y reconocidos por SENCE</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl mb-4" style="color: #10b981;">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h4 class="font-bold mb-2">Experiencia</h4>
-                            <p class="text-sm">Más de 10 años formando profesionales</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl mb-4" style="color: #f59e0b;">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <h4 class="font-bold mb-2">Disponibilidad</h4>
-                            <p class="text-sm">Servicios 24/7 todos los días del año</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -511,11 +255,6 @@ function renderPublicHome() {
 }
 
 function renderAdminDashboard() {
-    const totalGuardias = mockData.guardias.length;
-    const cursosActivos = mockData.cursos.filter(c => c.estado === 'activo').length;
-    const turnosHoy = mockData.turnos.filter(t => t.fecha === '2025-08-29').length;
-    const alertas = mockData.notifications.filter(n => !n.leida).length;
-    
     return `
         <h2 class="text-3xl font-bold mb-8">Panel de Control Administrativo</h2>
         
@@ -523,7 +262,7 @@ function renderAdminDashboard() {
             <div class="stat-card blue">
                 <div>
                     <p style="opacity: 0.8;">Total Guardias</p>
-                    <p class="stat-number">${totalGuardias}</p>
+                    <p class="stat-number">${mockData.guardias.length}</p>
                 </div>
                 <div class="stat-icon">
                     <i class="fas fa-shield-alt"></i>
@@ -533,7 +272,7 @@ function renderAdminDashboard() {
             <div class="stat-card green">
                 <div>
                     <p style="opacity: 0.8;">Cursos Activos</p>
-                    <p class="stat-number">${cursosActivos}</p>
+                    <p class="stat-number">${mockData.cursos.length}</p>
                 </div>
                 <div class="stat-icon">
                     <i class="fas fa-book"></i>
@@ -543,7 +282,7 @@ function renderAdminDashboard() {
             <div class="stat-card orange">
                 <div>
                     <p style="opacity: 0.8;">Turnos Hoy</p>
-                    <p class="stat-number">${turnosHoy}</p>
+                    <p class="stat-number">${mockData.turnos.length}</p>
                 </div>
                 <div class="stat-icon">
                     <i class="fas fa-calendar"></i>
@@ -553,7 +292,7 @@ function renderAdminDashboard() {
             <div class="stat-card red">
                 <div>
                     <p style="opacity: 0.8;">Alertas</p>
-                    <p class="stat-number">${alertas}</p>
+                    <p class="stat-number">${mockData.notifications.length}</p>
                 </div>
                 <div class="stat-icon">
                     <i class="fas fa-bell"></i>
@@ -561,20 +300,20 @@ function renderAdminDashboard() {
             </div>
         </div>
 
-        <div class="grid grid-cols-2 mb-8">
+        <div class="grid grid-cols-2">
             <div class="card">
                 <div class="card-header">
                     <h3 class="text-xl font-bold">Alertas de Certificaciones</h3>
                 </div>
                 <div class="card-content">
                     ${mockData.guardias.map(guardia => `
-                        <div class="p-4 mb-4" style="background-color: ${guardia.cursosVencen <= 30 ? '#fef3c7' : '#dcfce7'}; border-radius: 0.5rem;">
+                        <div class="p-4 mb-4" style="background-color: #fef3c7; border-radius: 0.5rem;">
                             <div class="flex justify-between items-center">
                                 <div>
                                     <p class="font-bold">${guardia.nombre}</p>
                                     <p class="text-sm">Certificación OS-10 vence en ${guardia.cursosVencen} días</p>
                                 </div>
-                                <i class="fas fa-${guardia.cursosVencen <= 30 ? 'exclamation-triangle' : 'check-circle'}" style="color: ${guardia.cursosVencen <= 30 ? '#d97706' : '#059669'};"></i>
+                                <i class="fas fa-exclamation-triangle" style="color: #d97706;"></i>
                             </div>
                         </div>
                     `).join('')}
@@ -586,129 +325,439 @@ function renderAdminDashboard() {
                     <h3 class="text-xl font-bold">Turnos de Hoy</h3>
                 </div>
                 <div class="card-content">
-                    ${mockData.turnos.filter(t => t.fecha === '2025-08-29').map(turno => `
+                    ${mockData.turnos.map(turno => `
                         <div class="p-4 mb-4" style="background-color: #dbeafe; border-radius: 0.5rem;">
                             <div class="flex justify-between items-center">
                                 <div>
                                     <p class="font-bold">${turno.ubicacion}</p>
                                     <p class="text-sm">${turno.guardia} - ${turno.hora}</p>
-                                    <p class="text-xs" style="color: #6b7280;">${turno.cliente}</p>
                                 </div>
-                                <span class="badge badge-success">${turno.estado}</span>
+                                <i class="fas fa-check-circle" style="color: #059669;"></i>
                             </div>
                         </div>
                     `).join('')}
                 </div>
             </div>
         </div>
+    `;
+}
+
+function renderGestionGuardias() {
+    return `
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold">Gestión de Guardias</h2>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Nuevo Guardia
+            </button>
+        </div>
         
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-lg font-bold">Lista de Guardias</h3>
+            </div>
+            <div class="card-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Guardia</th>
+                            <th>RUT</th>
+                            <th>Estado</th>
+                            <th>Certificación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${mockData.guardias.map(guardia => `
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div class="font-bold">${guardia.nombre}</div>
+                                        <div class="text-sm" style="color: #6b7280;">${guardia.email}</div>
+                                    </div>
+                                </td>
+                                <td>${guardia.rut}</td>
+                                <td>
+                                    <span class="badge badge-success">${guardia.estado}</span>
+                                </td>
+                                <td>Vence en ${guardia.cursosVencen} días</td>
+                                <td>
+                                    <button class="btn btn-primary" style="margin-right: 0.5rem; padding: 0.25rem 0.5rem;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger" style="padding: 0.25rem 0.5rem;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+}
+
+function renderGestionCursos() {
+    return `
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold">Gestión de Cursos</h2>
+            <button class="btn btn-success">
+                <i class="fas fa-plus"></i>
+                Nuevo Curso
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-3 mb-8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold">Cursos Activos</h3>
+                        <i class="fas fa-book" style="color: #3b82f6; font-size: 1.5rem;"></i>
+                    </div>
+                    <p class="text-3xl font-bold" style="color: #3b82f6;">${mockData.cursos.length}</p>
+                    <p class="text-sm" style="color: #6b7280;">En progreso</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold">Total Estudiantes</h3>
+                        <i class="fas fa-users" style="color: #10b981; font-size: 1.5rem;"></i>
+                    </div>
+                    <p class="text-3xl font-bold" style="color: #10b981;">43</p>
+                    <p class="text-sm" style="color: #6b7280;">Inscritos actualmente</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold">Ingresos Mensuales</h3>
+                        <i class="fas fa-trophy" style="color: #8b5cf6; font-size: 1.5rem;"></i>
+                    </div>
+                    <p class="text-3xl font-bold" style="color: #8b5cf6;">$7.5M</p>
+                    <p class="text-sm" style="color: #6b7280;">Agosto 2025</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-lg font-bold">Lista de Cursos</h3>
+            </div>
+            <div class="card-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Curso</th>
+                            <th>Fecha Inicio</th>
+                            <th>Estudiantes</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${mockData.cursos.map(curso => `
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div class="font-bold">${curso.nombre}</div>
+                                        <div class="text-sm" style="color: #6b7280;">${curso.duracion}</div>
+                                    </div>
+                                </td>
+                                <td>${curso.fechaInicio}</td>
+                                <td>${curso.estudiantes}</td>
+                                <td>${curso.precio.toLocaleString()}</td>
+                                <td>
+                                    <span class="badge badge-success">Activo</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" style="margin-right: 0.5rem; padding: 0.25rem 0.5rem;">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-success" style="margin-right: 0.5rem; padding: 0.25rem 0.5rem;">
+                                        <i class="fas fa-users"></i>
+                                    </button>
+                                    <button class="btn btn-danger" style="padding: 0.25rem 0.5rem;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+}
+
+function renderMiPerfil() {
+    return `
+        <h2 class="text-3xl font-bold mb-8">Mi Perfil</h2>
+        <div class="card">
+            <div class="card-content">
+                <div class="flex items-center mb-6">
+                    <div style="width: 80px; height: 80px; background-color: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem;">
+                        <i class="fas fa-user" style="color: white; font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">${currentUser.nombre}</h3>
+                        <p style="color: #6b7280;">${currentUser.email}</p>
+                        <p class="text-sm" style="color: #6b7280;">Guardia de Seguridad</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2">
+                    <div class="space-y-4">
+                        <h4 class="text-lg font-bold">Información Personal</h4>
+                        <div class="space-y-4">
+                            <p><span class="font-bold">RUT:</span> 12.345.678-9</p>
+                            <p><span class="font-bold">Teléfono:</span> +56 9 8765 4321</p>
+                            <p><span class="font-bold">Fecha de Contratación:</span> 15 Enero 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h4 class="text-lg font-bold">Estado de Certificaciones</h4>
+                        <div class="space-y-4">
+                            <div class="p-4" style="background-color: #fef3c7; border-radius: 0.5rem;">
+                                <div class="flex justify-between">
+                                    <span>Certificación OS-10</span>
+                                    <span class="font-bold" style="color: #d97706;">Vence en 15 días</span>
+                                </div>
+                            </div>
+                            <div class="p-4" style="background-color: #dcfce7; border-radius: 0.5rem;">
+                                <div class="flex justify-between">
+                                    <span>Primeros Auxilios</span>
+                                    <span class="font-bold" style="color: #059669;">Vigente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderMisTurnos() {
+    return `
+        <h2 class="text-3xl font-bold mb-8">Mis Turnos</h2>
         <div class="grid grid-cols-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-lg font-bold">Resumen Mensual</h3>
-                </div>
-                <div class="card-content">
-                    <div class="space-y-4">
-                        <div class="flex justify-between">
-                            <span>Ingresos Agosto</span>
-                            <span class="font-bold">$7.850.000</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>Nuevos Contratos</span>
-                            <span class="font-bold">12</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>Estudiantes Activos</span>
-                            <span class="font-bold">75</span>
-                        </div>
+            <div style="grid-column: span 2;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-lg font-bold">Turnos Asignados</h3>
                     </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-lg font-bold">Acciones Rápidas</h3>
-                </div>
-                <div class="card-content">
-                    <div class="space-y-4">
-                        <button onclick="navigateToSection('gestionar-guardias')" class="btn btn-primary w-full">
-                            <i class="fas fa-plus"></i>
-                            Nuevo Guardia
-                        </button>
-                        <button onclick="navigateToSection('gestionar-cursos')" class="btn btn-success w-full">
-                            <i class="fas fa-plus"></i>
-                            Nuevo Curso
-                        </button>
-                        <button onclick="openDocumentModal()" class="btn btn-warning w-full">
-                            <i class="fas fa-upload"></i>
-                            Subir Documento
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-lg font-bold">Próximos Vencimientos</h3>
-                </div>
-                <div class="card-content">
-                    <div class="space-y-3">
-                        ${mockData.guardias.filter(g => g.cursosVencen <= 45).map(guardia => `
-                            <div class="text-sm p-2" style="background-color: #f3f4f6; border-radius: 0.5rem;">
-                                <div class="font-bold">${guardia.nombre}</div>
-                                <div style="color: #6b7280;">OS-10 - ${guardia.cursosVencen} días</div>
+                    <div class="card-content">
+                        ${mockData.turnos.map(turno => `
+                            <div class="p-6 mb-4" style="border-bottom: 1px solid #e5e7eb;">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <div style="width: 48px; height: 48px; background-color: #dbeafe; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-map-marker-alt" style="color: #3b82f6;"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold">${turno.ubicacion}</h4>
+                                            <div class="flex items-center text-sm" style="color: #6b7280; margin-top: 0.25rem;">
+                                                <i class="fas fa-calendar" style="margin-right: 0.25rem;"></i>
+                                                ${turno.fecha}
+                                            </div>
+                                            <div class="flex items-center text-sm" style="color: #6b7280; margin-top: 0.25rem;">
+                                                <i class="fas fa-clock" style="margin-right: 0.25rem;"></i>
+                                                ${turno.hora}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="badge badge-success">${turno.estado}</span>
+                                        <div class="mt-2">
+                                            <button class="text-sm" style="color: #3b82f6;">Ver detalles</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         `).join('')}
                     </div>
                 </div>
             </div>
-        </div>
-    `;
-}
-
-// Additional render functions would continue here...
-// For brevity, I'll add the most important ones
-
-function renderSeccionEnDesarrollo() {
-    return `
-        <div class="text-center py-16">
-            <div class="card max-w-md mx-auto">
-                <div class="card-content">
-                    <i class="fas fa-tools text-4xl mb-4" style="color: #6b7280;"></i>
-                    <h3 class="text-xl font-bold mb-4">Sección en Desarrollo</h3>
-                    <p style="color: #6b7280;">Esta funcionalidad estará disponible pronto. Estamos trabajando para ofrecerte la mejor experiencia.</p>
+            
+            <div class="space-y-6">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="text-lg font-bold mb-4">Resumen Semanal</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span style="color: #6b7280;">Turnos esta semana:</span>
+                                <span class="font-bold">5</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span style="color: #6b7280;">Horas trabajadas:</span>
+                                <span class="font-bold">48h</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span style="color: #6b7280;">Próximo turno:</span>
+                                <span class="font-bold">Mañana 8:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="text-lg font-bold mb-4">Solicitudes</h3>
+                        <div class="space-y-4">
+                            <button class="btn w-full" style="background-color: #dbeafe; color: #1e40af;">
+                                Solicitar cambio de turno
+                            </button>
+                            <button class="btn w-full" style="background-color: #dcfce7; color: #166534;">
+                                Solicitar día libre
+                            </button>
+                            <button class="btn w-full" style="background-color: #fef3c7; color: #92400e;">
+                                Reportar incidencia
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     `;
 }
 
-// Initialize application
+function renderMisCursos() {
+    return `
+        <h2 class="text-3xl font-bold mb-8">Mis Cursos</h2>
+        <div class="grid grid-cols-2">
+            ${mockData.cursos.map(curso => `
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="text-xl font-bold mb-4">${curso.nombre}</h3>
+                        <div class="space-y-4" style="color: #6b7280;">
+                            <p><span class="font-bold">Fecha de Inicio:</span> ${curso.fechaInicio}</p>
+                            <p><span class="font-bold">Duración:</span> ${curso.duracion}</p>
+                            <p><span class="font-bold">Progreso:</span> 75%</p>
+                        </div>
+                        <div class="progress mt-4">
+                            <div class="progress-bar" style="width: 75%;"></div>
+                        </div>
+                        <button class="btn btn-primary mt-4">
+                            Continuar Curso
+                        </button>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function renderExamenPractica() {
+    return `
+        <h2 class="text-3xl font-bold mb-8">Examen de Práctica OS-10</h2>
+        <div class="grid grid-cols-2">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="text-xl font-bold mb-4">Simulacros Disponibles</h3>
+                    <div class="space-y-4">
+                        <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                            <h4 class="font-bold">Examen Básico OS-10</h4>
+                            <p class="text-sm" style="color: #6b7280;">30 preguntas - 60 minutos</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <span class="text-sm" style="color: #6b7280;">Último intento: 85%</span>
+                                <button class="btn btn-primary">Iniciar</button>
+                            </div>
+                        </div>
+                        <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                            <h4 class="font-bold">Examen Avanzado OS-10</h4>
+                            <p class="text-sm" style="color: #6b7280;">50 preguntas - 90 minutos</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <span class="text-sm" style="color: #6b7280;">Sin intentos</span>
+                                <button class="btn btn-success">Iniciar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="text-xl font-bold mb-4">Mi Progreso</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Progreso General</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4" style="padding-top: 1rem;">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold" style="color: #10b981;">12</div>
+                                <div class="text-sm" style="color: #6b7280;">Exámenes Completados</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold" style="color: #3b82f6;">85%</div>
+                                <div class="text-sm" style="color: #6b7280;">Promedio General</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4 class="font-bold mb-4">Material de Estudio</h4>
+                        <div class="space-y-4">
+                            <button class="btn w-full text-left" style="background-color: #f9fafb; color: #374151; justify-content: space-between;">
+                                <span>Manual OS-10 Actualizado</span>
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn w-full text-left" style="background-color: #f9fafb; color: #374151; justify-content: space-between;">
+                                <span>Normativa Legal Vigente</span>
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn w-full text-left" style="background-color: #f9fafb; color: #374151; justify-content: space-between;">
+                                <span>Videos Explicativos</span>
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderSeccionEnDesarrollo() {
+    return `
+        <h2 class="text-3xl font-bold mb-8">Sección en Desarrollo</h2>
+        <div class="card">
+            <div class="card-content">
+                <p style="color: #6b7280;">Esta sección está siendo desarrollada y estará disponible pronto.</p>
+            </div>
+        </div>
+    `;
+}
+
+// Initialize the application
 function init() {
     updateUI();
     
-    // Handle responsive sidebar
+    // Handle window resize
     window.addEventListener('resize', () => {
-        if (window.innerWidth > 768 && currentUser) {
-            toggleSidebar(true);
-        } else if (window.innerWidth <= 768) {
+        if (window.innerWidth > 768) {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (currentUser) {
+                sidebar.classList.add('open');
+                mainContent.classList.add('sidebar-open');
+            }
+        } else {
             toggleSidebar(false);
-        }
-    });
-    
-    // Close modals when clicking outside
-    window.addEventListener('click', (event) => {
-        const loginModal = document.getElementById('loginModal');
-        const documentModal = document.getElementById('documentModal');
-        
-        if (event.target === loginModal) {
-            closeLogin();
-        }
-        if (event.target === documentModal) {
-            closeDocumentModal();
         }
     });
 }
 
-// Start application when DOM is loaded
+// Start the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', init);
