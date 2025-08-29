@@ -44,22 +44,25 @@ body {
 .hamburger-menu {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 24px;
-    height: 18px;
+    justify-content: space-around;
+    width: 26px;
+    height: 20px;
+    padding: 2px;
     transition: all 0.3s ease;
 }
 
 .hamburger-line {
-    width: 100%;
+    display: block;
+    width: 22px;
     height: 3px;
-    background-color: white;
-    border-radius: 2px;
+    background-color: #ffffff;
+    border-radius: 1px;
     transition: all 0.3s ease;
+    margin: 0;
 }
 
 .hamburger-menu:hover .hamburger-line {
-    background-color: #e5e7eb;
+    background-color: #f3f4f6;
 }
 
 .btn {
