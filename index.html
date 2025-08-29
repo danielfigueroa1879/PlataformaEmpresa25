@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Capacitación Limitada - Sistema Integral</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
 </head>
 <body>
-    <!-- Login Modal -->
     <div id="loginModal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,17 +26,14 @@
                             <option value="admin">Administrador</option>
                         </select>
                     </div>
-                    
                     <div class="form-group">
                         <label class="form-label">Email</label>
                         <input type="email" id="userEmail" class="form-input" placeholder="tu@email.com" required>
                     </div>
-                    
                     <div class="form-group">
                         <label class="form-label">Contraseña</label>
                         <input type="password" id="userPassword" class="form-input" placeholder="••••••••" required>
                     </div>
-                    
                     <button type="submit" class="btn btn-primary w-full">
                         <i class="fas fa-sign-in-alt"></i>
                         Ingresar
@@ -47,7 +43,6 @@
         </div>
     </div>
 
-    <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <h2 class="font-bold">Global Capacitación</h2>
@@ -56,15 +51,13 @@
             </button>
         </div>
         <ul id="sidebarMenu" class="sidebar-menu">
-            <!-- Menu items will be populated by JavaScript -->
-        </ul>
-        <div class="sidebar-item logout-item" onclick="logout()">
+            </ul>
+        <div class="sidebar-item" onclick="logout()" style="margin-top: auto; border-top: 1px solid #374151;">
             <i class="fas fa-sign-out-alt"></i>
             <span>Cerrar Sesión</span>
         </div>
     </div>
 
-    <!-- Header -->
     <header id="header" class="header">
         <div class="header-content">
             <div class="logo">
@@ -72,77 +65,12 @@
                 <span>Global Capacitación Limitada</span>
             </div>
             <div id="headerActions">
-                <!-- Header actions will be populated by JavaScript -->
-            </div>
+                </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main id="mainContent" class="main-content">
-        <!-- Content will be populated by JavaScript -->
-    </main>
-
-    <!-- Document Upload Modal -->
-    <div id="documentModal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="text-xl font-bold">Gestión Documental</h3>
-                <button onclick="closeDocumentModal()" class="btn btn-secondary">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form onsubmit="handleDocumentUpload(event)">
-                    <div class="form-group">
-                        <label class="form-label">Tipo de Documento</label>
-                        <select id="documentType" class="form-input">
-                            <option value="contrato">Contrato de Trabajo</option>
-                            <option value="certificacion">Certificación</option>
-                            <option value="material">Material de Estudio</option>
-                            <option value="orden">Orden de Trabajo</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Título del Documento</label>
-                        <input type="text" id="documentTitle" class="form-input" placeholder="Título del documento" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Seleccionar Archivo</label>
-                        <input type="file" id="documentFile" class="form-input" accept=".pdf,.doc,.docx" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Descripción</label>
-                        <textarea id="documentDescription" class="form-input" rows="3" placeholder="Descripción del documento"></textarea>
-                    </div>
-                    
-                    <div class="flex gap-4">
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-upload"></i>
-                            Subir Documento
-                        </button>
-                        <button type="button" onclick="requestDigitalSignature()" class="btn btn-primary">
-                            <i class="fas fa-signature"></i>
-                            Solicitar Firma Digital
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification Toast -->
-    <div id="notificationToast" class="notification-toast hidden">
-        <div class="notification-content">
-            <i id="notificationIcon" class="fas fa-info-circle"></i>
-            <span id="notificationMessage"></span>
-            <button onclick="hideNotification()" class="notification-close">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
+        </main>
 
     <script src="script.js"></script>
 </body>
