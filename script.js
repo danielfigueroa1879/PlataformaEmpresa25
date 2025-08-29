@@ -126,9 +126,6 @@ function updateHeader() {
     } else {
         headerActions.innerHTML = `
             <div class="flex items-center gap-4">
-                <button onclick="toggleSidebar()" class="btn btn-secondary">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <span>Bienvenido, ${currentUser.nombre}</span>
                 <div class="flex items-center gap-4">
                     <i class="fas fa-bell"></i>
@@ -137,6 +134,25 @@ function updateHeader() {
                     </div>
                 </div>
             </div>
+        `;
+    }
+    
+    // Update header logo to include hamburger menu when user is logged in
+    const logo = document.querySelector('.logo');
+    if (currentUser) {
+        logo.innerHTML = `
+            <button onclick="toggleSidebar()" class="hamburger-menu" style="background: none; border: none; cursor: pointer; padding: 8px; margin-right: 12px;">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+            <i class="fas fa-shield-alt"></i>
+            <span>Global Capacitación Limitada</span>
+        `;
+    } else {
+        logo.innerHTML = `
+            <i class="fas fa-shield-alt"></i>
+            <span>Global Capacitación Limitada</span>
         `;
     }
 }
