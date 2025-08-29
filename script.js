@@ -328,20 +328,6 @@ function updatePrivateHeader() {
             </div>
         `;
     }
-    
-    // Update header logo to include hamburger menu - ALWAYS visible
-    const logo = document.querySelector('#privateSystem .logo');
-    if (logo && currentUser) {
-        logo.innerHTML = `
-            <button onclick="toggleSidebar()" class="hamburger-menu-btn">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-            <i class="fas fa-shield-alt"></i>
-            <span>Global Capacitación Limitada</span>
-        `;
-    }
 }
 
 function updateSidebar() {
