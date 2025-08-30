@@ -292,6 +292,13 @@ function handleLogin(event) {
         document.getElementById('privateSystem').classList.remove('hidden');
         
         updatePrivateUI();
+
+        if (window.innerWidth > 768) {
+            toggleSidebar(true);
+            setTimeout(() => {
+                toggleSidebar(false);
+            }, 20000);
+        }
     } else {
         alert('Por favor, complete todos los campos');
     }
@@ -694,13 +701,13 @@ function renderMiPerfil() {
                         <h4 class="text-lg font-bold">Estado de Certificaciones</h4>
                         <div class="space-y-4">
                             <div class="p-4" style="background-color: #fef3c7; border-radius: 0.5rem;">
-                                <div class="flex justify-between">
+                                <div class="flex justify-between certification-status">
                                     <span>Certificación OS-10</span>
                                     <span class="font-bold" style="color: #d97706;">Vence en 15 días</span>
                                 </div>
                             </div>
                             <div class="p-4" style="background-color: #dcfce7; border-radius: 0.5rem;">
-                                <div class="flex justify-between">
+                                <div class="flex justify-between certification-status">
                                     <span>Primeros Auxilios</span>
                                     <span class="font-bold" style="color: #059669;">Vigente</span>
                                 </div>
@@ -836,7 +843,7 @@ function renderExamenPractica() {
                             <p class="text-sm" style="color: #6b7280;">30 preguntas - 60 minutos</p>
                             <div class="flex justify-between items-center mt-4">
                                 <span class="text-sm" style="color: #6b7280;">Último intento: 85%</span>
-                                <button class="btn btn-primary">Iniciar</button>
+                                <button class="btn btn-primary" onclick="startQuiz()">Iniciar</button>
                             </div>
                         </div>
                         <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
@@ -844,7 +851,7 @@ function renderExamenPractica() {
                             <p class="text-sm" style="color: #6b7280;">50 preguntas - 90 minutos</p>
                             <div class="flex justify-between items-center mt-4">
                                 <span class="text-sm" style="color: #6b7280;">Sin intentos</span>
-                                <button class="btn btn-success">Iniciar</button>
+                                <button class="btn btn-success" onclick="startQuiz()">Iniciar</button>
                             </div>
                         </div>
                     </div>
@@ -897,6 +904,40 @@ function renderExamenPractica() {
             </div>
         </div>
     `;
+}
+
+function startQuiz() {
+    const mainContent = document.getElementById('mainContent');
+    mainContent.innerHTML = '<h1>Cargando Examen...</h1>';
+
+    fetch('index(45).html')
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            // Inject styles
+            const styles = doc.querySelector('style');
+            if (styles) {
+                document.head.appendChild(styles);
+            }
+
+            // Inject body content
+            const bodyContent = doc.body.innerHTML;
+            mainContent.innerHTML = bodyContent;
+
+            // Inject and execute script
+            const script = doc.querySelector('script');
+            if (script) {
+                const newScript = document.createElement('script');
+                newScript.textContent = script.textContent;
+                mainContent.appendChild(newScript);
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar el examen:', error);
+            mainContent.innerHTML = '<p>Hubo un error al cargar el examen. Por favor, inténtalo de nuevo.</p>';
+        });
 }
 
 function renderSeccionEnDesarrollo() {
