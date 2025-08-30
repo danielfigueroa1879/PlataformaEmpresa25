@@ -994,12 +994,12 @@ padding: 0 20px;
     grid-template-columns: repeat(3, 1fr);
 }
 
-/* Hamburger menu visible on tablets */
+/* Hamburger menu is no longer visible on tablet/PC */
 .hamburger-menu, .hamburger-menu-btn {
-    display: flex;
+    display: none;
 }
 .desktop-nav {
-    display: none;
+    display: block;
 }
 
 }
