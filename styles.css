@@ -943,6 +943,25 @@ nav a:hover {
     .hero h1 {
         font-size: 2rem; /* Ajuste a un tamaño ligeramente menor */
     }
+
+    #privateHeader .logo {
+        max-width: calc(100% - 100px);
+    }
+
+    #privateHeader .logo span {
+        font-size: 1.1rem;
+        white-space: normal;
+        text-align: left;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+
+    .certification-status {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
 }
 
 
