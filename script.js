@@ -107,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const contactForm = document.getElementById('contactForm');
     const blogContainer = document.getElementById('blogPosts');
     const cursosContainer = document.getElementById('cursosList');
+    const publicHamburgerBtn = document.getElementById('publicHamburgerBtn');
+    const publicMobileNav = document.getElementById('publicMobileNav');
 
     // Initialize public site
     initPublicSite();
@@ -122,6 +124,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tabId = button.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
             });
+        });
+    }
+
+    // Public hamburger menu functionality
+    if (publicHamburgerBtn && publicMobileNav) {
+        publicHamburgerBtn.addEventListener('click', () => {
+            publicMobileNav.classList.toggle('active');
         });
     }
 
@@ -143,6 +152,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         loginForm.addEventListener('submit', handleLogin);
     }
+    
+    // Mobile Login button
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    if (mobileLoginBtn) {
+        mobileLoginBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            publicMobileNav.classList.remove('active');
+        });
+    }
+
 
     // Contact form
     if (contactForm) {
