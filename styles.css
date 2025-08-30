@@ -62,7 +62,7 @@ gap: 10px;
 color: #00c853;
 }
 
-/* Hamburger Menu Styles /
+/* Hamburger Menu Styles */
 .hamburger-menu, .hamburger-menu-btn {
 display: flex;
 flex-direction: column;
@@ -70,7 +70,7 @@ justify-content: center;
 width: 40px;
 height: 40px;
 padding: 8px;
-background-color: #1e3a8a; / Changed from none to make it visible */
+background-color: #1e3a8a;
 border: none;
 cursor: pointer;
 transition: all 0.3s ease;
@@ -81,7 +81,7 @@ gap: 4px;
 .hamburger-line {
 width: 100%;
 height: 3px;
-background-color: #ffffff; /* Corrected to white */
+background-color: #ffffff;
 border-radius: 2px;
 transition: all 0.3s ease;
 }
@@ -815,6 +815,40 @@ padding: 0 10px;
     gap: 10px;
     padding: 10px;
 }
+.header-content {
+    padding: 10px;
+}
+.desktop-nav {
+    display: none;
+}
+.mobile-nav {
+    display: none;
+    position: static;
+    background: none;
+    backdrop-filter: none;
+    padding: 0;
+}
+.mobile-nav.active {
+    display: block;
+}
+.mobile-nav ul {
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+}
+.mobile-nav ul li {
+    width: 100%;
+    margin: 0.5rem 0;
+}
+.mobile-nav ul li a {
+    display: block;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.hamburger-menu-btn {
+    display: flex;
+}
 
 .logo {
     font-size: 1.4rem;
@@ -890,6 +924,12 @@ padding: 0 15px;
     flex-direction: column;
     gap: 15px;
 }
+.desktop-nav {
+    display: none;
+}
+.hamburger-menu-btn {
+    display: flex;
+}
 
 nav ul {
     flex-wrap: wrap;
@@ -958,6 +998,9 @@ padding: 0 20px;
 .hamburger-menu, .hamburger-menu-btn {
     display: flex;
 }
+.desktop-nav {
+    display: none;
+}
 
 }
 
@@ -966,6 +1009,12 @@ padding: 0 20px;
 .container {
 max-width: 1200px;
 padding: 0 20px;
+}
+.desktop-nav {
+display: block;
+}
+.hamburger-menu-btn {
+display: none;
 }
 
 .hero h1 {
@@ -1036,10 +1085,10 @@ padding: 30px 0;
 
 }
 
-/* High DPI displays /
+/* High DPI displays */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
 .hamburger-line {
-height: 2px; / Corrected to a more visible size on high DPI */
+height: 2px;
 }
 }
 
