@@ -109,6 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const cursosContainer = document.getElementById('cursosList');
     const publicHamburgerBtn = document.getElementById('publicHamburgerBtn');
     const publicMobileNav = document.getElementById('publicMobileNav');
+    // --- INICIO DE LA CORRECCIÓN ---
+    const publicMobileNavCloseBtn = document.getElementById('publicMobileNavCloseBtn'); // Se selecciona el botón de cierre
     
     // Initialize public site
     initPublicSite();
@@ -130,10 +132,22 @@ document.addEventListener('DOMContentLoaded', function () {
     // Public hamburger menu functionality
     if (publicHamburgerBtn && publicMobileNav) {
         publicHamburgerBtn.addEventListener('click', () => {
+            // Se usa toggle para abrir y cerrar con el mismo botón
             publicMobileNav.classList.toggle('active');
             publicHamburgerBtn.classList.toggle('active');
         });
     }
+    
+    // Funcionalidad para el botón de cierre del menú móvil
+    if (publicMobileNavCloseBtn && publicMobileNav) {
+        publicMobileNavCloseBtn.addEventListener('click', () => {
+            // Se quita la clase 'active' para cerrar el menú
+            publicMobileNav.classList.remove('active');
+            publicHamburgerBtn.classList.remove('active');
+        });
+    }
+    // --- FIN DE LA CORRECCIÓN ---
+
 
     // Login modal
     if (loginBtn && modal && closeModal) {
