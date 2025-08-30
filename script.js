@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cursosContainer = document.getElementById('cursosList');
     const publicHamburgerBtn = document.getElementById('publicHamburgerBtn');
     const publicMobileNav = document.getElementById('publicMobileNav');
-
+    
     // Initialize public site
     initPublicSite();
 
@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (publicHamburgerBtn && publicMobileNav) {
         publicHamburgerBtn.addEventListener('click', () => {
             publicMobileNav.classList.toggle('active');
+            publicHamburgerBtn.classList.toggle('active');
         });
     }
 
@@ -161,7 +162,6 @@ document.addEventListener('DOMContentLoaded', function () {
             publicMobileNav.classList.remove('active');
         });
     }
-
 
     // Contact form
     if (contactForm) {
