@@ -916,28 +916,25 @@ function startQuiz() {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             
-            // Extract the exam section and the modal
             const examSection = doc.querySelector('#exam-section');
             const modal = doc.querySelector('#results-modal-overlay');
 
             if (examSection && modal) {
-                mainContent.innerHTML = ''; // Clear loading message
+                mainContent.innerHTML = '';
                 mainContent.appendChild(examSection.cloneNode(true));
                 mainContent.appendChild(modal.cloneNode(true));
 
-                // Extract and append styles
                 const styles = doc.querySelector('style');
                 if (styles) {
                     document.head.appendChild(styles.cloneNode(true));
                 }
 
-                // Extract and execute script
-                const script = doc.querySelector('script');
-                if (script) {
-                    const newScript = document.createElement('script');
-                    newScript.textContent = script.textContent;
-                    document.body.appendChild(newScript); // Append to body to ensure execution
-                }
+                const scriptContent = doc.querySelector('script').textContent;
+                const functionBody = scriptContent.substring(scriptContent.indexOf('{') + 1, scriptContent.lastIndexOf('}'));
+                const newScript = document.createElement('script');
+                newScript.textContent = functionBody;
+                document.body.appendChild(newScript);
+
             } else {
                 mainContent.innerHTML = '<p>No se pudo encontrar el contenido del examen.</p>';
             }
