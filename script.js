@@ -924,17 +924,12 @@ function startQuiz() {
                 mainContent.appendChild(examSection.cloneNode(true));
                 mainContent.appendChild(modal.cloneNode(true));
 
-                const styles = doc.querySelector('style');
-                if (styles) {
-                    document.head.appendChild(styles.cloneNode(true));
+                const script = doc.querySelector('script');
+                if (script) {
+                    const newScript = document.createElement('script');
+                    newScript.innerHTML = script.innerHTML;
+                    document.body.appendChild(newScript);
                 }
-
-                const scriptContent = doc.querySelector('script').textContent;
-                const functionBody = scriptContent.substring(scriptContent.indexOf('{') + 1, scriptContent.lastIndexOf('}'));
-                const newScript = document.createElement('script');
-                newScript.textContent = functionBody;
-                document.body.appendChild(newScript);
-
             } else {
                 mainContent.innerHTML = '<p>No se pudo encontrar el contenido del examen.</p>';
             }
