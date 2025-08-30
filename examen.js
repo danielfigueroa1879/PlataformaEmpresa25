@@ -112,7 +112,7 @@ const questionsByCategory = {
         { question: "Las alarmas solo se activan en caso de incendio y sospechosas de robo y hurto.", correctAnswer: "Falso" },
         { question: "El extintor se utiliza para amagar un fuego.", correctAnswer: "Verdadero" },
         { question: "El circuito cerrado de televisión es un sistema apropiado sólo para áreas de difícil observación.", correctAnswer: "Falso" },
-        { question: "Alarma es un elemento que sirve para advertir el peligro, sólo en casos de delitos flagrantes.", correctAnswer: "Falso" },
+        { question: "Alarma es un elemento que sirve para advertir el peligro, sólo en casos de delitos flagrantes.", correctAnswer: "False" },
         { question: "Se puede contar entre otras alarmas los siguientes tipos: transceptores y teléfonos.", correctAnswer: "Falso" },
         { question: "Los polvos químicos de los extintores se clasifican en tipo, ABC, BC, CO2.", correctAnswer: "Verdadero" },
         { question: "Los medios de comunicación deben ser ocupados ante reales necesidades en forma ambigua y entregando en forma detallada los antecedentes.", correctAnswer: "Falso" },
@@ -311,6 +311,18 @@ const questionsByCategory = {
     ]
 };
 
+let questions = [];
+let userAnswers = {};
+
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
 function createCategorizedQuestions() {
     const allQuestions = [];
     const categories = Object.keys(questionsByCategory);
@@ -399,7 +411,7 @@ function generateQuestionsCategorized() {
     }
 
     setTimeout(() => {
-        const questions = createCategorizedQuestions();
+        questions = createCategorizedQuestions();
         userAnswers = {};
         
         displayCategorizedQuiz(questions);
@@ -416,6 +428,7 @@ function generateQuestionsCategorized() {
 
 function displayCategorizedQuiz(questions) {
     const quizContainer = document.getElementById('quiz-container');
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
     quizContainer.innerHTML = '';
     
     questions.forEach((q, index) => {
@@ -531,12 +544,8 @@ function getCategoryShortName(category) {
 
 function submitCategorizedQuiz() {
     let score = 0;
-    const questions = document.querySelectorAll('.question-card');
-    questions.forEach((card, index) => {
-        const questionText = card.querySelector('h5').innerText.substring(3);
-        const allQuestions = Object.values(questionsByCategory).flat();
-        const questionData = allQuestions.find(q => q.question === questionText);
-        if (questionData && userAnswers[index] === questionData.correctAnswer) {
+    questions.forEach((q, index) => {
+        if (userAnswers[index] === q.correctAnswer) {
             score++;
         }
     });
@@ -592,6 +601,3 @@ function calculateGrade(percentage) {
     if (percentage < 50) return (1.0 + (percentage / 50) * 3.0).toFixed(1);
     return (4.0 + ((percentage - 50) / 50) * 3.0).toFixed(1);
 }
-
-let questions = [];
-let userAnswers = {};
