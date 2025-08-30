@@ -908,36 +908,57 @@ function renderExamenPractica() {
 
 function startQuiz() {
     const mainContent = document.getElementById('mainContent');
-    mainContent.innerHTML = '<h1>Cargando Examen...</h1>';
-
-    fetch('index(45).html')
-        .then(response => response.text())
-        .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
+    
+    const quizHTML = `
+        <section id="exam-section" class="mt-5">
+            <h2 class="text-center exam-heading-green">Examen de Preparación OS-10</h2>
+            <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
+            <p class="text-center" style="color: #dc3545; font-weight: 600; font-size: 0.9rem;">
+                <i class="bi bi-exclamation-triangle"></i> 
+                <strong>IMPORTANTE:</strong> Este examen consta de 30 preguntas. Una vez que selecciones una respuesta, no podrás cambiarla. Lee cuidadosamente antes de responder.
+            </p>
             
-            const examSection = doc.querySelector('#exam-section');
-            const modal = doc.querySelector('#results-modal-overlay');
+            <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
 
-            if (examSection && modal) {
-                mainContent.innerHTML = '';
-                mainContent.appendChild(examSection.cloneNode(true));
-                mainContent.appendChild(modal.cloneNode(true));
+            <div id="quiz-container" class="mt-4" style="display: none;"></div>
+            <div class="exam-controls">
+                <button id="submit-quiz-btn" style="display: none;">Enviar Examen</button>
+            </div>
+            <div id="subtle-response-box" class="subtle-response-box"></div>
+        </section>
+        <div id="results-modal-overlay" style="display: none;">
+            <div id="results-modal-content">
+                <h3>Resultados del Examen</h3>
+                <p>Respuestas correctas: <span id="modal-correct-count"></span> de <span id="modal-total-questions"></span></p>
+                <p>Porcentaje: <span id="modal-percentage"></span>%</p>
+                <p>Tu nota en escala del 1 al 7: <strong id="modal-grade"></strong></p>
+                <p id="modal-message"></p>
+                <button id="close-modal-btn">Cerrar</button>
+            </div>
+        </div>
+    `;
 
-                const script = doc.querySelector('script');
-                if (script) {
-                    const newScript = document.createElement('script');
-                    newScript.innerHTML = script.innerHTML;
-                    document.body.appendChild(newScript);
-                }
-            } else {
-                mainContent.innerHTML = '<p>No se pudo encontrar el contenido del examen.</p>';
+    mainContent.innerHTML = quizHTML;
+
+    const startExamBtn = document.getElementById('start-exam-btn');
+    if(startExamBtn) {
+        startExamBtn.addEventListener('click', generateQuestionsCategorized);
+    }
+
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+    if(submitQuizBtn) {
+        submitQuizBtn.addEventListener('click', submitCategorizedQuiz);
+    }
+
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    if(closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            const resultsModalOverlay = document.getElementById('results-modal-overlay');
+            if(resultsModalOverlay) {
+                resultsModalOverlay.classList.remove('show');
             }
-        })
-        .catch(error => {
-            console.error('Error al cargar el examen:', error);
-            mainContent.innerHTML = '<p>Hubo un error al cargar el examen. Por favor, inténtalo de nuevo.</p>';
         });
+    }
 }
 
 function renderSeccionEnDesarrollo() {
