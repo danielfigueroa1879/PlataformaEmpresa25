@@ -895,29 +895,30 @@ nav a:hover {
 
     /* NUEVA CORRECCIÓN 1.1: Ajuste del menú móvil para que se despliegue debajo del banner */
     .mobile-nav.active {
-        top: 0; /* Asegura que el menú empiece arriba */
-        width: 100%; /* Ocupa todo el ancho en móvil */
-        height: 100vh; /* Ocupa toda la altura */
-        right: 0;
-        left: 0;
-        border-radius: 0;
-        background: rgba(30, 58, 138, 0.95); /* Fondo oscuro del header */
-        display: flex; /* Para centrar contenido si es necesario */
-        flex-direction: column;
-        justify-content: flex-start; /* Alinea el contenido arriba */
-        padding-top: 65px; /* Deja espacio para el header fijo */
+        top: 75px; /* Posiciona el menú debajo del banner */
+        width: 97%;
+        left: 1.5%;
+        right: 1.5%;
+        height: auto;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 1rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        display: block;
     }
     
     .mobile-nav ul {
         flex-direction: column;
         width: 100%;
-        padding: 1rem;
+        padding: 0;
     }
 
     .mobile-nav ul li a,
     .mobile-nav ul li button {
-        color: #fff; /* Asegura que los enlaces sean blancos */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Separador blanco sutil */
+        color: #333; /* Color de texto oscuro para el menú claro */
+        border-bottom: 1px solid #ccc; /* Separador oscuro */
     }
 
     .mobile-nav ul li:last-child {
