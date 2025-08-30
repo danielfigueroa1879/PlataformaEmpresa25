@@ -1392,3 +1392,21 @@ nav a:hover {
     background-color: #6f42c1 !important;
     color: white !important;
 }
+
+@media (max-width: 768px) {
+    #exam-section {
+        padding: 15px;
+    }
+
+    .question-card h5 {
+        font-size: 1rem;
+    }
+
+    .option-button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+    }
+}

@@ -109,13 +109,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const cursosContainer = document.getElementById('cursosList');
     const publicHamburgerBtn = document.getElementById('publicHamburgerBtn');
     const publicMobileNav = document.getElementById('publicMobileNav');
-    // --- INICIO DE LA CORRECCIÓN ---
-    const publicMobileNavCloseBtn = document.getElementById('publicMobileNavCloseBtn'); // Se selecciona el botón de cierre
+    const publicMobileNavCloseBtn = document.getElementById('publicMobileNavCloseBtn');
     
-    // Initialize public site
     initPublicSite();
 
-    // Tab functionality
     if (tabButtons.length > 0) {
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -129,26 +126,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Public hamburger menu functionality
     if (publicHamburgerBtn && publicMobileNav) {
         publicHamburgerBtn.addEventListener('click', () => {
-            // Se usa toggle para abrir y cerrar con el mismo botón
             publicMobileNav.classList.toggle('active');
             publicHamburgerBtn.classList.toggle('active');
         });
     }
     
-    // Funcionalidad para el botón de cierre del menú móvil
     if (publicMobileNavCloseBtn && publicMobileNav) {
         publicMobileNavCloseBtn.addEventListener('click', () => {
-            // Se quita la clase 'active' para cerrar el menú
             publicMobileNav.classList.remove('active');
             publicHamburgerBtn.classList.remove('active');
         });
     }
-    // --- FIN DE LA CORRECCIÓN ---
 
-    // Close mobile menu on link click
     const mobileNavLinks = document.querySelectorAll('#publicMobileNav a');
     if (mobileNavLinks.length > 0 && publicMobileNav && publicHamburgerBtn) {
         mobileNavLinks.forEach(link => {
@@ -159,8 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
-    // Login modal
     if (loginBtn && modal && closeModal) {
         loginBtn.addEventListener('click', () => {
             modal.classList.add('active');
@@ -179,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function () {
         loginForm.addEventListener('submit', handleLogin);
     }
     
-    // Mobile Login button
     const mobileLoginBtn = document.getElementById('mobileLoginBtn');
     if (mobileLoginBtn) {
         mobileLoginBtn.addEventListener('click', () => {
@@ -188,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Contact form
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -198,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Render blog and courses
     if (blogContainer) {
         renderBlog();
     }
@@ -207,11 +193,9 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCursos();
     }
 
-    // Show notification after delay
     setTimeout(showNotification, 3000);
 });
 
-// Public site functions
 function initPublicSite() {
     document.getElementById('publicSite').classList.remove('hidden');
     document.getElementById('privateSystem').classList.add('hidden');
@@ -262,7 +246,6 @@ function showNotification() {
     document.body.appendChild(notif);
 }
 
-// Authentication functions
 function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('username').value;
@@ -284,10 +267,8 @@ function handleLogin(event) {
         
         currentSection = role === 'admin' ? 'dashboard' : role === 'guardia' ? 'mi-perfil' : 'mis-cursos';
         
-        // Hide modal
         document.getElementById('loginModal').classList.remove('active');
         
-        // Switch to private system
         document.getElementById('publicSite').classList.add('hidden');
         document.getElementById('privateSystem').classList.remove('hidden');
         
@@ -308,15 +289,12 @@ function logout() {
     currentUser = null;
     currentSection = 'home';
     
-    // Hide sidebar
     toggleSidebar(false);
     
-    // Switch back to public site
     document.getElementById('privateSystem').classList.add('hidden');
     document.getElementById('publicSite').classList.remove('hidden');
 }
 
-// Helper functions for login links
 function openLoginForExam() {
     document.getElementById('userRole').value = 'estudiante';
     document.getElementById('loginModal').classList.add('active');
@@ -332,7 +310,6 @@ function openLoginForEnrollment(courseName) {
     document.getElementById('loginModal').classList.add('active');
 }
 
-// Private system functions
 function toggleSidebar(show = null) {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
@@ -430,11 +407,9 @@ function updateMainContent() {
     }
 }
 
-// Render functions for private system
 function renderAdminDashboard() {
     return `
         <h2 class="text-3xl font-bold mb-8">Panel de Control Administrativo</h2>
-        
         <div class="grid grid-cols-4 mb-8">
             <div class="stat-card blue">
                 <div>
@@ -445,7 +420,6 @@ function renderAdminDashboard() {
                     <i class="fas fa-shield-alt"></i>
                 </div>
             </div>
-            
             <div class="stat-card green">
                 <div>
                     <p style="opacity: 0.8;">Cursos Activos</p>
@@ -455,7 +429,6 @@ function renderAdminDashboard() {
                     <i class="fas fa-book"></i>
                 </div>
             </div>
-            
             <div class="stat-card orange">
                 <div>
                     <p style="opacity: 0.8;">Turnos Hoy</p>
@@ -465,7 +438,6 @@ function renderAdminDashboard() {
                     <i class="fas fa-calendar"></i>
                 </div>
             </div>
-            
             <div class="stat-card red">
                 <div>
                     <p style="opacity: 0.8;">Alertas</p>
@@ -476,63 +448,14 @@ function renderAdminDashboard() {
                 </div>
             </div>
         </div>
-
-        <div class="grid grid-cols-2">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-xl font-bold">Alertas de Certificaciones</h3>
-                </div>
-                <div class="card-content">
-                    ${mockData.guardias.map(guardia => `
-                        <div class="p-4 mb-4" style="background-color: #fef3c7; border-radius: 0.5rem;">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <p class="font-bold">${guardia.nombre}</p>
-                                    <p class="text-sm">Certificación OS-10 vence en ${guardia.cursosVencen} días</p>
-                                </div>
-                                <i class="fas fa-exclamation-triangle" style="color: #d97706;"></i>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-xl font-bold">Turnos de Hoy</h3>
-                </div>
-                <div class="card-content">
-                    ${mockData.turnos.map(turno => `
-                        <div class="p-4 mb-4" style="background-color: #dbeafe; border-radius: 0.5rem;">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <p class="font-bold">${turno.ubicacion}</p>
-                                    <p class="text-sm">${turno.guardia} - ${turno.hora}</p>
-                                </div>
-                                <i class="fas fa-check-circle" style="color: #059669;"></i>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        </div>
     `;
 }
 
 function renderGestionGuardias() {
     return `
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-bold">Gestión de Guardias</h2>
-            <button class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                Nuevo Guardia
-            </button>
-        </div>
-        
+        <h2 class="text-3xl font-bold mb-8">Gestión de Guardias</h2>
+        <button class="btn btn-primary mb-4">Nuevo Guardia</button>
         <div class="card">
-            <div class="card-header">
-                <h3 class="text-lg font-bold">Lista de Guardias</h3>
-            </div>
             <div class="card-content">
                 <table class="table">
                     <thead>
@@ -547,24 +470,13 @@ function renderGestionGuardias() {
                     <tbody>
                         ${mockData.guardias.map(guardia => `
                             <tr>
-                                <td>
-                                    <div>
-                                        <div class="font-bold">${guardia.nombre}</div>
-                                        <div class="text-sm" style="color: #6b7280;">${guardia.email}</div>
-                                    </div>
-                                </td>
+                                <td>${guardia.nombre}</td>
                                 <td>${guardia.rut}</td>
-                                <td>
-                                    <span class="badge badge-success">${guardia.estado}</span>
-                                </td>
+                                <td><span class="badge badge-success">${guardia.estado}</span></td>
                                 <td>Vence en ${guardia.cursosVencen} días</td>
                                 <td>
-                                    <button class="btn btn-primary" style="margin-right: 0.5rem; padding: 0.25rem 0.5rem;">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger" style="padding: 0.25rem 0.5rem;">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                    <button class="btn btn-sm btn-primary">Editar</button>
+                                    <button class="btn btn-sm btn-danger">Eliminar</button>
                                 </td>
                             </tr>
                         `).join('')}
@@ -577,53 +489,9 @@ function renderGestionGuardias() {
 
 function renderGestionCursos() {
     return `
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-bold">Gestión de Cursos</h2>
-            <button class="btn btn-success">
-                <i class="fas fa-plus"></i>
-                Nuevo Curso
-            </button>
-        </div>
-        
-        <div class="grid grid-cols-3 mb-8">
-            <div class="card">
-                <div class="card-content">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold">Cursos Activos</h3>
-                        <i class="fas fa-book" style="color: #3b82f6; font-size: 1.5rem;"></i>
-                    </div>
-                    <p class="text-3xl font-bold" style="color: #3b82f6;">${mockData.cursos.length}</p>
-                    <p class="text-sm" style="color: #6b7280;">En progreso</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-content">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold">Total Estudiantes</h3>
-                        <i class="fas fa-users" style="color: #10b981; font-size: 1.5rem;"></i>
-                    </div>
-                    <p class="text-3xl font-bold" style="color: #10b981;">43</p>
-                    <p class="text-sm" style="color: #6b7280;">Inscritos actualmente</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-content">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold">Ingresos Mensuales</h3>
-                        <i class="fas fa-trophy" style="color: #8b5cf6; font-size: 1.5rem;"></i>
-                    </div>
-                    <p class="text-3xl font-bold" style="color: #8b5cf6;">$7.5M</p>
-                    <p class="text-sm" style="color: #6b7280;">Agosto 2025</p>
-                </div>
-            </div>
-        </div>
-        
+        <h2 class="text-3xl font-bold mb-8">Gestión de Cursos</h2>
+        <button class="btn btn-primary mb-4">Nuevo Curso</button>
         <div class="card">
-            <div class="card-header">
-                <h3 class="text-lg font-bold">Lista de Cursos</h3>
-            </div>
             <div class="card-content">
                 <table class="table">
                     <thead>
@@ -632,35 +500,19 @@ function renderGestionCursos() {
                             <th>Fecha Inicio</th>
                             <th>Estudiantes</th>
                             <th>Precio</th>
-                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         ${mockData.cursos.map(curso => `
                             <tr>
-                                <td>
-                                    <div>
-                                        <div class="font-bold">${curso.nombre}</div>
-                                        <div class="text-sm" style="color: #6b7280;">${curso.duracion}</div>
-                                    </div>
-                                </td>
+                                <td>${curso.nombre}</td>
                                 <td>${curso.fechaInicio}</td>
                                 <td>${curso.estudiantes}</td>
-                                <td>${curso.precio.toLocaleString()}</td>
+                                <td>$${curso.precio.toLocaleString()}</td>
                                 <td>
-                                    <span class="badge badge-success">Activo</span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-primary" style="margin-right: 0.5rem; padding: 0.25rem 0.5rem;">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-success" style="margin-right: 0.5rem; padding: 0.25rem 0.5rem;">
-                                        <i class="fas fa-users"></i>
-                                    </button>
-                                    <button class="btn btn-danger" style="padding: 0.25rem 0.5rem;">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                    <button class="btn btn-sm btn-primary">Editar</button>
+                                    <button class="btn btn-sm btn-danger">Eliminar</button>
                                 </td>
                             </tr>
                         `).join('')}
@@ -723,82 +575,28 @@ function renderMiPerfil() {
 function renderMisTurnos() {
     return `
         <h2 class="text-3xl font-bold mb-8">Mis Turnos</h2>
-        <div class="grid grid-cols-3">
-            <div style="grid-column: span 2;">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-lg font-bold">Turnos Asignados</h3>
-                    </div>
-                    <div class="card-content">
+        <div class="card">
+            <div class="card-content">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Ubicación</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         ${mockData.turnos.map(turno => `
-                            <div class="p-6 mb-4" style="border-bottom: 1px solid #e5e7eb;">
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center gap-4">
-                                        <div style="width: 48px; height: 48px; background-color: #dbeafe; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-map-marker-alt" style="color: #3b82f6;"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold">${turno.ubicacion}</h4>
-                                            <div class="flex items-center text-sm" style="color: #6b7280; margin-top: 0.25rem;">
-                                                <i class="fas fa-calendar" style="margin-right: 0.25rem;"></i>
-                                                ${turno.fecha}
-                                            </div>
-                                            <div class="flex items-center text-sm" style="color: #6b7280; margin-top: 0.25rem;">
-                                                <i class="fas fa-clock" style="margin-right: 0.25rem;"></i>
-                                                ${turno.hora}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="badge badge-success">${turno.estado}</span>
-                                        <div class="mt-2">
-                                            <button class="text-sm" style="color: #3b82f6;">Ver detalles</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <tr>
+                                <td>${turno.fecha}</td>
+                                <td>${turno.hora}</td>
+                                <td>${turno.ubicacion}</td>
+                                <td><span class="badge badge-success">${turno.estado}</span></td>
+                            </tr>
                         `).join('')}
-                    </div>
-                </div>
-            </div>
-            
-            <div class="space-y-6">
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="text-lg font-bold mb-4">Resumen Semanal</h3>
-                        <div class="space-y-4">
-                            <div class="flex justify-between">
-                                <span style="color: #6b7280;">Turnos esta semana:</span>
-                                <span class="font-bold">5</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span style="color: #6b7280;">Horas trabajadas:</span>
-                                <span class="font-bold">48h</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span style="color: #6b7280;">Próximo turno:</span>
-                                <span class="font-bold">Mañana 8:00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="text-lg font-bold mb-4">Solicitudes</h3>
-                        <div class="space-y-4">
-                            <button class="btn w-full" style="background-color: #dbeafe; color: #1e40af;">
-                                Solicitar cambio de turno
-                            </button>
-                            <button class="btn w-full" style="background-color: #dcfce7; color: #166534;">
-                                Solicitar día libre
-                            </button>
-                            <button class="btn w-full" style="background-color: #fef3c7; color: #92400e;">
-                                Reportar incidencia
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
     `;
@@ -833,71 +631,24 @@ function renderMisCursos() {
 function renderExamenPractica() {
     return `
         <h2 class="text-3xl font-bold mb-8">Examen de Práctica OS-10</h2>
-        <div class="grid grid-cols-2">
-            <div class="card">
-                <div class="card-content">
-                    <h3 class="text-xl font-bold mb-4">Simulacros Disponibles</h3>
-                    <div class="space-y-4">
-                        <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
-                            <h4 class="font-bold">Examen Básico OS-10</h4>
-                            <p class="text-sm" style="color: #6b7280;">30 preguntas - 60 minutos</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <span class="text-sm" style="color: #6b7280;">Último intento: 85%</span>
-                                <button class="btn btn-primary" onclick="startQuiz()">Iniciar</button>
-                            </div>
-                        </div>
-                        <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
-                            <h4 class="font-bold">Examen Avanzado OS-10</h4>
-                            <p class="text-sm" style="color: #6b7280;">50 preguntas - 90 minutos</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <span class="text-sm" style="color: #6b7280;">Sin intentos</span>
-                                <button class="btn btn-success" onclick="startQuiz()">Iniciar</button>
-                            </div>
+        <div class="card">
+            <div class="card-content">
+                <h3 class="text-xl font-bold mb-4">Simulacros Disponibles</h3>
+                <div class="space-y-4">
+                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                        <h4 class="font-bold">Examen Básico OS-10</h4>
+                        <p class="text-sm" style="color: #6b7280;">30 preguntas - 60 minutos</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-sm" style="color: #6b7280;">Último intento: 85%</span>
+                            <button class="btn btn-primary" onclick="startQuiz()">Iniciar</button>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-content">
-                    <h3 class="text-xl font-bold mb-4">Mi Progreso</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span>Progreso General</span>
-                                <span>75%</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 75%;"></div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4" style="padding-top: 1rem;">
-                            <div class="text-center">
-                                <div class="text-2xl font-bold" style="color: #10b981;">12</div>
-                                <div class="text-sm" style="color: #6b7280;">Exámenes Completados</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-bold" style="color: #3b82f6;">85%</div>
-                                <div class="text-sm" style="color: #6b7280;">Promedio General</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 1.5rem;">
-                        <h4 class="font-bold mb-4">Material de Estudio</h4>
-                        <div class="space-y-4">
-                            <button class="btn w-full text-left" style="background-color: #f9fafb; color: #374151; justify-content: space-between;">
-                                <span>Manual OS-10 Actualizado</span>
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <button class="btn w-full text-left" style="background-color: #f9fafb; color: #374151; justify-content: space-between;">
-                                <span>Normativa Legal Vigente</span>
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <button class="btn w-full text-left" style="background-color: #f9fafb; color: #374151; justify-content: space-between;">
-                                <span>Videos Explicativos</span>
-                                <i class="fas fa-download"></i>
-                            </button>
+                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                        <h4 class="font-bold">Examen Avanzado OS-10</h4>
+                        <p class="text-sm" style="color: #6b7280;">50 preguntas - 90 minutos</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-sm" style="color: #6b7280;">Sin intentos</span>
+                            <button class="btn btn-success" onclick="startQuiz()">Iniciar</button>
                         </div>
                     </div>
                 </div>
