@@ -598,6 +598,6 @@ function submitCategorizedQuiz() {
 }
 
 function calculateGrade(percentage) {
-    if (percentage < 50) return (1.0 + (percentage / 50) * 3.0).toFixed(1);
-    return (4.0 + ((percentage - 50) / 50) * 3.0).toFixed(1);
+    if (percentage < 50) return 1.0 + (percentage / 50) * 3.0;
+    return 4.0 + ((percentage - 50) / 50) * 3.0;
 }
