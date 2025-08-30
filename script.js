@@ -148,6 +148,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     // --- FIN DE LA CORRECCIÓN ---
 
+    // Close mobile menu on link click
+    const mobileNavLinks = document.querySelectorAll('#publicMobileNav a');
+    if (mobileNavLinks.length > 0 && publicMobileNav && publicHamburgerBtn) {
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                publicMobileNav.classList.remove('active');
+                publicHamburgerBtn.classList.remove('active');
+            });
+        });
+    }
+
 
     // Login modal
     if (loginBtn && modal && closeModal) {
