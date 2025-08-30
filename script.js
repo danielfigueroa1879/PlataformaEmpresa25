@@ -34,15 +34,27 @@ const noticias = [
         titulo: 'Nueva Certificación OS10 Implementada',
         fecha: '10 de Enero, 2024',
         imagen: 'https://placehold.co/300x200/1a3a6e/white?text=Capacitación+OS10',
-        contenido: 'Anunciamos...'
+        contenido: 'Anunciamos la implementación de la nueva certificación OS10 para nuestros guardias de seguridad...'
+    },
+    {
+        titulo: 'Expansión de Servicios en Región de Coquimbo',
+        fecha: '5 de Enero, 2024',
+        imagen: 'https://placehold.co/300x200/2c5aa0/white?text=Seguridad+Privada',
+        contenido: 'Estamos expandiendo nuestros servicios de seguridad privada en la región de Coquimbo...'
+    },
+    {
+        titulo: 'Nuevo Portal Digital para Colaboradores',
+        fecha: '2 de Enero, 2024',
+        imagen: 'https://placehold.co/300x200/00c853/white?text=Portal+Digital',
+        contenido: 'Presentamos nuestro nuevo portal digital para que nuestros colaboradores puedan gestionar...'
     }
 ];
 
 // Mock data for private system
 const mockData = {
     guardias: [
-        { id: 1, nombre: 'Juan Pérez', email: 'juan@example.com', rol: 'guardia', rut: '12345678-9', estado: 'activo', cursosVencen: 15 },
-        { id: 2, nombre: 'María González', email: 'maria@example.com', rol: 'guardia', rut: '98765432-1', estado: 'activo', cursosVencen: 30 }
+        { id: 1, nombre: 'Juan Pérez', rut: '12345678-9', email: 'juan@example.com', estado: 'activo', cursosVencen: 15 },
+        { id: 2, nombre: 'María González', rut: '98765432-1', email: 'maria@example.com', estado: 'activo', cursosVencen: 30 }
     ],
     cursos: [
         { id: 1, nombre: 'Curso OS-10 Básico', fechaInicio: '2025-09-15', duracion: '40 horas', precio: 150000, estudiantes: 25 },
@@ -58,7 +70,7 @@ const mockData = {
     ]
 };
 
-// Menu configurations
+// Menu configurations for private system
 const menuConfig = {
     admin: [
         { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
@@ -83,58 +95,193 @@ const menuConfig = {
     ]
 };
 
-// Authentication functions
-function showPrivateSystem() {
-    document.getElementById('publicSite').classList.add('hidden');
-    document.getElementById('privateSystem').classList.remove('hidden');
-}
+// Initialize app
+document.addEventListener('DOMContentLoaded', function () {
+    // Elements
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const loginBtn = document.getElementById('loginBtn');
+    const modal = document.getElementById('loginModal');
+    const closeModal = document.querySelector('.close-modal');
+    const loginForm = document.getElementById('loginForm');
+    const contactForm = document.getElementById('contactForm');
+    const blogContainer = document.getElementById('blogPosts');
+    const cursosContainer = document.getElementById('cursosList');
 
-function showPublicSite() {
+    // Initialize public site
+    initPublicSite();
+
+    // Tab functionality
+    if (tabButtons.length > 0) {
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    }
+
+    // Login modal
+    if (loginBtn && modal && closeModal) {
+        loginBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // Contact form
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            alert(`Gracias ${nombre}, hemos recibido tu mensaje. Nos pondremos en contacto contigo pronto.`);
+            contactForm.reset();
+        });
+    }
+
+    // Render blog and courses
+    if (blogContainer) {
+        renderBlog();
+    }
+
+    if (cursosContainer) {
+        renderCursos();
+    }
+
+    // Show notification after delay
+    setTimeout(showNotification, 3000);
+});
+
+// Public site functions
+function initPublicSite() {
     document.getElementById('publicSite').classList.remove('hidden');
     document.getElementById('privateSystem').classList.add('hidden');
 }
 
-function openLogin() {
-    document.getElementById('loginModal').classList.remove('hidden');
+function renderBlog() {
+    const blogContainer = document.getElementById('blogPosts');
+    if (blogContainer) {
+        blogContainer.innerHTML = noticias.map(nota => `
+            <div class="blog-card">
+                <img src="${nota.imagen}" alt="${nota.titulo}">
+                <div class="blog-card-content">
+                    <h3>${nota.titulo}</h3>
+                    <p class="date">${nota.fecha}</p>
+                    <p>${nota.contenido}</p>
+                </div>
+            </div>
+        `).join('');
+    }
 }
 
-function closeLogin() {
-    document.getElementById('loginModal').classList.add('hidden');
+function renderCursos() {
+    const cursosContainer = document.getElementById('cursosList');
+    if (cursosContainer) {
+        cursosContainer.innerHTML = cursosCapacitacion.map(curso => `
+            <div class="card">
+                <h3>${curso.nombre}</h3>
+                <p><strong>Duración:</strong> ${curso.duracion}</p>
+                <p><strong>Modalidad:</strong> ${curso.modalidad}</p>
+                <p><strong>Precio:</strong> ${curso.precio}</p>
+                <ul>
+                    ${curso.temario.map(tema => `<li>${tema}</li>`).join('')}
+                </ul>
+                <button class="btn" onclick="openLoginForEnrollment('${curso.nombre}')">Inscribirse</button>
+            </div>
+        `).join('');
+    }
 }
 
+function showNotification() {
+    const notif = document.createElement('div');
+    notif.innerHTML = `
+        <div style="position: fixed; bottom: 20px; right: 20px; background: #ff6d00; color: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; max-width: 300px; font-family: 'Poppins', sans-serif;">
+            <strong>¡Bienvenido!</strong> Explora nuestros servicios de seguridad y capacitación.
+            <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">×</button>
+        </div>
+    `;
+    document.body.appendChild(notif);
+}
+
+// Authentication functions
 function handleLogin(event) {
     event.preventDefault();
-    const email = document.getElementById('userEmail').value;
+    const email = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
     const role = document.getElementById('userRole').value;
     
-    // Find the user in mockData
-    const userFound = mockData.guardias.find(g => g.email === email);
-    
-    if (userFound) {
-        currentUser = userFound;
-    } else {
+    if (!role) {
+        alert('Por favor, seleccione un tipo de usuario');
+        return;
+    }
+
+    if (email && password) {
         currentUser = {
-            id: 99,
-            nombre: role === 'admin' ? 'Admin Global' : 'Ana Estudiante',
+            id: 1,
+            nombre: role === 'admin' ? 'Admin Global' : role === 'guardia' ? 'Juan Pérez' : 'Ana Estudiante',
             email: email,
             rol: role
         };
+        
+        currentSection = role === 'admin' ? 'dashboard' : role === 'guardia' ? 'mi-perfil' : 'mis-cursos';
+        
+        // Hide modal
+        document.getElementById('loginModal').classList.remove('active');
+        
+        // Switch to private system
+        document.getElementById('publicSite').classList.add('hidden');
+        document.getElementById('privateSystem').classList.remove('hidden');
+        
+        updatePrivateUI();
+    } else {
+        alert('Por favor, complete todos los campos');
     }
-    
-    currentSection = role === 'admin' ? 'dashboard' : role === 'guardia' ? 'mi-perfil' : 'mis-cursos';
-    closeLogin();
-    showPrivateSystem();
-    updateUI();
 }
 
 function logout() {
     currentUser = null;
     currentSection = 'home';
+    
+    // Hide sidebar
     toggleSidebar(false);
-    showPublicSite();
+    
+    // Switch back to public site
+    document.getElementById('privateSystem').classList.add('hidden');
+    document.getElementById('publicSite').classList.remove('hidden');
 }
 
-// UI functions
+// Helper functions for login links
+function openLoginForExam() {
+    document.getElementById('userRole').value = 'estudiante';
+    document.getElementById('loginModal').classList.add('active');
+}
+
+function openLoginForStudents() {
+    document.getElementById('userRole').value = 'estudiante';
+    document.getElementById('loginModal').classList.add('active');
+}
+
+function openLoginForEnrollment(courseName) {
+    document.getElementById('userRole').value = 'estudiante';
+    document.getElementById('loginModal').classList.add('active');
+}
+
+// Private system functions
 function toggleSidebar(show = null) {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
@@ -153,15 +300,34 @@ function toggleSidebar(show = null) {
 
 function navigateToSection(sectionId) {
     currentSection = sectionId;
-    updateMainContent();
+    updatePrivateUI();
     if (window.innerWidth <= 768) {
         toggleSidebar(false);
     }
 }
 
-function updateUI() {
+function updatePrivateUI() {
+    updatePrivateHeader();
     updateSidebar();
     updateMainContent();
+}
+
+function updatePrivateHeader() {
+    const headerActions = document.getElementById('headerActions');
+    
+    if (currentUser) {
+        headerActions.innerHTML = `
+            <div class="flex items-center gap-4">
+                <span class="user-welcome">Bienvenido, ${currentUser.nombre}</span>
+                <div class="flex items-center gap-4">
+                    <i class="fas fa-bell"></i>
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 }
 
 function updateSidebar() {
@@ -183,12 +349,8 @@ function updateSidebar() {
 
 function updateMainContent() {
     const mainContent = document.getElementById('mainContent');
-    const publicContent = document.getElementById('publicContent');
     
-    if (!currentUser) {
-        publicContent.innerHTML = renderPublicHome();
-        return;
-    }
+    if (!currentUser) return;
 
     switch (currentSection) {
         case 'dashboard':
@@ -217,107 +379,7 @@ function updateMainContent() {
     }
 }
 
-// Render functions
-function renderPublicHome() {
-    return `
-        <div class="hero">
-            <div class="container">
-                <h1>Servicios de Seguridad y Capacitación Profesional</h1>
-                <p>Ofrecemos servicios integrales de seguridad privada y programas de capacitación especializados para formar guardias de seguridad certificados.</p>
-                <div class="hero-actions">
-                    <a href="#capacitacion" class="btn btn-primary">
-                        <i class="fas fa-clipboard-list"></i>
-                        Ver Cursos
-                    </a>
-                    <a href="#contacto" class="btn btn-secondary">
-                        <i class="fas fa-book"></i>
-                        Contáctenos
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <section id="seguridad" class="services-section">
-            <div class="container">
-                <h2 class="text-center mb-8">Nuestros Servicios de Seguridad</h2>
-                <div class="service-cards-grid">
-                    <div class="service-card">
-                        <i class="fas fa-shield-alt service-icon"></i>
-                        <h3>Vigilancia Privada</h3>
-                        <p>Protección y resguardo de sus instalaciones y activos.</p>
-                    </div>
-                    <div class="service-card">
-                        <i class="fas fa-building service-icon"></i>
-                        <h3>Seguridad Corporativa</h3>
-                        <p>Soluciones de seguridad personalizadas para empresas.</p>
-                    </div>
-                    <div class="service-card">
-                        <i class="fas fa-traffic-light service-icon"></i>
-                        <h3>Control de Acceso</h3>
-                        <p>Gestión eficiente del flujo de personas y vehículos.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="capacitacion" class="courses-section">
-            <div class="container">
-                <h2 class="text-center mb-8">Plataforma de Capacitación OTEC</h2>
-                <div class="course-cards-grid">
-                    ${cursosCapacitacion.map(curso => `
-                        <div class="course-card">
-                            <h3 class="course-title">${curso.nombre}</h3>
-                            <p class="course-info"><i class="fas fa-clock"></i> Duración: ${curso.duracion}</p>
-                            <p class="course-info"><i class="fas fa-desktop"></i> Modalidad: ${curso.modalidad}</p>
-                            <p class="course-info"><i class="fas fa-dollar-sign"></i> Precio: ${curso.precio}</p>
-                            <a href="#contacto" class="btn btn-primary btn-block mt-4">Más Información</a>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        </section>
-
-        <section id="blog" class="blog-section">
-            <div class="container">
-                <h2 class="text-center mb-8">Blog de Noticias</h2>
-                <div class="news-cards-grid">
-                    ${noticias.map(noticia => `
-                        <div class="news-card">
-                            <img src="${noticia.imagen}" alt="Imagen de noticia">
-                            <div class="news-card-content">
-                                <h4>${noticia.titulo}</h4>
-                                <p class="news-date">${noticia.fecha}</p>
-                                <p class="news-snippet">${noticia.contenido}</p>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        </section>
-
-        <section id="contacto" class="contact-section">
-            <div class="container">
-                <h2 class="text-center mb-8">Contáctenos</h2>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="contactName">Nombre</label>
-                        <input type="text" id="contactName" name="contactName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contactEmail">Email</label>
-                        <input type="email" id="contactEmail" name="contactEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contactMessage">Mensaje</label>
-                        <textarea id="contactMessage" name="contactMessage" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Enviar Mensaje</button>
-                </form>
-            </div>
-        </section>
-    `;
-}
-
+// Render functions for private system
 function renderAdminDashboard() {
     return `
         <h2 class="text-3xl font-bold mb-8">Panel de Control Administrativo</h2>
@@ -804,21 +866,14 @@ function renderSeccionEnDesarrollo() {
     `;
 }
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
-    updateMainContent();
-    const loginBtn = document.getElementById('loginBtn');
-    if (loginBtn) {
-        loginBtn.addEventListener('click', openLogin);
+// Initialize window resize handler for private system
+window.addEventListener('resize', () => {
+    if (currentUser && window.innerWidth > 768) {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        sidebar.classList.add('open');
+        mainContent.classList.add('sidebar-open');
+    } else if (currentUser) {
+        toggleSidebar(false);
     }
-    window.addEventListener('resize', () => {
-        if (currentUser && window.innerWidth > 768) {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            sidebar.classList.add('open');
-            mainContent.classList.add('sidebar-open');
-        } else if (currentUser) {
-            toggleSidebar(false);
-        }
-    });
 });
