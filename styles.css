@@ -1518,3 +1518,7 @@ display: none;
 .private-hamburger-menu-btn {
     display: block;
 }
+
+.private-hamburger-menu-btn .hamburger-line {
+    background-color: #fff !important;
+}
