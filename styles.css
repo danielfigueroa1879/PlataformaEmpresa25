@@ -1211,3 +1211,404 @@ nav a:hover {
 .w-full { 
     width: 100%; 
 }
+/* Global Capacitación Limitada - Integrated Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: #fff;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.header .logo i {
+    margin-right: 0.5rem;
+}
+
+.header nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.header nav ul li {
+    margin-left: 1.5rem;
+}
+
+.header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.header nav ul li a:hover {
+    color: #e0e0e0;
+}
+
+.btn {
+    background-color: #fff;
+    color: #1e3a8a;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e5e7eb;
+}
+
+/* Private System Layout */
+.flex {
+    display: flex;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #1f2937;
+    color: #d1d5db;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #374151;
+}
+
+.sidebar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.sidebar-close-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none; /* Hidden on large screens */
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+    flex-grow: 1;
+}
+
+.sidebar-item {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+    background-color: #374151;
+    color: #fff;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 1rem;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content.sidebar-open {
+    margin-left: 250px;
+}
+
+/* Hamburger Menu */
+.hamburger-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0.5rem;
+    width: 40px;
+    height: 30px;
+}
+
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #fff; /* Changed to white */
+    margin: 4px auto;
+    transition: all 0.3s ease-in-out;
+    border-radius: 9999px;
+}
+
+.sidebar.open .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.sidebar.open .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.sidebar.open .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Cards */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 1rem;
+}
+
+.card-content {
+    padding: 1rem;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 2rem;
+}
+
+/* Dashboard Styles */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-left: 4px solid;
+}
+
+.stat-card .icon-container {
+    width: 40px;
+    height: 40px;
+    background-color: #e0e7ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #3b82f6;
+    font-size: 1.25rem;
+}
+
+/* Responsive design */
+@media (min-width: 768px) {
+    .sidebar {
+        transform: translateX(0);
+        position: relative;
+    }
+    
+    .sidebar-close-btn {
+        display: none;
+    }
+
+    .sidebar-item {
+        padding: 0.75rem 1rem;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+    
+    .main-content.sidebar-open {
+        margin-left: 250px;
+    }
+
+    .hamburger-menu-btn {
+        display: none;
+    }
+    
+    /* Stats cards 4 columns on desktop */
+    .grid-cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .user-welcome {
+        display: inline !important;
+    }
+}
+
+/* Styles specific to hamburger menu on mobile */
+@media (max-width: 767px) {
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .sidebar-close-btn {
+        display: block;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+
+    .main-content.sidebar-open {
+        margin-left: 0;
+    }
+
+    /* Stats cards 2 columns on mobile */
+    .grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    /* Hide some text on very small screens */
+    .user-welcome {
+        display: none;
+    }
+
+    /* Ensure hamburger menu is always visible in private system */
+    .hamburger-menu, .hamburger-menu-btn {
+        display: flex !important;
+    }
+}
+
+/* Utilities */
+.text-center { 
+    text-align: center; 
+}
+
+.text-right { 
+    text-align: right; 
+}
+
+.font-bold { 
+    font-weight: 600; 
+}
+
+.text-sm { 
+    font-size: 0.875rem; 
+}
+
+.text-lg { 
+    font-size: 1.125rem; 
+}
+
+.text-xl { 
+    font-size: 1.25rem; 
+}
+
+.text-2xl { 
+    font-size: 1.5rem; 
+}
+
+.text-3xl { 
+    font-size: 1.875rem; 
+}
+
+.mb-4 { 
+    margin-bottom: 1rem; 
+}
+
+.mb-6 { 
+    margin-bottom: 1.5rem; 
+}
+
+.mb-8 { 
+    margin-bottom: 2rem; 
+}
+
+.hidden-sm {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .hidden-sm {
+        display: none;
+    }
+}
+
+.text-blue-600 { color: #2563eb; }
+.text-green-600 { color: #16a34a; }
+.text-yellow-600 { color: #ca8a04; }
+.text-red-600 { color: #dc2626; }
+.bg-blue-100 { background-color: #dbeafe; }
+.bg-green-100 { background-color: #dcfce7; }
+.bg-yellow-100 { background-color: #fef9c3; }
+.bg-red-100 { background-color: #fee2e2; }
+.border-blue-600 { border-color: #2563eb; }
+.border-green-600 { border-color: #16a34a; }
+.border-yellow-600 { border-color: #ca8a04; }
+.border-red-600 { border-color: #dc2626; }
