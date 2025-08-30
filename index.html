@@ -15,12 +15,13 @@
     <div id="publicSite">
         <!-- Header -->
         <header class="header">
-            <div class="container">
+            <div class="header-content container">
                 <div class="logo">
                     <i class="fas fa-shield-alt"></i>
                     <span>Global Capacitación</span>
                 </div>
-                <nav>
+                <!-- Desktop Navigation -->
+                <nav class="desktop-nav">
                     <ul>
                         <li><a href="#inicio">Inicio</a></li>
                         <li><a href="#seguridad">Seguridad</a></li>
@@ -30,7 +31,24 @@
                         <li><button id="loginBtn" class="btn">Iniciar Sesión</button></li>
                     </ul>
                 </nav>
+                <!-- Hamburger Menu for Mobile -->
+                <button class="hamburger-menu-btn" id="publicHamburgerBtn">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
+            <!-- Mobile Navigation -->
+            <nav class="mobile-nav" id="publicMobileNav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#seguridad">Seguridad</a></li>
+                    <li><a href="#capacitacion">Capacitación</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li><button id="mobileLoginBtn" class="btn">Iniciar Sesión</button></li>
+                </ul>
+            </nav>
         </header>
 
         <!-- Hero Section -->
@@ -266,7 +284,7 @@
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar">
             <div class="sidebar-header">
-                <h2 class="font-bold">Global Capacitación</h2>
+                <h2 class="font-bold">Mi Información</h2>
                 <button onclick="toggleSidebar()" class="btn btn-secondary">
                     <i class="fas fa-times"></i>
                 </button>
