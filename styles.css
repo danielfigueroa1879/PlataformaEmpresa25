@@ -134,11 +134,13 @@ body {
 .mobile-nav {
     display: none;
     position: fixed;
-    top: 65px;
+    /* ANTERIOR: top: 65px; */
+    /* Nueva posición relativa al banner para la página de inicio */
+    top: 65px; /* Valor inicial, se ajustará en @media */
     right: 1rem;
     left: auto;
     width: 200px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco por defecto */
     backdrop-filter: blur(10px);
     padding: 1rem;
     z-index: 1500;
@@ -889,6 +891,56 @@ nav a:hover {
     .grid-cols-4 {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
+    }
+
+    /* NUEVA CORRECCIÓN 1.1: Ajuste del menú móvil para que se despliegue debajo del banner */
+    .mobile-nav {
+        top: 0; /* Asegura que el menú empiece arriba */
+        width: 100%; /* Ocupa todo el ancho en móvil */
+        height: 100vh; /* Ocupa toda la altura */
+        right: 0;
+        left: 0;
+        border-radius: 0;
+        background: rgba(30, 58, 138, 0.95); /* Fondo oscuro del header */
+        display: flex; /* Para centrar contenido si es necesario */
+        flex-direction: column;
+        justify-content: flex-start; /* Alinea el contenido arriba */
+        padding-top: 65px; /* Deja espacio para el header fijo */
+    }
+    
+    .mobile-nav ul {
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .mobile-nav ul li a,
+    .mobile-nav ul li button {
+        color: #fff; /* Asegura que los enlaces sean blancos */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Separador blanco sutil */
+    }
+
+    .mobile-nav ul li:last-child {
+        border-bottom: none;
+    }
+
+    .mobile-nav ul li a:hover,
+    .mobile-nav ul li button:hover {
+        background-color: rgba(0, 200, 83, 0.2); /* Hover verde */
+    }
+
+    /* NUEVA CORRECCIÓN 1.2: Posiciona el botón de cierre dentro del header para que sea visible */
+    .close-mobile-nav {
+        display: block; /* Muestra el botón de cerrar */
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        color: #fff;
+    }
+
+    /* NUEVA CORRECCIÓN 2: Título más pequeño en la sección hero para móvil */
+    .hero h1 {
+        font-size: 2rem; /* Ajuste a un tamaño ligeramente menor */
     }
 }
 
