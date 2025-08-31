@@ -276,9 +276,6 @@ function handleLogin(event) {
 
         if (window.innerWidth > 768) {
             toggleSidebar(true);
-            setTimeout(() => {
-                toggleSidebar(false);
-            }, 20000);
         }
     } else {
         alert('Por favor, complete todos los campos');
@@ -313,16 +310,22 @@ function openLoginForEnrollment(courseName) {
 function toggleSidebar(show = null) {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
-    
+    const hamburgerBtn = document.querySelector('.private-hamburger-menu-btn');
+
+    const isOpen = sidebar.classList.contains('open');
+
     if (show === null) {
         sidebar.classList.toggle('open');
         mainContent.classList.toggle('sidebar-open');
+        if (hamburgerBtn) hamburgerBtn.classList.toggle('active');
     } else if (show) {
         sidebar.classList.add('open');
         mainContent.classList.add('sidebar-open');
+        if (hamburgerBtn) hamburgerBtn.classList.add('active');
     } else {
         sidebar.classList.remove('open');
         mainContent.classList.remove('sidebar-open');
+        if (hamburgerBtn) hamburgerBtn.classList.remove('active');
     }
 }
 
@@ -398,6 +401,9 @@ function updateMainContent() {
             break;
         case 'mis-cursos':
             mainContent.innerHTML = renderMisCursos();
+            break;
+        case 'horarios':
+            mainContent.innerHTML = renderHorarios();
             break;
         case 'examen-practica':
             mainContent.innerHTML = renderExamenPractica();
@@ -626,6 +632,51 @@ function renderMisCursos() {
                     </div>
                 </div>
             `).join('')}
+        </div>
+    `;
+}
+
+function renderHorarios() {
+    const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+    const hours = ['09:00', '11:00', '13:00', '15:00', '17:00', '19:00'];
+    const schedule = {
+        Lunes: { '09:00': 'Legislación Laboral', '11:00': 'Defensa Personal' },
+        Martes: { '11:00': 'Primeros Auxilios' },
+        Miércoles: { '09:00': 'Legislación Laboral', '11:00': 'Defensa Personal' },
+        Jueves: { '11:00': 'Primeros Auxilios' },
+        Viernes: { '09:00': 'Control de Emergencias' }
+    };
+
+    let headerHtml = '<th class="time-col">Hora</th>';
+    days.forEach(day => {
+        headerHtml += `<th>${day}</th>`;
+    });
+
+    let bodyHtml = '';
+    hours.forEach(hour => {
+        bodyHtml += `<tr><td class="time-col">${hour}</td>`;
+        days.forEach(day => {
+            const event = schedule[day] && schedule[day][hour];
+            if (event) {
+                bodyHtml += `<td class="class-event">${event}</td>`;
+            } else {
+                bodyHtml += `<td></td>`;
+            }
+        });
+        bodyHtml += '</tr>';
+    });
+
+    return `
+        <h2 class="text-3xl font-bold mb-8">Horario de Clases</h2>
+        <div class="card">
+            <div class="card-content">
+                <div class="calendar-container">
+                    <table class="calendar-table">
+                        <thead><tr>${headerHtml}</tr></thead>
+                        <tbody>${bodyHtml}</tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     `;
 }

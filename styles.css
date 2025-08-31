@@ -949,9 +949,7 @@ nav a:hover {
     }
 
     #privateHeader .logo span {
-        font-size: 1.1rem;
-        white-space: normal;
-        text-align: left;
+        display: none;
     }
 
     .main-content {
@@ -961,6 +959,14 @@ nav a:hover {
     .certification-status {
         flex-wrap: wrap;
         gap: 0.5rem;
+    }
+
+    #results-modal-content h3 {
+        font-size: 1.8rem;
+    }
+
+    #modal-grade {
+        font-size: 3rem;
     }
 }
 
@@ -1339,4 +1345,49 @@ nav a:hover {
     .options-container {
         flex-direction: column;
     }
+}
+
+/* Calendar Styles */
+.calendar-container {
+    overflow-x: auto;
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+.calendar-table th, .calendar-table td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: center;
+    min-width: 120px;
+}
+
+.calendar-table thead th {
+    background-color: #f9fafb;
+    font-weight: 600;
+}
+
+.time-col {
+    font-weight: 600;
+    background-color: #f9fafb;
+    width: 100px;
+}
+
+.class-event {
+    background-color: #e0f2fe;
+    color: #0c4a6e;
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.class-event:hover {
+    background-color: #bae6fd;
 }
