@@ -660,6 +660,7 @@ function renderExamenPractica() {
 function startQuiz() {
     const mainContent = document.getElementById('mainContent');
     
+    // ESTE BLOQUE CONTIENE AHORA EL HTML DEL EXAMEN Y EL HTML DE LA VENTANA DE RESULTADOS (MODAL)
     const quizHTML = `
         <section id="exam-section" class="mt-5">
             <h2 class="text-center exam-heading-green">Examen de Preparación OS-10</h2>
@@ -677,7 +678,7 @@ function startQuiz() {
             </div>
             <div id="subtle-response-box" class="subtle-response-box"></div>
         </section>
-
+        
         <div id="results-modal-overlay" style="display: none;">
             <div id="results-modal-content">
                 <h3>Resultados del Examen</h3>
@@ -688,31 +689,33 @@ function startQuiz() {
                 <button id="close-modal-btn">Cerrar</button>
             </div>
         </div>
-    `;
+        `;
 
+    // Se inyecta todo el HTML en la página
     mainContent.innerHTML = quizHTML;
 
+    // Se vuelven a asignar los eventos a los botones que ahora existen en la página
+    // Esto es crucial porque el contenido es dinámico
     const startExamBtn = document.getElementById('start-exam-btn');
-    if(startExamBtn) {
+    if (startExamBtn) {
         startExamBtn.addEventListener('click', generateQuestionsCategorized);
     }
 
     const submitQuizBtn = document.getElementById('submit-quiz-btn');
-    if(submitQuizBtn) {
+    if (submitQuizBtn) {
         submitQuizBtn.addEventListener('click', submitCategorizedQuiz);
     }
 
     const closeModalBtn = document.getElementById('close-modal-btn');
-    if(closeModalBtn) {
+    if (closeModalBtn) {
         closeModalBtn.addEventListener('click', () => {
             const resultsModalOverlay = document.getElementById('results-modal-overlay');
-            if(resultsModalOverlay) {
+            if (resultsModalOverlay) {
                 resultsModalOverlay.classList.remove('show');
+                // Se agrega un tiempo de espera para que la animación de CSS termine antes de ocultarlo
                 setTimeout(() => {
-                    if (resultsModalOverlay) {
-                       resultsModalOverlay.style.display = 'none';
-                    }
-                }, 300); // Espera a que termine la animación de cierre
+                    resultsModalOverlay.style.display = 'none';
+                }, 300);
             }
         });
     }
