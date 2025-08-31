@@ -475,7 +475,7 @@ function getGuardiaStatus(fechaExamen) {
     }
     const examDate = new Date(fechaExamen);
     const today = new Date();
-    const threeYearsFromExam = new Date(examDate.setFullYear(examDate.getFullYear() + 3));
+    const threeYearsFromExam = new Date(new Date(examDate).setFullYear(examDate.getFullYear() + 3));
     const thirtyDaysBeforeExpiry = new Date(new Date(threeYearsFromExam).setDate(threeYearsFromExam.getDate() - 30));
 
     if (today > threeYearsFromExam) {
@@ -509,18 +509,20 @@ function renderGestionGuardias() {
         <button class="btn btn-primary mb-4" onclick="openGuardiaModal()">Nuevo Guardia</button>
         <div class="card">
             <div class="card-content">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Guardia</th>
-                            <th>RUT</th>
-                            <th>Estado Certificado</th>
-                            <th>Fecha Examen</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>${tableRows}</tbody>
-                </table>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Guardia</th>
+                                <th>RUT</th>
+                                <th>Estado Certificado</th>
+                                <th>Fecha Examen</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -616,31 +618,33 @@ function renderGestionCursos() {
         <button class="btn btn-primary mb-4">Nuevo Curso</button>
         <div class="card">
             <div class="card-content">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Curso</th>
-                            <th>Fecha Inicio</th>
-                            <th>Estudiantes</th>
-                            <th>Precio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${mockData.cursos.map(curso => `
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>${curso.nombre}</td>
-                                <td>${curso.fechaInicio}</td>
-                                <td>${curso.estudiantes}</td>
-                                <td>$${curso.precio.toLocaleString()}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary">Editar</button>
-                                    <button class="btn btn-sm btn-danger">Eliminar</button>
-                                </td>
+                                <th>Curso</th>
+                                <th>Fecha Inicio</th>
+                                <th>Estudiantes</th>
+                                <th>Precio</th>
+                                <th>Acciones</th>
                             </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            ${mockData.cursos.map(curso => `
+                                <tr>
+                                    <td>${curso.nombre}</td>
+                                    <td>${curso.fechaInicio}</td>
+                                    <td>${curso.estudiantes}</td>
+                                    <td>$${curso.precio.toLocaleString()}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">Editar</button>
+                                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     `;
@@ -700,53 +704,62 @@ function renderMisTurnos() {
         <h2 class="text-3xl font-bold mb-8">Mis Turnos</h2>
         <div class="card">
             <div class="card-content">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Ubicación</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${mockData.turnos.map(turno => `
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>${turno.fecha}</td>
-                                <td>${turno.hora}</td>
-                                <td>${turno.ubicacion}</td>
-                                <td><span class="badge badge-success">${turno.estado}</span></td>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Ubicación</th>
+                                <th>Estado</th>
                             </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            ${mockData.turnos.map(turno => `
+                                <tr>
+                                    <td>${turno.fecha}</td>
+                                    <td>${turno.hora}</td>
+                                    <td>${turno.ubicacion}</td>
+                                    <td><span class="badge badge-success">${turno.estado}</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     `;
 }
 
 function renderMisCursos() {
+    const coursesHtml = mockData.cursos.map(curso => `
+        <div class="card">
+            <div class="card-content">
+                <h3 class="text-xl font-bold mb-4">${curso.nombre}</h3>
+                <div class="space-y-4" style="color: #6b7280;">
+                    <p><span class="font-bold">Fecha de Inicio:</span> ${curso.fechaInicio}</p>
+                    <p><span class="font-bold">Duración:</span> ${curso.duracion}</p>
+                    <p><span class="font-bold">Progreso:</span> 75%</p>
+                </div>
+                <div class="progress mt-4">
+                    <div class="progress-bar" style="width: 75%;"></div>
+                </div>
+                <button class="btn btn-primary mt-4">
+                    Continuar Curso
+                </button>
+            </div>
+        </div>
+    `).join('');
+
     return `
         <h2 class="text-3xl font-bold mb-8">Mis Cursos</h2>
-        <div class="grid grid-cols-2">
-            ${mockData.cursos.map(curso => `
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="text-xl font-bold mb-4">${curso.nombre}</h3>
-                        <div class="space-y-4" style="color: #6b7280;">
-                            <p><span class="font-bold">Fecha de Inicio:</span> ${curso.fechaInicio}</p>
-                            <p><span class="font-bold">Duración:</span> ${curso.duracion}</p>
-                            <p><span class="font-bold">Progreso:</span> 75%</p>
-                        </div>
-                        <div class="progress mt-4">
-                            <div class="progress-bar" style="width: 75%;"></div>
-                        </div>
-                        <button class="btn btn-primary mt-4">
-                            Continuar Curso
-                        </button>
-                    </div>
-                </div>
-            `).join('')}
+        <div class="grid grid-cols-2">${coursesHtml}</div>
+        <div class="card mt-8">
+            <div class="card-content">
+                <h3 class="text-xl font-bold mb-4">Examen de Práctica OS-10</h3>
+                <p>Pon a prueba tus conocimientos y prepárate para la certificación.</p>
+                <button class="btn btn-success mt-4" onclick="navigateToSection('examen-practica')">Acceder al Examen</button>
+            </div>
         </div>
     `;
 }
@@ -818,20 +831,23 @@ function renderCalificaciones() {
         <h2 class="text-3xl font-bold mb-8">Mis Calificaciones</h2>
         <div class="card mb-8">
             <div class="card-content">
-                <h3 class="text-xl font-bold mb-4">Calificaciones del Curso</h3>
-                <table class="table">
-                    <thead><tr><th>Materia</th><th>Nota</th><th>Estado</th></tr></thead>
-                    <tbody>${courseGradesHtml}</tbody>
-                </table>
+                <div class="table-container">
+                    <table class="table">
+                        <thead><tr><th>Materia</th><th>Nota</th><th>Estado</th></tr></thead>
+                        <tbody>${courseGradesHtml}</tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="card">
             <div class="card-content">
                 <h3 class="text-xl font-bold mb-4">Historial de Exámenes de Práctica (Últimos 5)</h3>
-                <table class="table">
-                    <thead><tr><th>Fecha</th><th>Puntaje</th><th>Porcentaje</th><th>Nota</th></tr></thead>
-                    <tbody>${examHistoryHtml.length ? examHistoryHtml : '<tr><td colspan="4" class="text-center">No hay exámenes registrados.</td></tr>'}</tbody>
-                </table>
+                <div class="table-container">
+                    <table class="table">
+                        <thead><tr><th>Fecha</th><th>Puntaje</th><th>Porcentaje</th><th>Nota</th></tr></thead>
+                        <tbody>${examHistoryHtml.length ? examHistoryHtml : '<tr><td colspan="4" class="text-center">No hay exámenes registrados.</td></tr>'}</tbody>
+                    </table>
+                </div>
             </div>
         </div>
     `;
@@ -844,7 +860,7 @@ function renderExamenPractica() {
             <div class="card-content">
                 <h3 class="text-xl font-bold mb-4">Simulacros Disponibles</h3>
                 <div class="space-y-4">
-                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; min-height: 150px;">
                         <h4 class="font-bold">Examen Básico OS-10</h4>
                         <p class="text-sm" style="color: #6b7280;">30 preguntas - 60 minutos</p>
                         <div class="flex justify-between items-center mt-4">
@@ -852,7 +868,7 @@ function renderExamenPractica() {
                             <button class="btn btn-primary" id="start-quiz-basic">Iniciar</button>
                         </div>
                     </div>
-                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; min-height: 150px;">
                         <h4 class="font-bold">Examen Avanzado OS-10</h4>
                         <p class="text-sm" style="color: #6b7280;">50 preguntas - 90 minutos</p>
                         <div class="flex justify-between items-center mt-4">
@@ -915,12 +931,9 @@ function setupExamEventListeners() {
 // FUNCIÓN CRÍTICA: Inicializar el examen correctamente
 function initializeExam() {
     // Ocultar el contenedor de simulacros disponibles
-    const simulacrosContainer = document.querySelector('.card-content');
+    const simulacrosContainer = document.querySelector('#examen-practica .card');
     if (simulacrosContainer) {
-        const parentCard = simulacrosContainer.closest('.card');
-        if (parentCard) {
-            parentCard.style.display = 'none';
-        }
+        simulacrosContainer.style.display = 'none';
     }
 
     // Mostrar el contenedor del examen
