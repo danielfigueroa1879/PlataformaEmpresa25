@@ -660,7 +660,6 @@ function renderExamenPractica() {
 function startQuiz() {
     const mainContent = document.getElementById('mainContent');
     
-    // El HTML del modal de resultados se ha añadido aquí.
     const quizHTML = `
         <section id="exam-section" class="mt-5">
             <h2 class="text-center exam-heading-green">Examen de Preparación OS-10</h2>
@@ -689,11 +688,10 @@ function startQuiz() {
                 <button id="close-modal-btn">Cerrar</button>
             </div>
         </div>
-        `;
+    `;
 
     mainContent.innerHTML = quizHTML;
 
-    // Se añaden los event listeners para los botones del examen, incluido el botón de cerrar el modal.
     const startExamBtn = document.getElementById('start-exam-btn');
     if(startExamBtn) {
         startExamBtn.addEventListener('click', generateQuestionsCategorized);
@@ -709,17 +707,16 @@ function startQuiz() {
         closeModalBtn.addEventListener('click', () => {
             const resultsModalOverlay = document.getElementById('results-modal-overlay');
             if(resultsModalOverlay) {
-                // Se usa la clase 'show' para ocultar con la animación del CSS
                 resultsModalOverlay.classList.remove('show');
-                 // Se vuelve a ocultar completamente después de la animación
                 setTimeout(() => {
-                    resultsModalOverlay.style.display = 'none';
-                }, 300);
+                    if (resultsModalOverlay) {
+                       resultsModalOverlay.style.display = 'none';
+                    }
+                }, 300); // Espera a que termine la animación de cierre
             }
         });
     }
 }
-
 function renderSeccionEnDesarrollo() {
     return `
         <h2 class="text-3xl font-bold mb-8">Sección en Desarrollo</h2>
