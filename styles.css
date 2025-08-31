@@ -941,12 +941,12 @@ nav a:hover {
     }
 
     #practica .card ul li {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
     .calendar-table th, .calendar-table td {
-        padding: 0.5rem;
-        font-size: 0.8rem;
+        padding: 0.4rem;
+        font-size: 0.7rem;
     }
 }
 
