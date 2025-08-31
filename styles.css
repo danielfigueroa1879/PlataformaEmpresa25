@@ -949,9 +949,10 @@ nav a:hover {
         font-size: 0.8rem;
     }
 
-    .calendar-table th, .calendar-table td {
-        padding: 0.4rem;
-        font-size: 0.7rem;
+    .exam-choice-card {
+        width: 97%;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 

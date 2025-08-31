@@ -856,11 +856,11 @@ function renderCalificaciones() {
 function renderExamenPractica() {
     return `
         <h2 class="text-3xl font-bold mb-8">Examen de Práctica OS-10</h2>
-        <div class="card">
+        <div class="card" id="simulacros-container">
             <div class="card-content">
                 <h3 class="text-xl font-bold mb-4">Simulacros Disponibles</h3>
                 <div class="space-y-4">
-                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; min-height: 150px;">
+                    <div class="exam-choice-card" style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; min-height: 150px;">
                         <h4 class="font-bold">Examen Básico OS-10</h4>
                         <p class="text-sm" style="color: #6b7280;">30 preguntas - 60 minutos</p>
                         <div class="flex justify-between items-center mt-4">
@@ -868,7 +868,7 @@ function renderExamenPractica() {
                             <button class="btn btn-primary" id="start-quiz-basic">Iniciar</button>
                         </div>
                     </div>
-                    <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; min-height: 150px;">
+                    <div class="exam-choice-card" style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; min-height: 150px;">
                         <h4 class="font-bold">Examen Avanzado OS-10</h4>
                         <p class="text-sm" style="color: #6b7280;">50 preguntas - 90 minutos</p>
                         <div class="flex justify-between items-center mt-4">
@@ -931,7 +931,7 @@ function setupExamEventListeners() {
 // FUNCIÓN CRÍTICA: Inicializar el examen correctamente
 function initializeExam() {
     // Ocultar el contenedor de simulacros disponibles
-    const simulacrosContainer = document.querySelector('#examen-practica .card');
+    const simulacrosContainer = document.getElementById('simulacros-container');
     if (simulacrosContainer) {
         simulacrosContainer.style.display = 'none';
     }
