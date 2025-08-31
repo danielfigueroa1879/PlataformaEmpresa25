@@ -40,7 +40,7 @@ const questionsByCategory = {
 
     "PRIMEROS AUXILIOS": [
         { question: "El objetivo básico de otorgar primeros auxilios es sólo establecer la identificación de la causa del daño que afecta al accidentado.", correctAnswer: "Falso" },
-        { question: "Ante un traumatismo toráxico, lo primordial es inmovilizar el cuello para evitar un daño a la columna vertebral.", correctAnswer: "Falso" },
+        { question: "Ante un traumatismo torácico, lo primordial es inmovilizar el cuello para evitar un daño a la columna vertebral.", correctAnswer: "Falso" },
         { question: "Existen las hemorragias capilares, venosas y subjuntivas.", correctAnswer: "Falso" },
         { question: "Un hematoma se produce cuando hay fractura expuesta.", correctAnswer: "Falso" },
         { question: "Lo más importante en un parto es sacar al niño y pegarle una palmada para ver si esta vivo.", correctAnswer: "Falso" },
@@ -112,7 +112,7 @@ const questionsByCategory = {
         { question: "Las alarmas solo se activan en caso de incendio y sospechosas de robo y hurto.", correctAnswer: "Falso" },
         { question: "El extintor se utiliza para amagar un fuego.", correctAnswer: "Verdadero" },
         { question: "El circuito cerrado de televisión es un sistema apropiado sólo para áreas de difícil observación.", correctAnswer: "Falso" },
-        { question: "Alarma es un elemento que sirve para advertir el peligro, sólo en casos de delitos flagrantes.", correctAnswer: "False" },
+        { question: "Alarma es un elemento que sirve para advertir el peligro, sólo en casos de delitos flagrantes.", correctAnswer: "Falso" },
         { question: "Se puede contar entre otras alarmas los siguientes tipos: transceptores y teléfonos.", correctAnswer: "Falso" },
         { question: "Los polvos químicos de los extintores se clasifican en tipo, ABC, BC, CO2.", correctAnswer: "Verdadero" },
         { question: "Los medios de comunicación deben ser ocupados ante reales necesidades en forma ambigua y entregando en forma detallada los antecedentes.", correctAnswer: "Falso" },
@@ -138,7 +138,7 @@ const questionsByCategory = {
         { question: "El valor, el coraje, la osadía y la desvergüenza son elementos para mantener la moral al personal de seguridad.", correctAnswer: "Falso" },
         { question: "La presentación personal de seguridad, no tiene incidencia en el servicio.", correctAnswer: "Falso" },
         { question: "Para un desempeño eficiente, el Guardia de Seguridad debe considerar, ser eficaz en el trabajo, que es una profesión importante, que se debe conocer completamente sus funciones.", correctAnswer: "Verdadero" },
-        { question: "El Guardia de Seguridad. es la cara visible de la empresa.", correctAnswer: "Verdadero" },
+        { question: "El Guardia de Seguridad es la cara visible de la empresa.", correctAnswer: "Verdadero" },
         { question: "El Guardia de Seguridad no le debe importar el respeto por el público en general.", correctAnswer: "Falso" },
         { question: "La honestidad es la obligación moral más grande.", correctAnswer: "Verdadero" },
         { question: "El trabajo armónico, conlleva entre otras una adecuada convivencia y un buen rendimiento.", correctAnswer: "Verdadero" },
@@ -195,119 +195,15 @@ const questionsByCategory = {
         { question: "Se recomienda que en toda llamada anónima que el receptor no trate de establecer el número de teléfono que llama; no tratar de identificar a la persona que realiza la llamada.", correctAnswer: "Falso" },
         { question: "Evacuación: Es un sistema que se aplica en una Empresa u Organización, para ingresar aun lugar, sitio, área o dependencia que se encuentra amagado por una situación de emergencia, temporal o permanente, que en forma organizada, metódica o coordinada, permita evitar daños a la integridad física de las personas y, cuando proceda, resguardar ciertos bienes.", correctAnswer: "Falso" },
         { question: "Ante una emergencia, es preciso tener presente algunas recomendaciones como: No utilizar ascensores. (Personas atrapadas - efecto chimenea), En caso de alarma, suspender trabajos y efectuar cortes de energía. No tratar de volver al lugar habitual de trabajo, en caso de encontrarse lejos, y seguir instrucciones del lugar donde se encuentren.", correctAnswer: "Verdadero" },
-        { question: "INFLAMABLES Sustancias que a la temperatura ambiente normal desprenden vapores que, mezclados con el aire, pueden arder en presencia de una fuente de calor.", correctAnswer: "Verdadero" },
-        { question: "En los primeros lugares de las causas de incendios y explosiones en la industria, se encuentran los líquidos inflamables.", correctAnswer: "Verdadero" },
-        { question: "Fuegos clase D. Son los incendios de metales como sodio, titanio, magnesio, litio y circonio. El extintor debe tener la letra D, de color blanco, sobre una estrella de 5 puntas de color amarillo.", correctAnswer: "Verdadero" },
-        { question: "Los estilos del cabello para su descripción pueden ser: largo, corto, muy corto, partido al lado, derecho (izquierdo), peinado hacia atrás, etc.", correctAnswer: "Verdadero" },
-        { question: "La descripción de vehículos es más simple que la de personas, por el sólo hecho que los vehículos son repetitivos en sus características, sin embargo es posible notar algunos detalles que los diferencian de sus congéneres.", correctAnswer: "Verdadero" },
-        { question: "En defensa personal se debe tener presente que siempre se debe actuar por instinto.", correctAnswer: "Falso" },
-        { question: "Una vez que un Guardia ha recibido entrenamiento para reconocer los peligros de incendios, debería incluir este aspecto en los recorridos regulares que realiza en su servicio y tomar la acción correctiva cuando sea requerida.", correctAnswer: "Verdadero" },
-        { question: "Los extintores de polvo químico seco se emplean entre otros para incendios de líquidos inflamables.", correctAnswer: "Verdadero" },
-        { question: "Una de las tantas razones que justifican la labor de los Vigilantes Privados y/o Guardias de Seguridad es que con un accionar seguro, decidido y profesional, hagan a los antisociales cometer delitos.", correctAnswer: "Falso" },
-        { question: "Un delincuente profesional puede: trabajar en equipo, hacerse pasar por vendedor y/o repartidor, mostrarse seguro de sí mismo, al ser desafiado verbalmente, reaccionar con agresividad, al ser desafiado físicamente pelear y huir.", correctAnswer: "Verdadero" },
-        { question: "El color del cabello puede describirse como: negro, gris, rojo dorado, blanquecido, rubio, grisáceo. Debiendo tener presente que el cabello puede estar teñido.", correctAnswer: "Verdadero" },
-        { question: "FUEGO: Es un proceso de combustión suficientemente intenso como para emitir calor y luz.", correctAnswer: "Verdadero" },
-        { question: "Dependiendo del lugar que se inspeccione, para evitar incendios deberá buscar materiales combustibles almacenados cerca de operaciones que producen llamas o chispas ( como por ejemplo esmerilado, oxicorte o soldadura); líneas de combustible y oxígeno, que no están marcadas o que están incorrectamente identificadas permite que se les confunda con líneas de aire o agua; falta de letreros de no fumar en lugares donde hay líquidos, vapores, gases u otros materiales muy inflamables que están almacenados o se los está usando. Uso de herramientas o equipos que produzcan chispas, en estos lugares.", correctAnswer: "Verdadero" },
-        { question: "Fuegos clase C. Son los incendios eléctricos o que ocurren cerca de equipos eléctricos, presentando además el peligro de un choque eléctrico. El extintor debe tener la letra C, de color blanco, sobre un circulo de color azul.", correctAnswer: "Verdadero" },
-        { question: "Un sistema para el control de incendio es la sofocación que consiste en el aislamiento del comburente, (oxigeno o aire) y se logra mediante el empleo de agentes capaces de privar o de empobrecer de oxigeno la atmósfera que rodea el combustible afectado. En la mayoría de los casos basta con un porcentaje inferior a 15 % de oxigeno en el aire para lograr la extinción.", correctAnswer: "Verdadero" },
-        { question: "En general no es posible describir el modus Operandi de los delincuentes pues estos varían según el tipo de delincuentes, características del delito a cometer y es así como podemos agruparlos en forma didáctica, considerando aqueles delitos en que puede accionar un Guardia de Seguridad de la siguiente manera.", correctAnswer: "Falso" },
-        { question: "El registro de un detenido cuando legalmente este respaldado debe ser meticuloso y solo se puede realizar cuando el detenido esté reducido, aislado y esposado.", correctAnswer: "Verdadero" },
-        { question: "Riesgos que originan las maquinarias y vehículos: El manejo de vehículos y maquinarias es un factor de permanente riesgo, en particular para quienes no están habituados a su uso.", correctAnswer: "Verdadero" },
-        { question: "El pronto descubrimiento de un incendio es, indudablemente vital, tanto para la extinción como para la seguridad de las personas.", correctAnswer: "Verdadero" },
-        { question: "Psicóticos son enfermos mentales en que hay una profunda alteración de la personalidad, más o menos prolongada, con peligrosidad y perjuicio para ellos mismos o para la sociedad. En cierto sentido, los sicóticos conceptualmente equivalen a los enajenados y pueden usarse estos términos indistintamente.", correctAnswer: "Verdadero" },
-        { question: "Características que ayudan a detectar delincuentes: Constante movimiento de ojos, miradas a los sistemas de seguridad y no a la mercadería, conducta errante y/o nerviosa, con poco interés en adquirir la mercadería, búsqueda de privacidad e intento de llevar la mercadería a lugares aislados.", correctAnswer: "Verdadero" },
-        { question: "Características que ayudan a detectar buenos clientes: Constante movimiento de ojos, miradas a los sistemas de seguridad y no a la mercadería, conducta errante y/o nerviosa, con poco interés en adquirir la mercadería, búsqueda de privacidad e intento de llevar la mercadería a lugares aislados.", correctAnswer: "Falso" },
-        { question: "Cuando se esposa un detenido con un par de esposas, se esposa la muñeca derecha pasando grillete por entre su cinturón para finalizar esposando muñeca izquierda dejando palmas hacia fuera.", correctAnswer: "Verdadero" },
-        { question: "Los incendios de tipo A son de leña y madera; los de tipo B son de elementos inflamables; y los tipos C por motores energizados.", correctAnswer: "Verdadero" },
-        { question: "Frente a un fuego dentro de un recinto cerrado el Guardia de Seguridad cerrará puertas y ventanas para así evitar que entre más oxígeno.", correctAnswer: "Falso" },
-        { question: "El personal que labora en una instalación, es un agente potencial generador de riesgo o víctima de ellos, en consecuencia debe existir un procedimiento que deben cumplir los controles desde el punto de vista de seguridad.", correctAnswer: "Verdadero" },
-        { question: "Una vez que un Guardia ha recibido entrenamiento para reconocer los peligros de incendios, no debe incluir este aspecto en los recorridos regulares que realiza en su servicio y para tomar la acción correctiva cuando sea requerida.", correctAnswer: "Falso" },
-        { question: "Un sistema para el control de incendio es la calefacción que consiste en el aumento de la temperatura en el ambiente y se logra mediante el empleo sobre el combustible, de agentes enfriadores capaces de obtener su aumento hasta valores superiores a la temperatura de combustión o ignición.", correctAnswer: "Falso" },
-        { question: "Las manos se juzgan en cuanto a su tamaño, color y peculiaridades; los adornos en relación a su tamaño y cualquier característica del porte.", correctAnswer: "Verdadero" },
-        { question: "Todo el personal, cualquiera sea su cargo o categoría dentro de la empresa, debe ceñirse a las disposiciones de evacuación, las que han sido incluidas previamente en el Plan respectivo.", correctAnswer: "Verdadero" },
-        { question: "Un sistema para el control de incendio es la refrigeración que consiste en el descenso de la temperatura en el ambiente y se logra mediante el empleo sobre el combustible, de agentes enfriadores capaces de obtener su disminución hasta valores inferiores a la temperatura de combustión o ignición.", correctAnswer: "Verdadero" },
-        { question: "Los extintores de bióxido de carbono (CO2) se emplean para incendio de inflamables.", correctAnswer: "Verdadero" },
-        { question: "Cada guardia de seguridad debe tener una carpeta con los antecedentes de las personas de seguridad que laboran en las instalaciones como autorizaciones, credenciales y además Planes, Manuales de Seguridad, Directiva de Funcionamiento, Órdenes de Puesto, Planes de Emergencia, etc. para ser cotejados por la Autoridad Fiscalizadora.", correctAnswer: "Verdadero" },
-        { question: "Es importante señalar que los delitos de robo y hurto no tienen características comunes como son la apropiación de cosa mueble ajena, con ánimo de lucro sin la voluntad de su dueño; la diferencia está en que en el robo se emplea la violencia o intimidación en las personas o fuerza en las cosas.", correctAnswer: "Falso" },
-        { question: "Los llamados anónimos siempre corresponden a bromas.", correctAnswer: "Falso" },
-        { question: "Es hurto cuando se introduce a un lugar mediante la seducción de un doméstico o a favor de nombres supuestos o simulación de autoridad y si se procede mediante fractura de puertas, vidrios, cierres, candados u otros dispositivos de protección o si utiliza medios de tracción.", correctAnswer: "Falso" },
-        { question: "Un ángulo fundamental de descripción de personas es la Fotografía Hablada, y se emplea en informes para describir individuos sometidos a observación o han sido acusados de ser víctimas de un delito y son buscados.", correctAnswer: "Verdadero" },
-        { question: "Evacuación: Es un sistema que se aplica en una Empresa u Organización, para abandonar un lugar, sitio, área o dependencia que se encuentra amagado por una situación de emergencia, temporal o permanente, que en forma organizada, metódica o coordinada, permita evitar daños a la integridad física de las personas y, cuando proceda, resguardar ciertos bienes.", correctAnswer: "Verdadero" },
-        { question: "El Plan de evacuación elaborado por el organismo de seguridad, no debe estar en conocimiento de todo el personal, y su práctica debe realizarse con la periodicidad fijada.", correctAnswer: "Falso" },
-        { question: "COMBUSTIBLES: Materiales que no son capaces de entrar en combustión, después de un calentamiento previo.", correctAnswer: "Falso" },
-        { question: "En los primeros lugares de las causas de incendios y explosiones en la industria, se encuentran los líquidos incombustibles.", correctAnswer: "Falso" },
-        { question: "Entre los dispositivos detectores de fuego encontramos, detectores de calor, detectores de temperatura fija, detectores por rango de elevación rápida de temperatura, detectores de humo, detector instantáneo o de llama, detectores de vapor.", correctAnswer: "Verdadero" },
-        { question: "Los extintores de agua se usan para incendios tipo C.", correctAnswer: "Falso" },
-        { question: "No se estima como violencia o intimidación en las personas en el delito de robo, el que para obtener la entrega o manifestación de una cosa alegare orden falsa de alguna autoridad o la diere por sí fingiéndose ministro de justicia o funcionario público.", correctAnswer: "Verdadero" },
-        { question: "Se entiende por fuerza en las cosas, cuando el hurto se efectúa en un lugar habitado o deshabitado, con escalamiento, entendiéndose que lo hay, cuando se entra por vía no destinada al efecto, por forados o con rompimiento de paredes o techos o con fracturas en las puertas o ventanas, fracturas de puertas interiores, armarios, arcas u otra clase de muebles u objetos cerrados o sellados.", correctAnswer: "Verdadero" },
-        { question: "Un sistema para el control de incendio es la inhibición que consiste en evitar o romper la reacción en cadena y se logra mediante el empleo de productos que, por efectos de la temperatura, reaccionan con los gases combustibles y/o con el comburenente.", correctAnswer: "Verdadero" },
-        { question: "Recomendaciones de tipo práctico ante llamados anónimos son: Anotar fecha, hora y número de teléfono en el cual se recibió el llamado ( dentro de las posibilidades ), Determinar si el que llamó es voz de varón o mujer ( o simulada o falsa ), En lo posible recordar el tono de voz, Escuchar, al mismo tiempo que se está hablando, los ruidos de fondo (ruidos callejeros o de ambiente, vehículos, voces, cosas particulares).", correctAnswer: "Verdadero" },
-        { question: "Todo el personal, cualquiera sea su cargo o categoría dentro de la empresa, no debe ceñirse a las disposiciones de evacuación.", correctAnswer: "Falso" },
-        { question: "Sabemos que para que exista fuego es necesario que se reúnan los cuatro elementos constituyentes. Para extinguirlo, por lo consiguiente, bastará con eliminar alguno de ellos.", correctAnswer: "Verdadero" },
-        { question: "Dependiendo del lugar que se inspeccione, para evitar incendios no se debe perder tiempo en buscar cosas tales como escobas, tubos, y otros desperdicios colocados alrededor o contra los interruptores del circuito eléctrico; recipientes con pintura o solvente que se han dejado sin cerrar y/o cerca de fuentes de calor; desperdicios inflamables (como por ejemplo alfombras, papeles, cajas y maderas) que podrían inflamarse o proporcionar combustible a un fuego que tuvo como origen otra fuente.", correctAnswer: "False" },
-        { question: "La energía eléctrica está presente en casi todas las actividades en que el hombre interviene, ya sea en el hogar, la industria, la oficina, el laboratorio, el taller, etc. Su uso ha significado un gran adelanto y comodidad, pero al mismo tiempo, ha traído como consecuencia una gran cantidad de riesgos, muchas veces fatales o con secuelas importantes.", correctAnswer: "Verdadero" },
-        { question: "Algunas acciones inseguras de electricistas son: Falta de conocimientos adecuados sobre la materia, Uso de equipos indebidos, Uso de material indebido, No usar elementos de protección, Ejecutar trabajos con equipos en mal estado.", correctAnswer: "Verdadero" },
-        { question: "La cara se juzga en cuanto a su tamaño, color y peculiaridades; la cabeza, en relación a su tamaño y cualquier característica del porte.", correctAnswer: "Verdadero" },
-        { question: "La tez puede ser blanca, oscura, bronceada, amarillenta, rojiza, negra, morena o roja.", correctAnswer: "Verdadero" },
-        { question: "El pronto descubrimiento de un incendio es, indudablemente negativo, tanto para la extinción como para la seguridad de las personas.", correctAnswer: "Falso" },
-        { question: "Los extintores de polvo químico seco se emplean para un solo tipo de fuego.", correctAnswer: "Falso" },
-        { question: "Si es posible, señalar un patrón que normalmente se encuentra en los delitos, que es actuar sobre seguro o con una seguridad relativamente alta de conseguir sus fines.", correctAnswer: "Verdadero" },
-        { question: "El extintor de polvo químico seco, sólo se puede utilizar en fuegos de clasificación A y B.", correctAnswer: "Falso" },
-        { question: "Fuegos clase A. Son los incendios de papeles, trapos, maderas, desperdicios. El extintor debe tener la letra A, de color blanco sobre un triángulo de color verde.", correctAnswer: "Verdadero" }
+        { question: "INFLAMABLES Sustancias que a la temperatura ambiente normal desprenden vapores que, mezclados con el aire, pueden arder en presencia de una fuente de calor.", correctAnswer: "Verdadero" }
     ],
 
     "PREGUNTAS ADICIONALES": [
         { question: "La Autoridad Fiscalizadora de la Seguridad Privada en Chile es la Prefectura de Carabineros de Chile del sector.", correctAnswer: "Verdadero" },
         { question: "La Ley N° 21.659, publicada en marzo de 2024, es la única ley que regula la seguridad privada en Chile actualmente.", correctAnswer: "Falso" },
-        { question: "La seguridad privada, según las normativas vigentes antes de la Ley 21.659, busca reemplazar a la seguridad pública.", correctAnswer: "Falso" },
         { question: "Uno de los requisitos para ser Guardia de Seguridad según el Decreto 93 es tener 18 años.", correctAnswer: "Verdadero" },
         { question: "Los Guardias de Seguridad están autorizados para portar armas de fuego en el ejercicio de sus funciones según el Decreto 93.", correctAnswer: "Falso" },
-        { question: "El curso de formación para Guardia de Seguridad, según el Decreto 93, tiene una duración de 90 horas.", correctAnswer: "Verdadero" },
-        { question: "El seguro de vida para Guardias de Seguridad, según el Decreto 93, tiene una cifra asegurada de 75 UTM.", correctAnswer: "Verdadero" },
-        { question: "El uniforme de un Guardia de Seguridad, según el Decreto 93, es libre y sin especificaciones de color.", correctAnswer: "Falso" },
-        { question: "Un Guardia de Seguridad está facultado para detener a alguien solo en caso de sorprenderlo en delito flagrante.", correctAnswer: "Verdadero" },
-        { question: "Delito es toda acción u omisión VOLUNTARIA penada por la Ley.", correctAnswer: "Verdadero" },
-        { question: "Cuasidelito es toda acción u omisión INVOLUNTARIA, penada por la ley.", correctAnswer: "Verdadero" },
-        { question: "La diferencia entre robo y hurto es que el robo se comete con violencia, intimidación o fuerza en las cosas, mientras que el hurto no.", correctAnswer: "Verdadero" },
-        { question: "La legítima defensa es aplicable solo si existe presencia policial en el momento de la agresión.", correctAnswer: "Falso" },
-        { question: "El sitio del suceso debe ser preservado y no alterado para la investigación.", correctAnswer: "Verdadero" },
-        { question: "Una ronda fija se caracteriza por tener la hora y el trayecto preestablecidos.", correctAnswer: "Verdadero" },
-        { question: "Los Guardias de Seguridad deben proteger personas y bienes, siendo la vida del guardia la más importante.", correctAnswer: "Verdadero" },
-        { question: "Ante el hallazgo de un artefacto explosivo, la primera acción debe ser intentar desactivarlo si se tienen conocimientos.", correctAnswer: "Falso" },
-        { question: "Una evacuación es el traslado ordenado de personas hacia una zona de seguridad designada.", correctAnswer: "Verdadero" },
-        { question: "Una Directiva de Funcionamiento es un documento que señala el funcionamiento íntegro de los guardias de seguridad.", correctAnswer: "Verdadero" },
-        { question: "El Estudio de Seguridad es aprobado por la Prefectura de Carabineros del sector.", correctAnswer: "Verdadero" },
-        { question: "El porte ilegal de armas es portar un arma en la vía pública sin autorización.", correctAnswer: "Verdadero" },
-        { question: "La Subsecretaría de Telecomunicaciones (SUBTEL) es la entidad que autoriza el uso de radiocomunicaciones en seguridad privada.", correctAnswer: "Verdadero" },
-        { question: "En un supermercado, un guardia puede detener a una persona por consumir un alimento antes de pasar por caja, incluso si no ha salido del establecimiento.", correctAnswer: "Falso" },
-        { question: "El secuestro es el traslado o retención de una o más personas sin su consentimiento.", correctAnswer: "Verdadero" },
-        { question: "La misión de Carabineros de Chile incluye garantizar el Orden y la Seguridad Pública.", correctAnswer: "Verdadero" },
-        { question: "Escalamiento es ingresar a una propiedad por una vía no destinada al efecto.", correctAnswer: "Verdadero" },
-        { question: "La función principal de una antena en un transceptor portátil es amplificar el sonido.", correctAnswer: "Falso" },
-        { question: "El contacto magnético es un sistema de alarma utilizado en puertas y ventanas para detectar aperturas.", correctAnswer: "Verdadero" },
-        { question: "Los daños físicos y psíquicos sufridos por un guardia en el cumplimiento de sus funciones se consideran actos del servicio y pueden derivar en enfermedades profesionales.", correctAnswer: "Verdadero" },
-        { question: "Para ser Guardia de Seguridad, se requiere haber cursado educación básica completa.", correctAnswer: "Falso" },
-        { question: "No tiene responsabilidad penal quienes compran una cosa hurtada, ya que él no la sustrajo.", correctAnswer: "Falso" },
-        { question: "La legítima defensa solamente se hace extensiva a la propia persona y no a terceros.", correctAnswer: "Falso" },
-        { question: "Robo es la apropiación de una cosa sin que intervengan la fuerza o violencia.", correctAnswer: "Falso" },
-        { question: "Son responsables en la comisión de un delito, los autores, los cómplices y los encubridores cuando en ellos solo se utilice imprudencia y negligencia.", correctAnswer: "Falso" },
-        { question: "La policía debe eximir de responsabilidad penal al que obre en defensa de su persona o derechos, siempre que concurra, entre otras circunstancias la agresión ilegítima.", correctAnswer: "Verdadero" },
-        { question: "La Nación políticamente organizada es sinónimo de Estado.", correctAnswer: "Verdadero" },
-        { question: "En el sistema de vigilancia privada vigente, solo los Guardias de Seguridad, están sujetos a la fiscalización de la Autoridad Fiscalizadora de la prefectura de Carabineros de su sector jurisdiccional.", correctAnswer: "Falso" },
-        { question: "En algunos casos los Guardias de Seguridad pueden actuar de civil, si están debidamente autorizados por la Autoridad Fiscalizadora.", correctAnswer: "Verdadero" },
-        { question: "El O.S. 10 no puede fiscalizar a los Guardias de Seguridad los días domingos y festivos.", correctAnswer: "Falso" },
-        { question: "No es obligación que los Guardias de Seguridad mantengan la Directiva de Funcionamiento en su respectiva instalación.", correctAnswer: "Falso" },
-        { question: "Las alarmas son elementos manuales o eléctricos que se utilizan para advertir peligro de intrusión o de incendio.", correctAnswer: "Verdadero" },
-        { question: "Para una adecuada detección de incendios deben existir mangueras adecuadas y grifos cercanos.", correctAnswer: "Falso" },
-        { question: "Un sistema de alarmas debe tener etapas básicas, detección, control y respuesta.", correctAnswer: "Verdadero" },
-        { question: "El circuito cerrado de Televisión es un complemento al sistema electrónico de alarma.", correctAnswer: "Verdadero" },
-        { question: "La empresa de seguridad privada debe informar mensualmente a Carabineros sobre el personal que labora en sus instalaciones.", correctAnswer: "Verdadero" },
-        { question: "Los guardias pueden realizar registros corporales a personas que ingresen a las instalaciones que custodian.", correctAnswer: "Falso" },
-        { question: "El guardia de seguridad puede usar la fuerza física solo en legítima defensa propia o de terceros.", correctAnswer: "Verdadero" },
-        { question: "Es obligatorio que el guardia de seguridad mantenga un libro de novedades actualizado durante su turno.", correctAnswer: "Verdadero" },
-        { question: "El curso OS-10 debe ser renovado cada 3 años según la normativa vigente.", correctAnswer: "Falso" },
-        { question: "Los guardias de seguridad pueden portar bastón de goma como elemento de protección personal.", correctAnswer: "Verdadero" },
-        { question: "La detención por particulares no puede exceder de 24 horas sin entregar al detenido a la autoridad competente.", correctAnswer: "Verdadero" }
+        { question: "El curso de formación para Guardia de Seguridad, según el Decreto 93, tiene una duración de 90 horas.", correctAnswer: "Verdadero" }
     ]
 };
 
@@ -390,26 +286,42 @@ function showCategoryStats(questions, userAnswers) {
     return categoryStats;
 }
 
+// FUNCIÓN PRINCIPAL CORREGIDA: Genera preguntas categorizadas
 function generateQuestionsCategorized() {
+    console.log("generateQuestionsCategorized function called.");
+    
+    // Buscar elementos tanto en página pública como privada
     const quizContainer = document.getElementById('quiz-container');
     const startExamBtn = document.getElementById('start-exam-btn');
     const submitQuizBtn = document.getElementById('submit-quiz-btn');
     const examSection = document.getElementById('exam-section');
     const subtleResponseBox = document.getElementById('subtle-response-box');
 
+    if (!quizContainer) {
+        console.error('No se encontró el contenedor del quiz');
+        return;
+    }
+
+    // Mostrar mensaje de carga
     quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas categorizadas...</p>';
     quizContainer.style.display = 'block';
-    startExamBtn.style.display = 'none';
-    submitQuizBtn.style.display = 'none';
+    
+    if (startExamBtn) startExamBtn.style.display = 'none';
+    if (submitQuizBtn) submitQuizBtn.style.display = 'none';
 
-    examSection.classList.add('active-red-border');
+    // Activar borde rojo persistente
+    if (examSection) {
+        examSection.classList.add('active-red-border');
+    }
 
+    // Mostrar mensaje sutil
     if (subtleResponseBox) { 
         subtleResponseBox.style.display = 'block';
         subtleResponseBox.classList.add('show');
         subtleResponseBox.textContent = '¡Generando preguntas categorizadas, por favor espera!';
     }
 
+    // Simular tiempo de carga y generar preguntas
     setTimeout(() => {
         questions = createCategorizedQuestions();
         userAnswers = {};
@@ -426,9 +338,14 @@ function generateQuestionsCategorized() {
     }, 1000);
 }
 
+// FUNCIÓN PRINCIPAL CORREGIDA: Muestra el quiz categorizado
 function displayCategorizedQuiz(questions) {
     const quizContainer = document.getElementById('quiz-container');
-    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+    if (!quizContainer) {
+        console.error('No se encontró el contenedor del quiz para mostrar las preguntas');
+        return;
+    }
+    
     quizContainer.innerHTML = '';
     
     questions.forEach((q, index) => {
@@ -502,11 +419,23 @@ function displayCategorizedQuiz(questions) {
                 feedbackMessage.appendChild(lockMessage);
 
                 if (Object.keys(userAnswers).length === questions.length) {
-                    submitQuizBtn.style.display = 'block';
+                    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+                    if (submitQuizBtn) {
+                        submitQuizBtn.style.display = 'block';
+                    }
+                    
+                    // Mostrar mensaje sutil si la función existe
+                    if (typeof showSubtleMessage === 'function') {
+                        showSubtleMessage('¡Todas las preguntas respondidas! Puedes enviar tu examen.');
+                    } else if (typeof window.showSubtleMessage === 'function') {
+                        window.showSubtleMessage('¡Todas las preguntas respondidas! Puedes enviar tu examen.');
+                    }
                 }
             });
         });
     });
+
+    console.log("Categorized quiz questions displayed.");
 }
 
 function getCategoryBadge(category) {
@@ -542,6 +471,7 @@ function getCategoryShortName(category) {
     return shortNames[category] || category;
 }
 
+// FUNCIÓN PRINCIPAL CORREGIDA: Envía el quiz categorizado
 function submitCategorizedQuiz() {
     let score = 0;
     questions.forEach((q, index) => {
@@ -557,6 +487,7 @@ function submitCategorizedQuiz() {
     
     const categoryStats = showCategoryStats(questions, userAnswers);
 
+    // Buscar elementos del modal
     const modal = document.getElementById('results-modal-overlay');
     const modalCorrectCount = document.getElementById('modal-correct-count');
     const modalTotalQuestions = document.getElementById('modal-total-questions');
@@ -564,6 +495,13 @@ function submitCategorizedQuiz() {
     const modalGrade = document.getElementById('modal-grade');
     const modalMessage = document.getElementById('modal-message');
     const resultsModalContent = document.getElementById('results-modal-content');
+
+    if (!modal || !modalCorrectCount || !modalTotalQuestions || !modalPercentage || !modalGrade || !modalMessage || !resultsModalContent) {
+        console.error('No se encontraron todos los elementos del modal de resultados');
+        // Mostrar alerta como respaldo
+        alert(`Examen completado!\nRespuestas correctas: ${score}/${maxScore}\nPorcentaje: ${percentage.toFixed(1)}%\nNota: ${grade.toFixed(1)}\n${passed ? '¡Aprobado!' : 'Reprobado'}`);
+        return;
+    }
 
     modalCorrectCount.textContent = score;
     modalTotalQuestions.textContent = maxScore;
@@ -595,6 +533,19 @@ function submitCategorizedQuiz() {
     }
 
     modal.classList.add('show');
+    modal.style.display = 'flex';
+
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+    if (submitQuizBtn) {
+        submitQuizBtn.style.display = 'none';
+    }
+    
+    document.querySelectorAll('.option-button').forEach(button => {
+        button.style.pointerEvents = 'none';
+        button.style.opacity = '0.7';
+    });
+
+    console.log("Categorized quiz submitted and results displayed in modal. Score:", score);
 }
 
 function calculateGrade(percentage) {
