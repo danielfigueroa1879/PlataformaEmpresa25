@@ -225,28 +225,28 @@ function createCategorizedQuestions() {
         let questionsToTake;
         switch(category) {
             case "CONOCIMIENTOS LEGALES":
-                questionsToTake = 5;
+                questionsToTake = 8;
                 break;
             case "PRIMEROS AUXILIOS":
-                questionsToTake = 4;
+                questionsToTake = 7;
                 break;
             case "PROTECCIÓN DE INSTALACIONES":
-                questionsToTake = 5;
+                questionsToTake = 8;
                 break;
             case "CONOCIMIENTOS DE SISTEMAS DE ALARMA":
-                questionsToTake = 3;
+                questionsToTake = 5;
                 break;
             case "VALORES Y ÉTICA":
-                questionsToTake = 4;
+                questionsToTake = 7;
                 break;
             case "SISTEMAS DE COMUNICACIÓN Y ENLACE":
-                questionsToTake = 3;
+                questionsToTake = 5;
                 break;
-            case "PREVENCIÓN Y CONTROL DE EMERGENCIA":
-                questionsToTake = 4;
+            case "PREVENCIÓN Y Y CONTROL DE EMERGENCIA":
+                questionsToTake = 7;
                 break;
             case "PREGUNTAS ADICIONALES":
-                questionsToTake = 2;
+                questionsToTake = 3;
                 break;
             default:
                 questionsToTake = 3;
@@ -324,7 +324,7 @@ function generateQuestionsCategorized() {
         displayCategorizedQuiz(questions);
         
         if (subtleResponseBox) {
-            subtleResponseBox.textContent = '¡30 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
+            subtleResponseBox.textContent = '¡50 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
             setTimeout(() => {
                 subtleResponseBox.classList.remove('show');
                 setTimeout(() => subtleResponseBox.style.display = 'none', 500);
@@ -552,6 +552,6 @@ function submitCategorizedQuiz() {
 }
 
 function calculateGrade(percentage) {
-    if (percentage < 50) return 1.0 + (percentage / 50) * 3.0;
-    return 4.0 + ((percentage - 50) / 50) * 3.0;
+    if (percentage < 60) return 1.0 + (percentage / 60) * 2.9;
+    return 4.0 + ((percentage - 60) / 40) * 3.0;
 }
