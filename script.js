@@ -3,6 +3,7 @@
 // Global state
 let currentUser = null;
 let currentSection = 'home';
+let examHistory = []; // To store exam results
 
 // Mock data for public site
 const cursosCapacitacion = [
@@ -53,8 +54,8 @@ const noticias = [
 // Mock data for private system
 const mockData = {
     guardias: [
-        { id: 1, nombre: 'Juan Pérez', rut: '12345678-9', email: 'juan@example.com', estado: 'activo', cursosVencen: 15 },
-        { id: 2, nombre: 'María González', rut: '98765432-1', email: 'maria@example.com', estado: 'activo', cursosVencen: 30 }
+        { id: 1, nombre: 'Juan Pérez', rut: '12345678-9', email: 'juan@example.com', fechaExamen: '2022-10-15' },
+        { id: 2, nombre: 'María González', rut: '98765432-1', email: 'maria@example.com', fechaExamen: '2024-08-01' }
     ],
     cursos: [
         { id: 1, nombre: 'Curso OS-10 Básico', fechaInicio: '2025-09-15', duracion: '40 horas', precio: 150000, estudiantes: 25 },
@@ -67,6 +68,13 @@ const mockData = {
     notifications: [
         { id: 1, tipo: 'warning', mensaje: 'Curso OS-10 de Juan Pérez vence en 15 días', fecha: '2025-08-28' },
         { id: 2, tipo: 'info', mensaje: 'Nuevo estudiante inscrito en Seguridad Industrial', fecha: '2025-08-28' }
+    ],
+    calificaciones: [
+        { materia: 'Legislación de Seguridad Privada', nota: 6.5, estado: 'Aprobado' },
+        { materia: 'Prevención de Riesgos', nota: 5.8, estado: 'Aprobado' },
+        { materia: 'Control de Emergencias', nota: 6.2, estado: 'Aprobado' },
+        { materia: 'Primeros Auxilios', nota: 7.0, estado: 'Aprobado' },
+        { materia: 'Defensa Personal', nota: 5.5, estado: 'Aprobado' }
     ]
 };
 
@@ -405,9 +413,11 @@ function updateMainContent() {
         case 'horarios':
             mainContent.innerHTML = renderHorarios();
             break;
+        case 'calificaciones':
+            mainContent.innerHTML = renderCalificaciones();
+            break;
         case 'examen-practica':
             mainContent.innerHTML = renderExamenPractica();
-            // CRÍTICO: Después de renderizar, configurar los event listeners del examen
             setupExamEventListeners();
             break;
         default:
@@ -459,10 +469,44 @@ function renderAdminDashboard() {
     `;
 }
 
+function getGuardiaStatus(fechaExamen) {
+    if (!fechaExamen) {
+        return { text: 'Sin Datos', className: 'badge-secondary' };
+    }
+    const examDate = new Date(fechaExamen);
+    const today = new Date();
+    const threeYearsFromExam = new Date(examDate.setFullYear(examDate.getFullYear() + 3));
+    const thirtyDaysBeforeExpiry = new Date(new Date(threeYearsFromExam).setDate(threeYearsFromExam.getDate() - 30));
+
+    if (today > threeYearsFromExam) {
+        return { text: 'Vencido', className: 'badge-danger' };
+    }
+    if (today >= thirtyDaysBeforeExpiry) {
+        return { text: 'Por Vencer', className: 'badge-warning' };
+    }
+    return { text: 'Vigente', className: 'badge-success' };
+}
+
 function renderGestionGuardias() {
+    const tableRows = mockData.guardias.map(guardia => {
+        const status = getGuardiaStatus(guardia.fechaExamen);
+        return `
+            <tr>
+                <td>${guardia.nombre}</td>
+                <td>${guardia.rut}</td>
+                <td><span class="badge ${status.className}">${status.text}</span></td>
+                <td>${new Date(guardia.fechaExamen).toLocaleDateString('es-CL')}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="openGuardiaModal(${guardia.id})">Editar</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteGuardia(${guardia.id})">Eliminar</button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
     return `
         <h2 class="text-3xl font-bold mb-8">Gestión de Guardias</h2>
-        <button class="btn btn-primary mb-4">Nuevo Guardia</button>
+        <button class="btn btn-primary mb-4" onclick="openGuardiaModal()">Nuevo Guardia</button>
         <div class="card">
             <div class="card-content">
                 <table class="table">
@@ -470,29 +514,100 @@ function renderGestionGuardias() {
                         <tr>
                             <th>Guardia</th>
                             <th>RUT</th>
-                            <th>Estado</th>
-                            <th>Certificación</th>
+                            <th>Estado Certificado</th>
+                            <th>Fecha Examen</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        ${mockData.guardias.map(guardia => `
-                            <tr>
-                                <td>${guardia.nombre}</td>
-                                <td>${guardia.rut}</td>
-                                <td><span class="badge badge-success">${guardia.estado}</span></td>
-                                <td>Vence en ${guardia.cursosVencen} días</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary">Editar</button>
-                                    <button class="btn btn-sm btn-danger">Eliminar</button>
-                                </td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
+                    <tbody>${tableRows}</tbody>
                 </table>
             </div>
         </div>
+
+        <div id="guardiaModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeGuardiaModal()">&times;</span>
+                <h2 id="guardiaModalTitle">Nuevo Guardia</h2>
+                <form id="guardiaForm" onsubmit="handleGuardiaFormSubmit(event)">
+                    <input type="hidden" id="guardiaId">
+                    <div class="form-group">
+                        <label for="nombreGuardia">Nombre Completo</label>
+                        <input type="text" id="nombreGuardia" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rutGuardia">RUT</label>
+                        <input type="text" id="rutGuardia" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailGuardia">Correo Electrónico</label>
+                        <input type="email" id="emailGuardia" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaExamenGuardia">Fecha de Realización del Examen</label>
+                        <input type="date" id="fechaExamenGuardia" required>
+                    </div>
+                    <button type="submit" class="btn">Guardar</button>
+                </form>
+            </div>
+        </div>
     `;
+}
+
+function openGuardiaModal(id = null) {
+    const modal = document.getElementById('guardiaModal');
+    const form = document.getElementById('guardiaForm');
+    const title = document.getElementById('guardiaModalTitle');
+    form.reset();
+
+    if (id) {
+        const guardia = mockData.guardias.find(g => g.id === id);
+        if (guardia) {
+            title.textContent = 'Editar Guardia';
+            document.getElementById('guardiaId').value = guardia.id;
+            document.getElementById('nombreGuardia').value = guardia.nombre;
+            document.getElementById('rutGuardia').value = guardia.rut;
+            document.getElementById('emailGuardia').value = guardia.email;
+            document.getElementById('fechaExamenGuardia').value = guardia.fechaExamen;
+        }
+    } else {
+        title.textContent = 'Nuevo Guardia';
+        document.getElementById('guardiaId').value = '';
+    }
+
+    modal.classList.add('active');
+}
+
+function closeGuardiaModal() {
+    document.getElementById('guardiaModal').classList.remove('active');
+}
+
+function handleGuardiaFormSubmit(event) {
+    event.preventDefault();
+    const id = document.getElementById('guardiaId').value;
+    const guardiaData = {
+        nombre: document.getElementById('nombreGuardia').value,
+        rut: document.getElementById('rutGuardia').value,
+        email: document.getElementById('emailGuardia').value,
+        fechaExamen: document.getElementById('fechaExamenGuardia').value
+    };
+
+    if (id) {
+        const index = mockData.guardias.findIndex(g => g.id == id);
+        mockData.guardias[index] = { ...mockData.guardias[index], ...guardiaData };
+    } else {
+        guardiaData.id = Date.now(); // Simple unique ID
+        mockData.guardias.push(guardiaData);
+    }
+
+    closeGuardiaModal();
+    updateMainContent();
+}
+
+function deleteGuardia(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este guardia?')) {
+        mockData.guardias = mockData.guardias.filter(g => g.id !== id);
+        updateMainContent();
+    }
 }
 
 function renderGestionCursos() {
@@ -681,6 +796,47 @@ function renderHorarios() {
     `;
 }
 
+function renderCalificaciones() {
+    const courseGradesHtml = mockData.calificaciones.map(grade => `
+        <tr>
+            <td>${grade.materia}</td>
+            <td>${grade.nota}</td>
+            <td><span class="badge ${grade.nota >= 4.0 ? 'badge-success' : 'badge-danger'}">${grade.estado}</span></td>
+        </tr>
+    `).join('');
+
+    const examHistoryHtml = examHistory.slice(-5).reverse().map(result => `
+        <tr>
+            <td>${result.date}</td>
+            <td>${result.score}/${result.maxScore}</td>
+            <td>${result.percentage.toFixed(1)}%</td>
+            <td><span class="badge ${result.grade >= 4.0 ? 'badge-success' : 'badge-danger'}">${result.grade.toFixed(1)}</span></td>
+        </tr>
+    `).join('');
+
+    return `
+        <h2 class="text-3xl font-bold mb-8">Mis Calificaciones</h2>
+        <div class="card mb-8">
+            <div class="card-content">
+                <h3 class="text-xl font-bold mb-4">Calificaciones del Curso</h3>
+                <table class="table">
+                    <thead><tr><th>Materia</th><th>Nota</th><th>Estado</th></tr></thead>
+                    <tbody>${courseGradesHtml}</tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <h3 class="text-xl font-bold mb-4">Historial de Exámenes de Práctica (Últimos 5)</h3>
+                <table class="table">
+                    <thead><tr><th>Fecha</th><th>Puntaje</th><th>Porcentaje</th><th>Nota</th></tr></thead>
+                    <tbody>${examHistoryHtml.length ? examHistoryHtml : '<tr><td colspan="4" class="text-center">No hay exámenes registrados.</td></tr>'}</tbody>
+                </table>
+            </div>
+        </div>
+    `;
+}
+
 function renderExamenPractica() {
     return `
         <h2 class="text-3xl font-bold mb-8">Examen de Práctica OS-10</h2>
@@ -809,7 +965,10 @@ function startExamFromPrivatePanel() {
 // FUNCIÓN CRÍTICA: Enviar examen desde panel privado
 function submitExamFromPrivatePanel() {
     if (typeof submitCategorizedQuiz === 'function') {
-        submitCategorizedQuiz();
+        const result = submitCategorizedQuiz();
+        if (result) {
+            examHistory.push(result);
+        }
     } else {
         console.error('La función submitCategorizedQuiz no está disponible.');
         alert('Error: No se pudo enviar el examen. Por favor, recargue la página.');

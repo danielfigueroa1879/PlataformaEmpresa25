@@ -220,7 +220,7 @@ nav a:hover {
     position: fixed;
     top: 0;
     left: 0;
-    width: 250px;
+    width: 280px;
     height: 100vh;
     background-color: rgba(255, 255, 255, 0.95);
     color: #1f2937;
@@ -244,6 +244,10 @@ nav a:hover {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgba(229, 231, 235, 0.3);
+}
+
+.sidebar-header h2 {
+    font-size: 1.1rem;
 }
 
 .sidebar-menu {
@@ -282,7 +286,7 @@ nav a:hover {
 }
 
 .main-content.sidebar-open {
-    margin-left: 250px;
+    margin-left: 280px;
 }
 
 /* Hero Section */
@@ -843,9 +847,8 @@ nav a:hover {
         display: flex;
     }
     
-    /* CORRECCIÓN 2: Evita que el sidebar ocupe toda la pantalla */
     .sidebar {
-        /* Se elimina la regla 'width: 100%' para que use el valor por defecto de 250px */
+        width: 250px;
     }
 
     .main-content.sidebar-open {
@@ -893,9 +896,8 @@ nav a:hover {
         gap: 1rem;
     }
 
-    /* NUEVA CORRECCIÓN 1.1: Ajuste del menú móvil para que se despliegue debajo del banner */
     .mobile-nav.active {
-        top: 75px; /* Posiciona el menú debajo del banner */
+        top: 75px;
         width: 97%;
         left: 1.5%;
         right: 1.5%;
@@ -917,8 +919,8 @@ nav a:hover {
 
     .mobile-nav ul li a,
     .mobile-nav ul li button {
-        color: #333; /* Color de texto oscuro para el menú claro */
-        border-bottom: 1px solid #ccc; /* Separador oscuro */
+        color: #333;
+        border-bottom: 1px solid #ccc;
     }
 
     .mobile-nav ul li:last-child {
@@ -927,21 +929,19 @@ nav a:hover {
 
     .mobile-nav ul li a:hover,
     .mobile-nav ul li button:hover {
-        background-color: rgba(0, 200, 83, 0.2); /* Hover verde */
+        background-color: rgba(0, 200, 83, 0.2);
     }
 
-    /* NUEVA CORRECCIÓN 1.2: Posiciona el botón de cierre dentro del header para que sea visible */
     .close-mobile-nav {
-        display: block; /* Muestra el botón de cerrar */
+        display: block;
         position: absolute;
         top: 15px;
         right: 15px;
         color: #fff;
     }
 
-    /* NUEVA CORRECCIÓN 2: Título más pequeño en la sección hero para móvil */
     .hero h1 {
-        font-size: 2rem; /* Ajuste a un tamaño ligeramente menor */
+        font-size: 2rem;
     }
 
     #privateHeader .logo {
@@ -962,11 +962,11 @@ nav a:hover {
     }
 
     #results-modal-content h3 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 
     #modal-grade {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 }
 
@@ -978,7 +978,7 @@ nav a:hover {
     }
     
     #privateHeader .private-hamburger-menu-btn {
-        display: flex; /* Asegura que el botón del panel privado siempre sea visible */
+        display: flex;
     }
 
     .desktop-nav {
