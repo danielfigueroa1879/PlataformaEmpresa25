@@ -44,6 +44,11 @@ body {
     align-items: center;
 }
 
+#privateHeader .header-content .logo {
+    flex-grow: 1;
+    justify-content: center;
+}
+
 .logo {
     font-size: 1.8rem;
     font-weight: 600;
@@ -824,6 +829,10 @@ nav a:hover {
         width: 98%;
     }
 
+    p {
+        text-align: justify;
+    }
+
     .header .container {
         flex-direction: row;
         justify-content: space-between;
@@ -907,10 +916,6 @@ nav a:hover {
     }
 
     #privateHeader .logo {
-        justify-content: flex-start;
-    }
-
-    #privateHeader .logo span {
         display: none;
     }
 
