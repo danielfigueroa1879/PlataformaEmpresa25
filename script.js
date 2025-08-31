@@ -707,6 +707,15 @@ function setupExamEventListeners() {
 
 // FUNCIÓN CRÍTICA: Inicializar el examen correctamente
 function initializeExam() {
+    // Ocultar el contenedor de simulacros disponibles
+    const simulacrosContainer = document.querySelector('.card-content');
+    if (simulacrosContainer) {
+        const parentCard = simulacrosContainer.closest('.card');
+        if (parentCard) {
+            parentCard.style.display = 'none';
+        }
+    }
+
     // Mostrar el contenedor del examen
     const quizContainer = document.getElementById('quiz-exam-container');
     if (quizContainer) {

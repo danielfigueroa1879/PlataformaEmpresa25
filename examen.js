@@ -440,13 +440,13 @@ function displayCategorizedQuiz(questions) {
 
 function getCategoryBadge(category) {
     const categoryColors = {
-        "CONOCIMIENTOS LEGALES": "bg-primary",
-        "PRIMEROS AUXILIOS": "bg-danger", 
-        "PROTECCIÓN DE INSTALACIONES": "bg-success",
-        "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "bg-warning text-dark",
-        "VALORES Y ÉTICA": "bg-info",
-        "SISTEMAS DE COMUNICACIÓN Y ENLACE": "bg-secondary",
-        "PREVENCIÓN Y CONTROL DE EMERGENCIA": "bg-dark",
+        "CONOCIMIENTOS LEGALES": "bg-legal",
+        "PRIMEROS AUXILIOS": "bg-primeros-auxilios", 
+        "PROTECCIÓN DE INSTALACIONES": "bg-proteccion",
+        "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "bg-sistemas-alarma",
+        "VALORES Y ÉTICA": "bg-etica",
+        "SISTEMAS DE COMUNICACIÓN Y ENLACE": "bg-comunicacion",
+        "PREVENCIÓN Y CONTROL DE EMERGENCIA": "bg-emergencias",
         "PREGUNTAS ADICIONALES": "bg-purple"
     };
     
