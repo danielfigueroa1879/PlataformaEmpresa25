@@ -242,7 +242,7 @@ function createCategorizedQuestions() {
             case "SISTEMAS DE COMUNICACIÓN Y ENLACE":
                 questionsToTake = 5;
                 break;
-            case "PREVENCIÓN Y Y CONTROL DE EMERGENCIA":
+            case "PREVENCIÓN Y CONTROL DE EMERGENCIA":
                 questionsToTake = 7;
                 break;
             case "PREGUNTAS ADICIONALES":

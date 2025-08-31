@@ -863,7 +863,7 @@ function renderExamenPractica() {
                 <div class="space-y-4">
                     <div class="exam-choice-card" style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; min-height: 150px;">
                         <h4 class="font-bold">Examen Básico OS-10</h4>
-                        <p class="text-sm" style="color: #6b7280;">30 preguntas - 60 minutos</p>
+                        <p class="text-sm" style="color: #6b7280;">50 preguntas - 60 minutos</p>
                         <div class="flex justify-between items-center mt-4">
                             <span class="text-sm" style="color: #6b7280;">Último intento: 85%</span>
                             <button class="btn btn-primary" id="start-quiz-basic">Iniciar</button>
@@ -888,7 +888,7 @@ function renderExamenPractica() {
                 <p class="text-center exam-intro-text">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
                 <p class="text-center exam-intro-text" style="color: #dc3545; font-weight: 600; font-size: 0.9rem;">
                     <i class="bi bi-exclamation-triangle"></i> 
-                    <strong>IMPORTANTE:</strong> Este examen consta de 30 preguntas. Una vez que selecciones una respuesta, no podrás cambiarla. Lee cuidadosamente antes de responder.
+                    <strong>IMPORTANTE:</strong> Este examen consta de 50 preguntas. Una vez que selecciones una respuesta, no podrás cambiarla. Lee cuidadosamente antes de responder.
                 </p>
                 
                 <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
