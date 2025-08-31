@@ -1,58 +1,72 @@
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM Content Loaded. Initializing app logic.");
+// Global Capacitación Limitada - Integrated JavaScript
 
-    // Navbar Shrink on Scroll
-    const navbar = document.getElementById('mainNavbar');
-    if (navbar) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-shrink');
-            } else {
-                navbar.classList.remove('navbar-shrink');
-            }
-        });
+// Global state
+let currentUser = null;
+let currentSection = 'home';
+
+// Mock data for public site
+const cursosCapacitacion = [
+    {
+        nombre: 'Capacitación OS10 Completa',
+        duracion: '120 horas',
+        modalidad: 'Presencial y Online',
+        precio: '$150.000',
+        temario: ['Normativas de Seguridad', 'Procedimientos de Emergencia', 'Manejo de Conflictos', 'Primeros Auxilios']
+    },
+    {
+        nombre: 'Seguridad Privada Avanzada',
+        duracion: '80 horas',
+        modalidad: 'Presencial',
+        precio: '$200.000',
+        temario: ['Técnicas de Vigilancia', 'Control de Accesos', 'Gestión de Riesgos', 'Comunicación Efectiva']
     }
+];
 
-    // Search Bar Toggle
-    const searchToggle = document.getElementById('searchToggle');
-    const searchBar = document.getElementById('searchBar');
-
-    if (searchToggle && searchBar) {
-        searchToggle.addEventListener('click', function() {
-            searchBar.classList.toggle('show');
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!searchBar.contains(event.target) && !searchToggle.contains(event.target)) {
-                searchBar.classList.remove('show');
-            }
-        });
+const noticias = [
+    {
+        titulo: 'Nueva Certificación OS10 Implementada',
+        fecha: '10 de Enero, 2024',
+        imagen: 'https://placehold.co/300x200/1a3a6e/white?text=Capacitación+OS10',
+        contenido: 'Anunciamos la implementación de la nueva certificación OS10 para nuestros guardias de seguridad...'
     }
+];
 
-    // Variables globales para el quiz
-    let questions = [];
-    let userAnswers = {};
+// Mock data for private system
+const mockData = {
+    guardias: [
+        { id: 1, nombre: 'Juan Pérez', rut: '12345678-9', email: 'juan@example.com', estado: 'activo', cursosVencen: 15 }
+    ],
+    cursos: [
+        { id: 1, nombre: 'Curso OS-10 Básico', fechaInicio: '2025-09-15', duracion: '40 horas', precio: 150000, estudiantes: 25 }
+    ],
+    turnos: [
+        { id: 1, fecha: '2025-08-29', hora: '08:00-20:00', ubicacion: 'Mall Plaza La Serena', guardia: 'Juan Pérez', estado: 'asignado' }
+    ]
+};
 
-    // Quiz Logic
-    const quizContainer = document.getElementById('quiz-container');
-    const submitQuizBtn = document.getElementById('submit-quiz-btn');
-    const startExamBtn = document.getElementById('start-exam-btn');
-    const examSection = document.getElementById('exam-section');
-    const subtleResponseBox = document.getElementById('subtle-response-box');
+// Menu configurations for private system
+const menuConfig = {
+    admin: [
+        { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
+        { id: 'gestionar-guardias', label: 'Gestionar Guardias', icon: 'fas fa-shield-alt' }
+    ],
+    guardia: [
+        { id: 'mi-perfil', label: 'Mi Perfil', icon: 'fas fa-user' },
+        { id: 'mis-turnos', label: 'Mis Turnos', icon: 'fas fa-calendar' }
+    ],
+    estudiante: [
+        { id: 'mis-cursos', label: 'Mis Cursos', icon: 'fas fa-book' },
+        { id: 'examen-practica', label: 'Examen de Práctica OS-10', icon: 'fas fa-clipboard-check' }
+    ]
+};
 
-    // Modal elements for results
-    const resultsModalOverlay = document.getElementById('results-modal-overlay');
-    const resultsModalContent = document.getElementById('results-modal-content');
-    const modalCorrectCount = document.getElementById('modal-correct-count');
-    const modalTotalQuestions = document.getElementById('modal-total-questions');
-    const modalPercentage = document.getElementById('modal-percentage');
-    const modalGrade = document.getElementById('modal-grade');
-    const modalMessage = document.getElementById('modal-message');
-    const closeModalBtn = document.getElementById('close-modal-btn');
+// Quiz variables
+let questions = [];
+let userAnswers = {};
 
-    // Sistema de preguntas categorizadas para el examen OS-10 - BANCO COMPLETO
-    const questionsByCategory = {
-        "CONOCIMIENTOS LEGALES": [
+// Simplified question bank for testing
+const questionsByCategory = {
+    "CONOCIMIENTOS LEGALES": [
             { question: "La labor básica de los Guardias de Seguridad es brindar personalmente seguridad y protección a bienes, personas e instalaciones.", correctAnswer: "Verdadero" },
             { question: "Cualquier persona puede ser detenida cuando hay sospecha de que cometió un delito.", correctAnswer: "Falso" },
             { question: "La existencia de la legítima defensa como justificación de un hecho, es determinada por la policía.", correctAnswer: "Falso" },
@@ -330,557 +344,533 @@ document.addEventListener('DOMContentLoaded', function() {
             { question: "La detención por particulares no puede exceder de 24 horas sin entregar al detenido a la autoridad competente.", correctAnswer: "Verdadero" }
         ]
     };
+// Initialize app
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("App initialized");
+    
+    // Elements
+    const loginBtn = document.getElementById('loginBtn');
+    const modal = document.getElementById('loginModal');
+    const closeModal = document.querySelector('.close-modal');
+    const loginForm = document.getElementById('loginForm');
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    
+    initPublicSite();
 
-    // Función para crear el array de preguntas mezcladas categorizadamente
-    function createCategorizedQuestions() {
-        const allQuestions = [];
-        const categories = Object.keys(questionsByCategory);
-        
-        // Obtener preguntas de cada categoría de manera aleatoria
-        categories.forEach(category => {
-            const categoryQuestions = questionsByCategory[category];
-            const shuffledCategoryQuestions = shuffleArray([...categoryQuestions]);
-            
-            // Determinar cuántas preguntas tomar de cada categoría
-            let questionsToTake;
-            switch(category) {
-                case "CONOCIMIENTOS LEGALES":
-                    questionsToTake = 8;
-                    break;
-                case "PRIMEROS AUXILIOS":
-                    questionsToTake = 4;
-                    break;
-                case "PROTECCIÓN DE INSTALACIONES":
-                    questionsToTake = 6;
-                    break;
-                case "CONOCIMIENTOS DE SISTEMAS DE ALARMA":
-                    questionsToTake = 4;
-                    break;
-                case "VALORES Y ÉTICA":
-                    questionsToTake = 4;
-                    break;
-                case "PREGUNTAS ADICIONALES":
-                    questionsToTake = 4;
-                    break;
-                default:
-                    questionsToTake = 3;
-            }
-            
-            // Agregar las preguntas seleccionadas con la información de categoría
-            for (let i = 0; i < Math.min(questionsToTake, shuffledCategoryQuestions.length); i++) {
-                allQuestions.push({
-                    ...shuffledCategoryQuestions[i],
-                    category: category
-                });
-            }
-        });
-        
-        // Mezclar todas las preguntas seleccionadas y tomar exactamente 30
-        return shuffleArray(allQuestions).slice(0, 30);
-    }
-
-    // Función para mostrar las estadísticas de categorías al final del examen
-    function showCategoryStats(questions, userAnswers) {
-        const categoryStats = {};
-        
-        questions.forEach((question, index) => {
-            const category = question.category;
-            if (!categoryStats[category]) {
-                categoryStats[category] = { total: 0, correct: 0 };
-            }
-            categoryStats[category].total++;
-            
-            if (userAnswers[index] === question.correctAnswer) {
-                categoryStats[category].correct++;
-            }
-        });
-        
-        return categoryStats;
-    }
-
-    // Function to shuffle an array
-    function shuffleArray(array) {
-        const shuffled = [...array];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
-    }
-
-    // Función para obtener el badge de categoría con colores
-    function getCategoryBadge(category) {
-        const categoryColors = {
-            "CONOCIMIENTOS LEGALES": "bg-primary",
-            "PRIMEROS AUXILIOS": "bg-danger", 
-            "PROTECCIÓN DE INSTALACIONES": "bg-success",
-            "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "bg-warning text-dark",
-            "VALORES Y ÉTICA": "bg-info",
-            "PREGUNTAS ADICIONALES": "bg-purple"
-        };
-        
-        const colorClass = categoryColors[category] || "bg-secondary";
-        const categoryShort = getCategoryShortName(category);
-        
-        return `<span class="badge ${colorClass} category-badge">${categoryShort}</span>`;
-    }
-
-    // Función para obtener nombres cortos de categorías
-    function getCategoryShortName(category) {
-        const shortNames = {
-            "CONOCIMIENTOS LEGALES": "Legal",
-            "PRIMEROS AUXILIOS": "Primeros Auxilios",
-            "PROTECCIÓN DE INSTALACIONES": "Protección",
-            "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "Sistemas",
-            "VALORES Y ÉTICA": "Ética",
-            "PREGUNTAS ADICIONALES": "Adicionales"
-        };
-        
-        return shortNames[category] || category;
-    }
-
-    // Función principal para generar preguntas categorizadas
-    function generateQuestionsCategorized() {
-        console.log("generateQuestionsCategorized function called.");
-        
-        // Show loading message
-        if (quizContainer) {
-            quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas categorizadas... Esto puede tardar unos segundos.</p>';
-            quizContainer.style.display = 'block';
-        }
-        
-        if (startExamBtn) startExamBtn.style.display = 'none';
-        if (submitQuizBtn) submitQuizBtn.style.display = 'none';
-
-        // Activate persistent red border for the exam section
-        if (examSection) examSection.classList.add('active-red-border');
-
-        // Show subtle message box
-        if (subtleResponseBox) { 
-            subtleResponseBox.style.display = 'block';
-            subtleResponseBox.classList.add('show');
-            subtleResponseBox.textContent = '¡Generando preguntas categorizadas, por favor espera!';
-        }
-
-        // Simulate loading time and then generate categorized questions
-        setTimeout(() => {
-            questions = createCategorizedQuestions();
-            userAnswers = {};
-            
-            displayCategorizedQuiz();
-            
-            if (subtleResponseBox) {
-                subtleResponseBox.textContent = '¡30 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
-                setTimeout(() => {
-                    subtleResponseBox.classList.remove('show');
-                    setTimeout(() => subtleResponseBox.style.display = 'none', 500);
-                }, 4000);
-            }
-        }, 1000);
-    }
-
-    // Función para mostrar el quiz categorizado
-    function displayCategorizedQuiz() {
-        if (!quizContainer) return;
-        
-        quizContainer.innerHTML = '';
-        
-        questions.forEach((q, index) => {
-            const questionCard = document.createElement('div');
-            questionCard.classList.add('question-card');
-            
-            // Agregar badge de categoría
-            const categoryBadge = getCategoryBadge(q.category);
-            
-            questionCard.innerHTML = `
-                <div class="category-badge-container mb-2">
-                    ${categoryBadge}
-                </div>
-                <h5>${index + 1}. ${q.question}</h5>
-                <div class="options-container">
-                    <label class="option-button" data-question="${index}" data-value="Verdadero">
-                        <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" style="display: none;">
-                        Verdadero
-                    </label>
-                    <label class="option-button" data-question="${index}" data-value="Falso">
-                        <input class="form-check-input" type="radio" name="question${index}" value="Falso" style="display: none;">
-                        Falso
-                    </label>
-                </div>
-                <div class="feedback-message mt-2" style="font-weight: 600; display: none;"></div>
-            `;
-            quizContainer.appendChild(questionCard);
-
-            // Add event listeners to option buttons
-            const optionButtons = questionCard.querySelectorAll('.option-button');
-            optionButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const questionIndex = parseInt(this.dataset.question);
-                    
-                    if (userAnswers[questionIndex] !== undefined) {
-                        return;
-                    }
-                    
-                    const selectedValue = this.dataset.value;
-                    const currentQuestion = questions[questionIndex];
-                    const feedbackMessage = questionCard.querySelector('.feedback-message');
-
-                    userAnswers[questionIndex] = selectedValue;
-
-                    optionButtons.forEach(btn => {
-                        btn.classList.remove('selected', 'correct', 'incorrect');
-                    });
-
-                    this.classList.add('selected');
-                    
-                    if (selectedValue === currentQuestion.correctAnswer) {
-                        this.classList.add('correct');
-                        feedbackMessage.style.color = '#28a745';
-                        feedbackMessage.textContent = '¡Correcto!';
-                    } else {
-                        this.classList.add('incorrect');
-                        feedbackMessage.style.color = '#dc3545';
-                        feedbackMessage.textContent = `Incorrecto. La respuesta correcta era: "${currentQuestion.correctAnswer}".`;
-                    }
-
-                    feedbackMessage.style.display = 'block';
-                    questionCard.classList.add('answered-blue-border');
-                    
-                    optionButtons.forEach(btn => {
-                        btn.style.pointerEvents = 'none';
-                        btn.style.opacity = '0.8';
-                        btn.style.cursor = 'not-allowed';
-                    });
-                    
-                    const lockMessage = document.createElement('div');
-                    lockMessage.style.cssText = 'font-size: 0.8em; color: #666; margin-top: 8px; font-style: italic;';
-                    lockMessage.textContent = '🔒 Respuesta registrada - No se puede modificar';
-                    feedbackMessage.appendChild(lockMessage);
-
-                    if (Object.keys(userAnswers).length === questions.length && submitQuizBtn) {
-                        submitQuizBtn.style.display = 'block';
-                        showSubtleMessage('¡Todas las preguntas respondidas! Puedes enviar tu examen.');
-                    }
-                });
-            });
+    // Login functionality
+    if (loginBtn && modal && closeModal) {
+        loginBtn.addEventListener('click', () => {
+            modal.classList.add('active');
         });
 
-        console.log("Categorized quiz questions displayed.");
-    }
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
 
-    // Función modificada para enviar quiz con estadísticas por categoría
-    function submitCategorizedQuiz() {
-        let score = 0;
-        questions.forEach((q, index) => {
-            if (userAnswers[index] === q.correctAnswer) {
-                score++;
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
             }
         });
 
-        const maxScore = questions.length;
-        const percentage = (score / maxScore) * 100;
-        const grade = calculateGrade(percentage);
-        const passed = grade >= 4.0;
-        
-        // Obtener estadísticas por categoría
-        const categoryStats = showCategoryStats(questions, userAnswers);
-
-        // Populate modal content
-        if (modalCorrectCount) modalCorrectCount.textContent = score;
-        if (modalTotalQuestions) modalTotalQuestions.textContent = maxScore;
-        if (modalPercentage) modalPercentage.textContent = percentage.toFixed(1);
-        if (modalGrade) modalGrade.textContent = grade.toFixed(1);
-
-        // Crear contenido detallado por categorías
-        let categoryBreakdown = '<div class="category-breakdown mt-3"><h6>Resultados por Categoría:</h6>';
-        Object.entries(categoryStats).forEach(([category, stats]) => {
-            const categoryPercentage = ((stats.correct / stats.total) * 100).toFixed(1);
-            const categoryShort = getCategoryShortName(category);
-            const statusIcon = stats.correct === stats.total ? '✅' : 
-                              categoryPercentage >= 60 ? '⚠️' : '❌';
-            
-            categoryBreakdown += `
-                <div class="category-stat">
-                    ${statusIcon} <strong>${categoryShort}:</strong> ${stats.correct}/${stats.total} (${categoryPercentage}%)
-                </div>
-            `;
+        loginForm.addEventListener('submit', handleLogin);
+    }
+    
+    if (mobileLoginBtn && modal) {
+        mobileLoginBtn.addEventListener('click', () => {
+            modal.classList.add('active');
         });
-        categoryBreakdown += '</div>';
-
-        // Set modal message and color
-        if (resultsModalContent) {
-            resultsModalContent.classList.remove('pass', 'fail');
-            if (passed) {
-                if (modalMessage) modalMessage.innerHTML = '¡Felicitaciones! Has aprobado.' + categoryBreakdown;
-                resultsModalContent.classList.add('pass');
-            } else {
-                if (modalMessage) modalMessage.innerHTML = 'Necesitas repasar más. ¡No te desanimes!' + categoryBreakdown;
-                resultsModalContent.classList.add('fail');
-            }
-        }
-
-        // Show the modal
-        if (resultsModalOverlay) {
-            resultsModalOverlay.style.display = 'flex';
-            setTimeout(() => resultsModalOverlay.classList.add('show'), 10);
-        }
-
-        if (submitQuizBtn) submitQuizBtn.style.display = 'none';
-        
-        // Disable all option buttons
-        document.querySelectorAll('.option-button').forEach(button => {
-            button.style.pointerEvents = 'none';
-            button.style.opacity = '0.7';
-        });
-
-        console.log("Categorized quiz submitted and results displayed in modal. Score:", score);
     }
 
-    // Function to calculate grade from 1 to 7
-    function calculateGrade(percentage) {
-        if (percentage < 30) return 1.0;
-        if (percentage < 40) return 2.0;
-        if (percentage < 50) return 3.0;
-        if (percentage < 60) return 4.0;
-        if (percentage < 70) return 5.0;
-        if (percentage < 85) return 6.0;
-        return 7.0;
-    }
+    // Quiz functionality
+    const startExamBtn = document.getElementById('start-exam-btn');
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
 
-    // Function to show subtle messages
-    function showSubtleMessage(message, isError = false) {
-        const messageBox = document.createElement('div');
-        messageBox.className = 'subtle-response-box show';
-        messageBox.textContent = message;
-        messageBox.style.position = 'fixed';
-        messageBox.style.top = '20%';
-        messageBox.style.left = '50%';
-        messageBox.style.transform = 'translate(-50%, -50%)';
-        messageBox.style.zIndex = '1500';
-
-        if (isError) {
-            messageBox.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
-            messageBox.style.color = '#dc3545';
-        } else {
-            messageBox.style.backgroundColor = 'rgba(40, 53, 147, 0.2)';
-            messageBox.style.color = '#283593';
-        }
-
-        document.body.appendChild(messageBox);
-
-        setTimeout(() => {
-            messageBox.classList.remove('show');
-            messageBox.addEventListener('transitionend', () => messageBox.remove());
-        }, 3000);
-    }
-
-    // Event Listeners
     if (startExamBtn) {
-        startExamBtn.addEventListener('click', generateQuestionsCategorized);
+        startExamBtn.addEventListener('click', generateQuestions);
     }
     
     if (submitQuizBtn) {
-        submitQuizBtn.addEventListener('click', submitCategorizedQuiz);
+        submitQuizBtn.addEventListener('click', submitQuiz);
     }
 
-    // Close modal button listener
     if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            if (resultsModalOverlay) {
-                resultsModalOverlay.classList.remove('show');
-                setTimeout(() => {
-                    resultsModalOverlay.style.display = 'none';
-                    if (resultsModalContent) resultsModalContent.classList.remove('pass', 'fail');
-                    
-                    // Reset exam
-                    if (quizContainer) quizContainer.style.display = 'none';
-                    if (startExamBtn) startExamBtn.style.display = 'block';
-                    if (submitQuizBtn) submitQuizBtn.style.display = 'none';
-                    if (examSection) examSection.classList.remove('active-red-border');
-                    questions = [];
-                    userAnswers = {};
-                }, 300);
-            }
-        });
+        closeModalBtn.addEventListener('click', closeResultsModal);
     }
 
-    // Click outside modal to close
-    if (resultsModalOverlay) {
-        resultsModalOverlay.addEventListener('click', (e) => {
-            if (e.target === resultsModalOverlay && closeModalBtn) {
-                closeModalBtn.click();
-            }
-        });
+    renderBlog();
+    renderCursos();
+});
+
+function initPublicSite() {
+    const publicSite = document.getElementById('publicSite');
+    const privateSystem = document.getElementById('privateSystem');
+    
+    if (publicSite) publicSite.classList.remove('hidden');
+    if (privateSystem) privateSystem.classList.add('hidden');
+}
+
+function renderBlog() {
+    const blogContainer = document.getElementById('blogPosts');
+    if (blogContainer) {
+        blogContainer.innerHTML = noticias.map(nota => `
+            <div class="blog-card">
+                <img src="${nota.imagen}" alt="${nota.titulo}">
+                <div class="blog-card-content">
+                    <h3>${nota.titulo}</h3>
+                    <p class="date">${nota.fecha}</p>
+                    <p>${nota.contenido}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function renderCursos() {
+    const cursosContainer = document.getElementById('cursosList');
+    if (cursosContainer) {
+        cursosContainer.innerHTML = cursosCapacitacion.map(curso => `
+            <div class="card">
+                <h3>${curso.nombre}</h3>
+                <p><strong>Duración:</strong> ${curso.duracion}</p>
+                <p><strong>Modalidad:</strong> ${curso.modalidad}</p>
+                <p><strong>Precio:</strong> ${curso.precio}</p>
+                <button class="btn" onclick="openLoginForEnrollment('${curso.nombre}')">Inscribirse</button>
+            </div>
+        `).join('');
+    }
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const role = document.getElementById('userRole').value;
+    
+    if (!role) {
+        alert('Por favor, seleccione un tipo de usuario');
+        return;
     }
 
-    // Report Drafting Assistant Logic
-    const incidentDescriptionInput = document.getElementById('incident-description-input');
-    const reportTypeSelect = document.getElementById('report-type-select');
-    const generateReportBtn = document.getElementById('generate-report-btn');
-    const reportOutput = document.getElementById('report-output');
-    const copyReportBtn = document.getElementById('copy-report-btn');
-    const downloadActaBtn = document.getElementById('download-acta-btn');
-
-    // Hide report action buttons on init
-    if (copyReportBtn) copyReportBtn.style.display = 'none';
-    if (downloadActaBtn) downloadActaBtn.style.display = 'none';
-
-    if (generateReportBtn && incidentDescriptionInput && reportTypeSelect && reportOutput) {
-        generateReportBtn.addEventListener('click', async () => {
-            const description = incidentDescriptionInput.value.trim();
-            const selectedReportType = reportTypeSelect.value;
-
-            if (!description) {
-                reportOutput.innerHTML = '<p style="color: #dc3545;">Por favor, describe el incidente.</p>';
-                if (copyReportBtn) copyReportBtn.style.display = 'none';
-                if (downloadActaBtn) downloadActaBtn.style.display = 'none';
-                return;
-            }
-
-            reportOutput.innerHTML = '<p style="color: #17a2b8;"><span class="spinner-border text-info" role="status"></span> Generando borrador...</p>';
-            generateReportBtn.disabled = true;
-            if (copyReportBtn) copyReportBtn.style.display = 'none';
-            if (downloadActaBtn) downloadActaBtn.style.display = 'none';
-
-            if (selectedReportType === 'acta_detencion_particulares') {
-                reportOutput.innerHTML = `<p style="color: #28a745;">Haz clic en el botón para descargar el Acta de Detención:</p>`;
-                if (downloadActaBtn) downloadActaBtn.style.display = 'block';
-                generateReportBtn.disabled = false;
-                console.log("Showing Detention Act download button.");
-                return;
-            }
-
-            // Generate a simulated report
-            setTimeout(() => {
-                const currentDate = new Date().toLocaleDateString('es-CL');
-                const currentTime = new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' });
-
-                let generatedReport = `INFORME DE INCIDENTE
-
-Fecha: ${currentDate}
-Hora: ${currentTime}
-Descripción: ${description}
-
-ACCIONES TOMADAS:
-- Se procedió según protocolo de seguridad establecido
-- Se documentó el incidente para registro interno
-
-Elaborado por: [Nombre del Guardia]
-Fecha de elaboración: ${currentDate}`;
-
-                reportOutput.innerHTML = `<pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; padding: 10px; border-radius: 5px; color: #333; margin: 0;">${generatedReport}</pre>`;
-                if (copyReportBtn) copyReportBtn.style.display = 'block';
-                generateReportBtn.disabled = false;
-            }, 1500);
-        });
+    if (email && password) {
+        currentUser = {
+            id: 1,
+            nombre: role === 'admin' ? 'Admin Global' : role === 'guardia' ? 'Juan Pérez' : 'Ana Estudiante',
+            email: email,
+            rol: role
+        };
+        
+        currentSection = role === 'admin' ? 'dashboard' : role === 'guardia' ? 'mi-perfil' : 'mis-cursos';
+        
+        const modal = document.getElementById('loginModal');
+        const publicSite = document.getElementById('publicSite');
+        const privateSystem = document.getElementById('privateSystem');
+        
+        if (modal) modal.classList.remove('active');
+        if (publicSite) publicSite.classList.add('hidden');
+        if (privateSystem) privateSystem.classList.remove('hidden');
+        
+        updatePrivateUI();
+    } else {
+        alert('Por favor, complete todos los campos');
     }
+}
 
-    if (copyReportBtn && reportOutput) {
-        copyReportBtn.addEventListener('click', () => {
-            const reportContent = reportOutput.textContent;
-            navigator.clipboard.writeText(reportContent).then(() => {
-                showSubtleMessage('¡Borrador copiado al portapapeles!');
-            }).catch(err => {
-                console.error('Error al copiar el borrador:', err);
-                showSubtleMessage('No se pudo copiar el borrador.', true);
+function logout() {
+    currentUser = null;
+    currentSection = 'home';
+    
+    const publicSite = document.getElementById('publicSite');
+    const privateSystem = document.getElementById('privateSystem');
+    
+    if (privateSystem) privateSystem.classList.add('hidden');
+    if (publicSite) publicSite.classList.remove('hidden');
+}
+
+function toggleSidebar(show = null) {
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    
+    if (!sidebar || !mainContent) return;
+    
+    if (show === null) {
+        sidebar.classList.toggle('open');
+        mainContent.classList.toggle('sidebar-open');
+    } else if (show) {
+        sidebar.classList.add('open');
+        mainContent.classList.add('sidebar-open');
+    } else {
+        sidebar.classList.remove('open');
+        mainContent.classList.remove('sidebar-open');
+    }
+}
+
+function navigateToSection(sectionId) {
+    currentSection = sectionId;
+    updatePrivateUI();
+}
+
+function updatePrivateUI() {
+    updatePrivateHeader();
+    updateSidebar();
+    updateMainContent();
+}
+
+function updatePrivateHeader() {
+    const headerActions = document.getElementById('headerActions');
+    if (headerActions && currentUser) {
+        headerActions.innerHTML = `
+            <div class="flex items-center gap-4">
+                <span class="user-welcome">Bienvenido, ${currentUser.nombre}</span>
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function updateSidebar() {
+    const sidebarMenu = document.getElementById('sidebarMenu');
+    if (!sidebarMenu || !currentUser) return;
+
+    const menuItems = menuConfig[currentUser.rol] || [];
+    sidebarMenu.innerHTML = menuItems.map(item => `
+        <li class="sidebar-item ${currentSection === item.id ? 'active' : ''}" onclick="navigateToSection('${item.id}')">
+            <i class="${item.icon}"></i>
+            <span>${item.label}</span>
+        </li>
+    `).join('');
+}
+
+function updateMainContent() {
+    const mainContent = document.getElementById('mainContent');
+    if (!mainContent || !currentUser) return;
+
+    switch (currentSection) {
+        case 'examen-practica':
+            mainContent.innerHTML = renderExamenPractica();
+            break;
+        case 'mis-cursos':
+            mainContent.innerHTML = renderMisCursos();
+            break;
+        case 'dashboard':
+            mainContent.innerHTML = renderAdminDashboard();
+            break;
+        default:
+            mainContent.innerHTML = renderSeccionEnDesarrollo();
+    }
+}
+
+function renderExamenPractica() {
+    return `
+        <section id="exam-section" class="mt-5">
+            <h2 class="text-center exam-heading-green">Examen de Preparación OS-10</h2>
+            <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada. ¡Obtén tu calificación en escala del 1 al 7!</p>
+            
+            <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
+
+            <div id="quiz-container" class="mt-4" style="display: none;"></div>
+            <div class="exam-controls">
+                <button id="submit-quiz-btn" style="display: none;">Enviar Examen</button>
+            </div>
+            <div id="subtle-response-box" class="subtle-response-box"></div>
+        </section>
+        <div id="results-modal-overlay" style="display: none;">
+            <div id="results-modal-content">
+                <h3>Resultados del Examen</h3>
+                <p>Respuestas correctas: <span id="modal-correct-count"></span> de <span id="modal-total-questions"></span></p>
+                <p>Porcentaje: <span id="modal-percentage"></span>%</p>
+                <p>Tu nota en escala del 1 al 7: <strong id="modal-grade"></strong></p>
+                <p id="modal-message"></p>
+                <button id="close-modal-btn">Cerrar</button>
+            </div>
+        </div>
+    `;
+}
+
+function renderMisCursos() {
+    return `
+        <h2 class="text-3xl font-bold mb-8">Mis Cursos</h2>
+        <div class="grid grid-cols-2">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="text-xl font-bold mb-4">Curso OS-10 Básico</h3>
+                    <p><strong>Progreso:</strong> 75%</p>
+                    <div class="progress mt-4">
+                        <div class="progress-bar" style="width: 75%;"></div>
+                    </div>
+                    <button class="btn btn-primary mt-4">Continuar Curso</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderAdminDashboard() {
+    return `
+        <h2 class="text-3xl font-bold mb-8">Panel de Control Administrativo</h2>
+        <div class="grid grid-cols-4 mb-8">
+            <div class="stat-card blue">
+                <div>
+                    <p>Total Guardias</p>
+                    <p class="stat-number">2</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderSeccionEnDesarrollo() {
+    return `
+        <h2 class="text-3xl font-bold mb-8">Sección en Desarrollo</h2>
+        <div class="card">
+            <div class="card-content">
+                <p>Esta sección está siendo desarrollada y estará disponible pronto.</p>
+            </div>
+        </div>
+    `;
+}
+
+// Quiz Functions
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+function createCategorizedQuestions() {
+    const allQuestions = [];
+    const categories = Object.keys(questionsByCategory);
+    
+    categories.forEach(category => {
+        const categoryQuestions = questionsByCategory[category];
+        const shuffledCategoryQuestions = shuffleArray([...categoryQuestions]);
+        
+        // Take questions from each category
+        const questionsToTake = Math.min(3, shuffledCategoryQuestions.length);
+        
+        for (let i = 0; i < questionsToTake; i++) {
+            allQuestions.push({
+                ...shuffledCategoryQuestions[i],
+                category: category
+            });
+        }
+    });
+    
+    return shuffleArray(allQuestions).slice(0, 12); // 12 questions total for testing
+}
+
+function generateQuestions() {
+    console.log("generateQuestions called");
+    
+    const quizContainer = document.getElementById('quiz-container');
+    const startExamBtn = document.getElementById('start-exam-btn');
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+    
+    if (quizContainer) {
+        quizContainer.innerHTML = '<p class="text-center">Generando preguntas...</p>';
+        quizContainer.style.display = 'block';
+    }
+    
+    if (startExamBtn) startExamBtn.style.display = 'none';
+    if (submitQuizBtn) submitQuizBtn.style.display = 'none';
+
+    setTimeout(() => {
+        questions = createCategorizedQuestions();
+        userAnswers = {};
+        displayQuiz();
+    }, 1000);
+}
+
+function displayQuiz() {
+    const quizContainer = document.getElementById('quiz-container');
+    if (!quizContainer) return;
+    
+    quizContainer.innerHTML = '';
+    
+    questions.forEach((q, index) => {
+        const questionCard = document.createElement('div');
+        questionCard.classList.add('question-card');
+        
+        questionCard.innerHTML = `
+            <h5>${index + 1}. ${q.question}</h5>
+            <div class="options-container">
+                <label class="option-button" data-question="${index}" data-value="Verdadero">
+                    <input type="radio" name="question${index}" value="Verdadero" style="display: none;">
+                    Verdadero
+                </label>
+                <label class="option-button" data-question="${index}" data-value="Falso">
+                    <input type="radio" name="question${index}" value="Falso" style="display: none;">
+                    Falso
+                </label>
+            </div>
+            <div class="feedback-message mt-2" style="font-weight: 600; display: none;"></div>
+        `;
+        quizContainer.appendChild(questionCard);
+
+        // Add event listeners
+        const optionButtons = questionCard.querySelectorAll('.option-button');
+        optionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const questionIndex = parseInt(this.dataset.question);
+                
+                if (userAnswers[questionIndex] !== undefined) {
+                    return;
+                }
+                
+                const selectedValue = this.dataset.value;
+                const currentQuestion = questions[questionIndex];
+                const feedbackMessage = questionCard.querySelector('.feedback-message');
+
+                userAnswers[questionIndex] = selectedValue;
+
+                optionButtons.forEach(btn => {
+                    btn.classList.remove('selected', 'correct', 'incorrect');
+                });
+
+                this.classList.add('selected');
+                
+                if (selectedValue === currentQuestion.correctAnswer) {
+                    this.classList.add('correct');
+                    feedbackMessage.style.color = '#28a745';
+                    feedbackMessage.textContent = '¡Correcto!';
+                } else {
+                    this.classList.add('incorrect');
+                    feedbackMessage.style.color = '#dc3545';
+                    feedbackMessage.textContent = `Incorrecto. La respuesta correcta era: "${currentQuestion.correctAnswer}".`;
+                }
+
+                feedbackMessage.style.display = 'block';
+                questionCard.classList.add('answered-blue-border');
+                
+                optionButtons.forEach(btn => {
+                    btn.style.pointerEvents = 'none';
+                    btn.style.opacity = '0.8';
+                });
+
+                if (Object.keys(userAnswers).length === questions.length) {
+                    const submitBtn = document.getElementById('submit-quiz-btn');
+                    if (submitBtn) submitBtn.style.display = 'block';
+                }
             });
         });
+    });
+
+    console.log("Quiz questions displayed");
+}
+
+function submitQuiz() {
+    let score = 0;
+    questions.forEach((q, index) => {
+        if (userAnswers[index] === q.correctAnswer) {
+            score++;
+        }
+    });
+
+    const maxScore = questions.length;
+    const percentage = (score / maxScore) * 100;
+    const grade = calculateGrade(percentage);
+    const passed = grade >= 4.0;
+
+    // Show modal with results
+    showResultsModal(score, maxScore, percentage, grade, passed);
+    
+    console.log("Quiz submitted. Score:", score);
+}
+
+function calculateGrade(percentage) {
+    if (percentage < 30) return 1.0;
+    if (percentage < 40) return 2.0;
+    if (percentage < 50) return 3.0;
+    if (percentage < 60) return 4.0;
+    if (percentage < 70) return 5.0;
+    if (percentage < 85) return 6.0;
+    return 7.0;
+}
+
+function showResultsModal(score, maxScore, percentage, grade, passed) {
+    const modalOverlay = document.getElementById('results-modal-overlay');
+    const modalContent = document.getElementById('results-modal-content');
+    const modalCorrectCount = document.getElementById('modal-correct-count');
+    const modalTotalQuestions = document.getElementById('modal-total-questions');
+    const modalPercentage = document.getElementById('modal-percentage');
+    const modalGrade = document.getElementById('modal-grade');
+    const modalMessage = document.getElementById('modal-message');
+
+    if (!modalOverlay) return;
+
+    if (modalCorrectCount) modalCorrectCount.textContent = score;
+    if (modalTotalQuestions) modalTotalQuestions.textContent = maxScore;
+    if (modalPercentage) modalPercentage.textContent = percentage.toFixed(1);
+    if (modalGrade) modalGrade.textContent = grade.toFixed(1);
+
+    if (modalContent) {
+        modalContent.classList.remove('pass', 'fail');
+        if (passed) {
+            modalContent.classList.add('pass');
+            if (modalMessage) modalMessage.textContent = '¡Felicitaciones! Has aprobado.';
+        } else {
+            modalContent.classList.add('fail');
+            if (modalMessage) modalMessage.textContent = 'Necesitas repasar más. ¡No te desanimes!';
+        }
     }
 
-    // AI Clarifier Logic (Floating)
-    const floatingAiButton = document.getElementById('floating-ai-button');
-    const aiClarifierChat = document.getElementById('ai-clarifier-chat');
-    const closeAiChatBtn = document.getElementById('close-ai-chat');
-    const aiQuestionInput = document.getElementById('ai-question-input');
-    const askAiBtn = document.getElementById('ask-ai-btn');
-    const aiClarifierResponse = document.getElementById('ai-clarifier-response');
+    modalOverlay.style.display = 'flex';
+    setTimeout(() => modalOverlay.classList.add('show'), 10);
 
-    if (floatingAiButton && aiClarifierChat) {
-        floatingAiButton.addEventListener('click', () => {
-            console.log("Floating AI button clicked. Toggling chat visibility.");
-            aiClarifierChat.classList.toggle('show');
-        });
+    const submitBtn = document.getElementById('submit-quiz-btn');
+    if (submitBtn) submitBtn.style.display = 'none';
+}
+
+function closeResultsModal() {
+    const modalOverlay = document.getElementById('results-modal-overlay');
+    const modalContent = document.getElementById('results-modal-content');
+    
+    if (modalOverlay) {
+        modalOverlay.classList.remove('show');
+        setTimeout(() => {
+            modalOverlay.style.display = 'none';
+            if (modalContent) modalContent.classList.remove('pass', 'fail');
+            
+            // Reset exam
+            const quizContainer = document.getElementById('quiz-container');
+            const startExamBtn = document.getElementById('start-exam-btn');
+            const submitBtn = document.getElementById('submit-quiz-btn');
+            
+            if (quizContainer) quizContainer.style.display = 'none';
+            if (startExamBtn) startExamBtn.style.display = 'block';
+            if (submitBtn) submitBtn.style.display = 'none';
+            
+            questions = [];
+            userAnswers = {};
+        }, 300);
     }
+}
 
-    if (closeAiChatBtn && aiClarifierChat && aiQuestionInput && aiClarifierResponse) {
-        closeAiChatBtn.addEventListener('click', () => {
-            console.log("Close chat button clicked. Hiding chat.");
-            aiClarifierChat.classList.remove('show');
-            aiQuestionInput.value = '';
-            aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>';
-        });
-    }
+// Helper functions
+function openLoginForEnrollment(courseName) {
+    const userRole = document.getElementById('userRole');
+    const modal = document.getElementById('loginModal');
+    
+    if (userRole) userRole.value = 'estudiante';
+    if (modal) modal.classList.add('active');
+}
 
-    if (askAiBtn && aiQuestionInput && aiClarifierResponse) {
-        askAiBtn.addEventListener('click', async function() {
-            const userQuestion = aiQuestionInput.value.trim();
-            if (userQuestion === "") {
-                aiClarifierResponse.innerHTML = '<p style="color: #dc3545;">Por favor, escribe tu pregunta.</p>';
-                return;
-            }
+function openLoginForExam() {
+    const userRole = document.getElementById('userRole');
+    const modal = document.getElementById('loginModal');
+    
+    if (userRole) userRole.value = 'estudiante';
+    if (modal) modal.classList.add('active');
+}
 
-            aiClarifierResponse.innerHTML = '<p style="color: #17a2b8;"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
-            askAiBtn.disabled = true;
-            console.log("Ask AI button clicked. Generating response for:", userQuestion);
+function startQuiz() {
+    generateQuestions();
+}
 
-            // Simulate AI response generation
-            setTimeout(() => {
-                const response = generateAIResponse(userQuestion);
-                aiClarifierResponse.innerHTML = `<p>${response}</p>`;
-                askAiBtn.disabled = false;
-                console.log("AI Clarifier response generated and displayed.");
-            }, 2000);
-        });
-    }
-
-    // Function to generate simulated AI responses
-    function generateAIResponse(question) {
-        const lowerQuestion = question.toLowerCase();
-        
-        // Respuestas sobre Decreto 93
-        if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('requisito') || lowerQuestion.includes('educación'))) {
-            return "Según el Decreto 93, para ser Guardia de Seguridad se requiere: tener al menos 18 años de edad, haber cursado educación media completa o su equivalente, no tener antecedentes penales, aprobar examen psicológico y físico, y completar el curso de formación de 90 horas académicas.";
-        }
-        
-        if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('uniforme') || lowerQuestion.includes('vestimenta'))) {
-            return "El Decreto 93 establece que el uniforme del guardia debe ser de color azul marino, con distintivos que identifiquen a la empresa y al guardia. Debe incluir placa identificatoria con nombre y RUN, y no puede asemejarse a uniformes de Fuerzas Armadas o de Orden.";
-        }
-        
-        if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('seguro') || lowerQuestion.includes('utm'))) {
-            return "El Decreto 93 establece que las empresas deben contratar un seguro de vida para sus guardias con una cifra asegurada de 75 UTM, que cubra accidentes y enfermedades derivadas del trabajo.";
-        }
-        
-        // Respuestas sobre funciones del guardia
-        if (lowerQuestion.includes('función') || lowerQuestion.includes('responsabilidad')) {
-            return "Las principales funciones del guardia de seguridad incluyen: vigilar y proteger bienes y personas, detectar y prevenir actos que atenten contra la seguridad, informar novedades a superiores, aplicar medidas de seguridad según protocolos, y colaborar con autoridades cuando sea requerido.";
-        }
-        
-        if (lowerQuestion.includes('detención') || lowerQuestion.includes('detener')) {
-            return "Los guardias pueden detener a personas solo en caso de delito flagrante, aplicando el Artículo 134 del Código Procesal Penal. Deben entregar inmediatamente al detenido a Carabineros y no pueden usar fuerza excesiva.";
-        }
-        
-        // Respuestas sobre Ley 21.659
-        if (lowerQuestion.includes('ley 21.659') || lowerQuestion.includes('nueva ley')) {
-            return "La Ley 21.659 moderniza la regulación de seguridad privada en Chile. Entra en vigencia el 28 de noviembre de 2025 y establece nuevos estándares para empresas y guardias, fortalece la fiscalización y mejora los requisitos de formación.";
-        }
-        
-        // Respuestas sobre armamento
-        if (lowerQuestion.includes('arma') || lowerQuestion.includes('armamento')) {
-            return "Los guardias de seguridad NO están autorizados para portar armas de fuego según el Decreto 93. Solo pueden usar elementos de protección personal autorizados como bastón de goma, silbato y linterna.";
-        }
-        
-        // Respuestas sobre procedimientos
-        if (lowerQuestion.includes('procedimiento') || lowerQuestion.includes('protocolo')) {
-            return "Los guardias deben seguir protocolos establecidos: observar y reportar, no alterar sitio del suceso, preservar evidencias, comunicar novedades de inmediato, actuar con prudencia y solicitar apoyo cuando sea necesario.";
-        }
-        
-        // Respuestas sobre formación
-        if (lowerQuestion.includes('curso') || lowerQuestion.includes('formación') || lowerQuestion.includes('90 horas')) {
-            return "El curso OS-10 para guardias de seguridad tiene una duración de 90 horas académicas y debe incluir materias como: legislación, procedimientos de seguridad, primeros auxilios, comunicaciones, derechos humanos y ética profesional.";
-        }
-        
-        // Respuesta general
-        return "Basándome en la normativa chilena de seguridad privada (Decreto Ley 3607, Decreto 93 y Ley 21.659), puedo ayudarte con temas específicos sobre funciones del guardia, requisitos, procedimientos y marco legal. ¿Podrías ser más específico con tu consulta?";
-    }
-
-    console.log("Quiz system and AI Clarifier initialized successfully.");
+console.log("Script loaded successfully");
