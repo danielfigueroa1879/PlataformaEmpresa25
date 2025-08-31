@@ -100,7 +100,6 @@ const questionsByCategory = {
         { question: "Sólo el Jefe de Seguridad de una empresa debe conocer los planes de emergencia de ésta, para que no se divulguen entre el personal de la instalación.", correctAnswer: "Falso" },
         { question: "El prevenir se logra estando atento al servicio, controlar y fiscalizar al máximo las medidas de seguridad de la empresa.", correctAnswer: "Verdadero" },
         { question: "Dentro de los tipos de barreras se cuentan las artificiales.", correctAnswer: "Verdadero" },
-        { question: "El vigilante privado o guardia de seguridad deben efectuar inspecciones a la instalación protegida para reconocer peligros de incendio.", correctAnswer: "Verdadero" },
         { question: "El Guardia de Seguridad es una barrera artificial pasiva.", correctAnswer: "Falso" }
     ],
 
@@ -163,10 +162,6 @@ const questionsByCategory = {
         { question: "Lo fundamental en la tarea del Guardia de Seguridad es demostrar diariamente su compromiso con la tarea de seguridad que asumido.", correctAnswer: "Verdadero" },
         { question: "El Guardia de Seguridad además de su condición de tal, debe demostrar sus virtudes personales como fórmula exacta para el enriquecimiento de su actuar.", correctAnswer: "Verdadero" },
         { question: "El Guardia de Seguridad debe ser, moderado en su actuar, esto es una muestra de auto control o autodisciplina.", correctAnswer: "Verdadero" },
-        { question: "Por las funciones que cumplen los Guardias de Seguridad se requiere una estructura, bien jerarquizada y una disciplina más rigurosa que otras funciones laborales.", correctAnswer: "Verdadero" },
-        { question: "La lealtad hacia los compañeros se demuestra, ejecutando el turno cuando éstos no llegan a su servicio, para que no se vea éste.", correctAnswer: "Verdadero" },
-        { question: "La honradez no es un valor para el Guardia de Seguridad.", correctAnswer: "Falso" },
-        { question: "La responsabilidad es asumir con las consecuencias de los actos de todos.", correctAnswer: "Falso" },
         { question: "Por rigurosas que sean las normas o procedimientos de control, debe existir amabilidad, deferencia, una actitud cortés y adecuada, por neutralizar el rechazo que dichas normas.", correctAnswer: "Verdadero" }
     ],
 
@@ -356,9 +351,9 @@ function displayCategorizedQuiz(questions) {
         
         questionCard.innerHTML = `
             <div class="category-badge-container mb-2">
-                ${categoryBadge}
+                ${categoryBadge}<br>
             </div>
-            <h5>${index + 1}. ${q.question}</h5>
+            <h5 class="question-text">${index + 1}. ${q.question}</h5>
             <div class="options-container">
                 <label class="option-button" data-question="${index}" data-value="Verdadero">
                     <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" style="display: none;">

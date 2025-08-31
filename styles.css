@@ -954,12 +954,16 @@ nav a:hover {
         font-size: 0.7rem;
     }
 
+    #examen-practica-titulo {
+        font-size: 1.5rem;
+    }
+
     #simulacros-container .card-content {
         padding: 0.5rem;
     }
 
     .exam-choice-card {
-        width: 97%;
+        width: 99%;
         margin-left: auto;
         margin-right: auto;
     }

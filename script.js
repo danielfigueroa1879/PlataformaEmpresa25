@@ -330,7 +330,8 @@ function toggleSidebar(show = null) {
         sidebar.classList.add('open');
         mainContent.classList.add('sidebar-open');
         if (hamburgerBtn) hamburgerBtn.classList.add('active');
-    } else {
+    }
+    else {
         sidebar.classList.remove('open');
         mainContent.classList.remove('sidebar-open');
         if (hamburgerBtn) hamburgerBtn.classList.remove('active');
@@ -855,7 +856,7 @@ function renderCalificaciones() {
 
 function renderExamenPractica() {
     return `
-        <h2 class="text-3xl font-bold mb-8">Examen de Práctica OS-10</h2>
+        <h2 id="examen-practica-titulo" class="text-3xl font-bold mb-8">Examen de Práctica OS-10</h2>
         <div class="card" id="simulacros-container">
             <div class="card-content">
                 <h3 class="text-xl font-bold mb-4">Simulacros Disponibles</h3>
@@ -884,8 +885,8 @@ function renderExamenPractica() {
         <div id="quiz-exam-container" style="display: none;">
             <section id="exam-section" class="mt-5">
                 <h2 class="text-center exam-heading-green">Examen de Preparación OS-10</h2>
-                <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
-                <p class="text-center" style="color: #dc3545; font-weight: 600; font-size: 0.9rem;">
+                <p class="text-center exam-intro-text">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
+                <p class="text-center exam-intro-text" style="color: #dc3545; font-weight: 600; font-size: 0.9rem;">
                     <i class="bi bi-exclamation-triangle"></i> 
                     <strong>IMPORTANTE:</strong> Este examen consta de 30 preguntas. Una vez que selecciones una respuesta, no podrás cambiarla. Lee cuidadosamente antes de responder.
                 </p>
@@ -903,7 +904,7 @@ function renderExamenPractica() {
         <!-- Modal de resultados -->
         <div id="results-modal-overlay" style="display: none;">
             <div id="results-modal-content">
-                <h3>Resultados del Examen</h3>
+                <h3>Results del Examen</h3>
                 <p>Respuestas correctas: <span id="modal-correct-count"></span> de <span id="modal-total-questions"></span></p>
                 <p>Porcentaje: <span id="modal-percentage"></span>%</p>
                 <p>Tu nota en escala del 1 al 7: <strong id="modal-grade"></strong></p>
