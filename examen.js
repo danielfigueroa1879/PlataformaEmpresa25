@@ -546,6 +546,14 @@ function submitCategorizedQuiz() {
     });
 
     console.log("Categorized quiz submitted and results displayed in modal. Score:", score);
+
+    return {
+        date: new Date().toLocaleDateString('es-CL'),
+        score: score,
+        maxScore: maxScore,
+        percentage: percentage,
+        grade: grade
+    };
 }
 
 function calculateGrade(percentage) {
