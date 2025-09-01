@@ -453,7 +453,7 @@ function getCategoryBadge(category) {
 
 function getCategoryShortName(category) {
     const shortNames = {
-        "CONOCIMIENTOS LEGALES": "Legal",
+        "CONOCIMIENTOS LEGALES": "Legal\n",
         "PRIMEROS AUXILIOS": "Primeros Auxilios",
         "PROTECCIÓN DE INSTALACIONES": "Protección",
         "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "Sistemas Alarma",
