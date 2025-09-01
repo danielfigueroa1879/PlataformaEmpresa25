@@ -29,7 +29,7 @@ body {
     background: rgba(255, 255, 255, 0.75);      /* Fondo blanco semitransparente */
     backdrop-filter: blur(10px);               /* Efecto de desenfoque */
     -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
-    padding: 10px 0;                           /* Encabezado más delgado */
+    padding: 5px 0;                           /* Encabezado más delgado */
     position: sticky;
     top: 0;
     z-index: 1000;
