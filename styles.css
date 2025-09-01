@@ -1016,7 +1016,7 @@ nav a:hover {
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     min-height: 500px;
     /* --- LÍNEAS AÑADIDAS --- */
-    max-width: 1000px; /* Establece un ancho máximo */
+    max-width: 1200px; /* Establece un ancho máximo */
     margin: 0 auto 40px; /* Centra el contenedor horizontalmente y mantiene el margen inferior */
 }
 
