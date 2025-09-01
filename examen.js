@@ -349,12 +349,14 @@ function displayCategorizedQuiz(questions) {
         
         const categoryBadge = getCategoryBadge(q.category);
         
+        // --- INICIO DE LA MODIFICACIÓN ---
+        // Se ha reestructurado el HTML para asegurar el salto de línea.
+        // Ahora la categoría está en su propio <div>, lo que fuerza a la pregunta (<h5>) a aparecer debajo.
         questionCard.innerHTML = `
-            <h5 class="question-text">
-        ${categoryBadge}
-        <br><br>
-        ${index + 1}. ${q.question}
-            </h5>
+            <div style="margin-bottom: 12px;"> 
+                ${categoryBadge}
+            </div>
+            <h5 class="question-text">${index + 1}. ${q.question}</h5>
             <div class="options-container">
                 <label class="option-button" data-question="${index}" data-value="Verdadero">
                     <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" style="display: none;">
@@ -367,6 +369,8 @@ function displayCategorizedQuiz(questions) {
             </div>
             <div class="feedback-message mt-2" style="font-weight: 600; display: none;"></div>
         `;
+        // --- FIN DE LA MODIFICACIÓN ---
+
         quizContainer.appendChild(questionCard);
 
         const optionButtons = questionCard.querySelectorAll('.option-button');
@@ -420,7 +424,6 @@ function displayCategorizedQuiz(questions) {
                         submitQuizBtn.style.display = 'block';
                     }
                     
-                    // Mostrar mensaje sutil si la función existe
                     if (typeof showSubtleMessage === 'function') {
                         showSubtleMessage('¡Todas las preguntas respondidas! Puedes enviar tu examen.');
                     } else if (typeof window.showSubtleMessage === 'function') {
@@ -431,7 +434,7 @@ function displayCategorizedQuiz(questions) {
         });
     });
 
-    console.log("Categorized quiz questions displayed.");
+    console.log("Categorized quiz questions displayed with new structure.");
 }
 
 function getCategoryBadge(category) {
