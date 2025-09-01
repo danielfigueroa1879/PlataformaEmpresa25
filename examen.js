@@ -352,7 +352,7 @@ function displayCategorizedQuiz(questions) {
         questionCard.innerHTML = `
             <h5 class="question-text">
         ${categoryBadge}
-        <br>
+        <br><br>
         ${index + 1}. ${q.question}
             </h5>
             <div class="options-container">
