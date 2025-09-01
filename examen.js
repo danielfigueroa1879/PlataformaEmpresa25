@@ -350,10 +350,11 @@ function displayCategorizedQuiz(questions) {
         const categoryBadge = getCategoryBadge(q.category);
         
         questionCard.innerHTML = `
-            <div class="category-badge-container mb-2">
-                ${categoryBadge}<br>
-            </div>
-            <h5 class="question-text">${index + 1}. ${q.question}</h5>
+            <h5 class="question-text">
+        ${categoryBadge}
+        <br>
+        ${index + 1}. ${q.question}
+            </h5>
             <div class="options-container">
                 <label class="option-button" data-question="${index}" data-value="Verdadero">
                     <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" style="display: none;">
