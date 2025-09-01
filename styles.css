@@ -281,7 +281,7 @@ nav a:hover {
 
 /* Hero Section - MODIFICADO */
 .hero {
-    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semitransparente */
+    background-color: #e5eaf1; /* Fondo blanco semitransparente */
     backdrop-filter: blur(10px);               /* Efecto de desenfoque */
     -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
     color: #1a3a6e;                            /* Color de texto oscuro para legibilidad */
