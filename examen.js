@@ -453,13 +453,13 @@ function getCategoryBadge(category) {
 
 function getCategoryShortName(category) {
     const shortNames = {
-        "CONOCIMIENTOS LEGALES": "Legal\n\n",
-        "PRIMEROS AUXILIOS": "Primeros Auxilios\n\n",
-        "PROTECCIÓN DE INSTALACIONES": "Protección\n\n",
-        "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "Sistemas Alarma\n\n",
+        "CONOCIMIENTOS LEGALES": "Legal",
+        "PRIMEROS AUXILIOS": "Primeros Auxilios",
+        "PROTECCIÓN DE INSTALACIONES": "Protección",
+        "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "Sistemas Alarma",
         "VALORES Y ÉTICA": "Ética",
-        "SISTEMAS DE COMUNICACIÓN Y ENLACE": "Comunicación\n\n",
-        "PREVENCIÓN Y CONTROL DE EMERGENCIA": "Emergencias\n\n",
+        "SISTEMAS DE COMUNICACIÓN Y ENLACE": "Comunicación",
+        "PREVENCIÓN Y CONTROL DE EMERGENCIA": "Emergencias",
         "PREGUNTAS ADICIONALES": "Adicionales"
     };
     
