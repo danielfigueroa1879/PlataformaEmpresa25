@@ -287,7 +287,7 @@ nav a:hover {
     backdrop-filter: blur(10px);               /* Efecto de desenfoque */
     -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
     color: #1a3a6e;                            /* Color de texto oscuro para legibilidad */
-    padding: 80px 0;                           /* Banner más delgado */
+    padding: 120px 0;                           /* Banner más delgado */
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Borde sutil opcional */
 }
@@ -925,7 +925,7 @@ nav a:hover {
 
     /* Aumenta la altura del banner en dispositivos móviles */
     .hero {
-        padding: 90px 0;
+        padding: 110px 0;
     }
 
     #privateHeader .logo {
@@ -1447,3 +1447,7 @@ html, body {
     }
 
 }
+
+
+
+
