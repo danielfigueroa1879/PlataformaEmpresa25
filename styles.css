@@ -287,7 +287,7 @@ nav a:hover {
     backdrop-filter: blur(10px);               /* Efecto de desenfoque */
     -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
     color: #1a3a6e;                            /* Color de texto oscuro para legibilidad */
-    padding: 120px 0;                           /* Banner más delgado */
+    padding: 150px 0;                          /* AUMENTADO para PC */
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Borde sutil opcional */
 }
@@ -360,6 +360,13 @@ nav a:hover {
 
 .btn-danger:hover {
     background-color: #dc2626;
+}
+
+/* Estilo específico para achicar el botón de Iniciar Sesión */
+#loginBtn, #mobileLoginBtn {
+    padding: 8px 22px;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 /* Secciones */
@@ -925,7 +932,7 @@ nav a:hover {
 
     /* Aumenta la altura del banner en dispositivos móviles */
     .hero {
-        padding: 110px 0;
+        padding: 130px 0; /* AUMENTADO para celular */
     }
 
     #privateHeader .logo {
@@ -1447,7 +1454,3 @@ html, body {
     }
 
 }
-
-
-
-
