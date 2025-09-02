@@ -11,6 +11,7 @@ body {
     background-color: #f4f6f9;
     color: #333;
     line-height: 1.6;
+    padding-top: 65px; /* AÑADIDO: para compensar el header fijo */
 }
 
 .hidden {
@@ -30,7 +31,8 @@ body {
     backdrop-filter: blur(10px);               /* Efecto de desenfoque */
     -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
     padding: 2px 0;                           /* Encabezado más delgado */
-    position: sticky;
+    position: fixed; /* CAMBIO: de sticky a fixed para que siempre esté fijo */
+    width: 100%; /* AÑADIDO: para que ocupe todo el ancho */
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -285,7 +287,7 @@ nav a:hover {
     backdrop-filter: blur(10px);               /* Efecto de desenfoque */
     -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
     color: #1a3a6e;                            /* Color de texto oscuro para legibilidad */
-    padding: 40px 0;                           /* Banner más delgado */
+    padding: 80px 0;                           /* Banner más delgado */
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Borde sutil opcional */
 }
@@ -923,7 +925,7 @@ nav a:hover {
 
     /* Aumenta la altura del banner en dispositivos móviles */
     .hero {
-        padding: 70px 0;
+        padding: 90px 0;
     }
 
     #privateHeader .logo {
@@ -1445,5 +1447,3 @@ html, body {
     }
 
 }
-
-
