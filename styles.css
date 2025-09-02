@@ -1398,3 +1398,30 @@ nav a:hover {
 .class-event:hover {
     background-color: #bae6fd;
 }
+/* ============================================= */
+/* ====== CORRECCIONES ADICIONALES PARA MOVILES ====== */
+/* ============================================= */
+
+@media (max-width: 768px) {
+
+    /* 1. Solución para la imagen cortada y el ancho de página */
+    /* Esta regla previene el desbordamiento horizontal en toda la página.
+       Soluciona el problema de la imagen de inicio que se corta
+       en el lado derecho al eliminar la barra de scroll horizontal. */
+    body {
+        overflow-x: hidden;
+    }
+
+
+    /* 2. Solución para el área del examen y ancho del contenido */
+    /* Como solicitaste, el área de contenido principal del sistema privado
+       ahora ocupa el 98% del ancho de la pantalla y se centra.
+       Esto automáticamente hace que el contenedor de las preguntas del examen
+       sea más angosto, solucionando el desbordamiento de los botones. */
+    #mainContent {
+        width: 98%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}
