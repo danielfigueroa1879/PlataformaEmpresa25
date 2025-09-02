@@ -921,6 +921,11 @@ nav a:hover {
         font-size: 1.8rem;
     }
 
+    /* Aumenta la altura del banner en dispositivos móviles */
+    .hero {
+        padding: 70px 0;
+    }
+
     #privateHeader .logo {
         display: none;
     }
@@ -1440,3 +1445,5 @@ html, body {
     }
 
 }
+
+
