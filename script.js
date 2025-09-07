@@ -54,8 +54,91 @@ const noticias = [
 // Mock data for private system
 const mockData = {
     guardias: [
-        { id: 1, nombre: 'Juan Pérez', rut: '12345678-9', email: 'juan@example.com', fechaExamen: '2022-10-15' },
-        { id: 2, nombre: 'María González', rut: '98765432-1', email: 'maria@example.com', fechaExamen: '2024-08-01' }
+        {
+            id: 1,
+            nombre: 'Juan Pérez',
+            rut: '12.345.678-9',
+            email: 'juan@example.com',
+            curso: {
+                nombre: 'OS-10 Perfeccionamiento',
+                fechaRealizacion: '2022-10-15', // Por Vencer
+                institucion: 'Capacitaciones Seguras Ltda.'
+            },
+            contrato: 'CONTRATO DE TRABAJO A PLAZO FIJO\n\nEn La Serena, a 01 de Enero de 2024, entre EMPRESA RR.HH Y CAPACITACION LTDA, RUT 76.123.456-7, representada legalmente por Don Administrador General, en adelante "el empleador", y por otra parte, Don JUAN PÉREZ, cédula de identidad N° 12.345.678-9, en adelante "el trabajador", se ha convenido el siguiente contrato de trabajo:\n\nPRIMERO: El trabajador se compromete a ejecutar la labor de Guardia de Seguridad en las instalaciones que el empleador determine. Sus funciones principales serán el control de acceso, rondas perimetrales, y velar por la seguridad de las personas y bienes de la instalación asignada.\n\nSEGUNDO: La jornada de trabajo será de 45 horas semanales, distribuidas en turnos rotativos según lo dispuesto en el artículo 22 del Código del Trabajo.\n\nTERCERO: El trabajador declara recibir en este acto una copia del Reglamento Interno de Orden, Higiene y Seguridad, comprometiéndose a darle cumplimiento.\n\n[... Resto del contenido del contrato ...]'
+        },
+        {
+            id: 2,
+            nombre: 'María González',
+            rut: '9.876.543-2',
+            email: 'maria@example.com',
+            curso: {
+                nombre: 'OS-10 Formación',
+                fechaRealizacion: '2024-08-01', // Vigente
+                institucion: 'Instituto de Seguridad Chile'
+            },
+            contrato: 'Contrato de trabajo para María González...'
+        },
+        // 5 nuevos guardias
+        {
+            id: 3,
+            nombre: 'Carlos Soto',
+            rut: '11.222.333-4',
+            email: 'carlos@example.com',
+            curso: {
+                nombre: 'OS-10 Formación',
+                fechaRealizacion: '2022-02-20', // Vencido
+                institucion: 'Capacitaciones Seguras Ltda.'
+            },
+            contrato: 'Contrato de trabajo para Carlos Soto...'
+        },
+        {
+            id: 4,
+            nombre: 'Ana Flores',
+            rut: '14.555.888-7',
+            email: 'ana@example.com',
+            curso: {
+                nombre: 'OS-10 Perfeccionamiento',
+                fechaRealizacion: '2024-12-10', // Vigente
+                institucion: 'Prosegur Capacitación'
+            },
+            contrato: 'Contrato de trabajo para Ana Flores...'
+        },
+        {
+            id: 5,
+            nombre: 'Pedro Rojas',
+            rut: '13.444.777-6',
+            email: 'pedro@example.com',
+            curso: {
+                nombre: 'OS-10 Formación',
+                fechaRealizacion: '2022-09-30', // Por vencer
+                institucion: 'Instituto de Seguridad Chile'
+            },
+            contrato: 'Contrato de trabajo para Pedro Rojas...'
+        },
+        {
+            id: 6,
+            nombre: 'Luisa Castro',
+            rut: '15.111.999-K',
+            email: 'luisa@example.com',
+            curso: {
+                nombre: 'OS-10 Formación',
+                fechaRealizacion: '2025-05-15', // Vigente
+                institucion: 'Capacitaciones Seguras Ltda.'
+            },
+            contrato: 'Contrato de trabajo para Luisa Castro...'
+        },
+        {
+            id: 7,
+            nombre: 'Jorge Díaz',
+            rut: '10.888.222-1',
+            email: 'jorge@example.com',
+            curso: {
+                nombre: 'OS-10 Perfeccionamiento',
+                fechaRealizacion: '2020-01-25', // Muy Vencido
+                institucion: 'Prosegur Capacitación'
+            },
+            contrato: 'Contrato de trabajo para Jorge Díaz...'
+        }
     ],
     cursos: [
         { id: 1, nombre: 'Curso OS-10 Básico', fechaInicio: '2025-09-15', duracion: '40 horas', precio: 150000, estudiantes: 25 },
@@ -411,6 +494,12 @@ function updateMainContent() {
         case 'mis-cursos':
             mainContent.innerHTML = renderMisCursos();
             break;
+        case 'mis-cursos-guardia':
+            mainContent.innerHTML = renderMisCursosGuardia();
+            break;
+        case 'mi-contrato':
+            mainContent.innerHTML = renderMiContrato();
+            break;
         case 'horarios':
             mainContent.innerHTML = renderHorarios();
             break;
@@ -475,11 +564,14 @@ function getGuardiaStatus(fechaExamen) {
         return { text: 'Sin Datos', className: 'badge-secondary' };
     }
     const examDate = new Date(fechaExamen);
-    const today = new Date();
-    const threeYearsFromExam = new Date(new Date(examDate).setFullYear(examDate.getFullYear() + 3));
-    const thirtyDaysBeforeExpiry = new Date(new Date(threeYearsFromExam).setDate(threeYearsFromExam.getDate() - 30));
+    const expirationDate = new Date(examDate.valueOf());
+    expirationDate.setFullYear(expirationDate.getFullYear() + 3);
 
-    if (today > threeYearsFromExam) {
+    const today = new Date();
+    const thirtyDaysBeforeExpiry = new Date(expirationDate.valueOf());
+    thirtyDaysBeforeExpiry.setDate(thirtyDaysBeforeExpiry.getDate() - 30);
+
+    if (today > expirationDate) {
         return { text: 'Vencido', className: 'badge-danger' };
     }
     if (today >= thirtyDaysBeforeExpiry) {
@@ -490,16 +582,16 @@ function getGuardiaStatus(fechaExamen) {
 
 function renderGestionGuardias() {
     const tableRows = mockData.guardias.map(guardia => {
-        const status = getGuardiaStatus(guardia.fechaExamen);
+        const status = getGuardiaStatus(guardia.curso.fechaRealizacion);
         return `
             <tr>
                 <td>${guardia.nombre}</td>
-                <td>${guardia.rut}</td>
+                <td class="rut-column">${guardia.rut}</td>
                 <td><span class="badge ${status.className}">${status.text}</span></td>
-                <td>${new Date(guardia.fechaExamen).toLocaleDateString('es-CL')}</td>
+                <td class="date-column">${new Date(guardia.curso.fechaRealizacion).toLocaleDateString('es-CL')}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary" onclick="openGuardiaModal(${guardia.id})">Editar</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteGuardia(${guardia.id})">Eliminar</button>
+                    <button class="btn btn-sm btn-primary" onclick="openGuardiaModal(${guardia.id})" title="Editar"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteGuardia(${guardia.id})" title="Eliminar"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
         `;
@@ -507,7 +599,7 @@ function renderGestionGuardias() {
 
     return `
         <h2 class="text-3xl font-bold mb-8">Gestión de Guardias</h2>
-        <button class="btn btn-primary mb-4" onclick="openGuardiaModal()">Nuevo Guardia</button>
+        <button class="btn btn-primary mb-4" onclick="openGuardiaModal()"><i class="fas fa-plus"></i> Nuevo Guardia</button>
         <div class="card">
             <div class="card-content">
                 <div class="table-container">
@@ -515,9 +607,9 @@ function renderGestionGuardias() {
                         <thead>
                             <tr>
                                 <th>Guardia</th>
-                                <th>RUT</th>
-                                <th>Estado Certificado</th>
-                                <th>Fecha Examen</th>
+                                <th class="rut-column">RUT</th>
+                                <th>Estado Cert.</th>
+                                <th class="date-column">Fecha Examen</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -570,7 +662,7 @@ function openGuardiaModal(id = null) {
             document.getElementById('nombreGuardia').value = guardia.nombre;
             document.getElementById('rutGuardia').value = guardia.rut;
             document.getElementById('emailGuardia').value = guardia.email;
-            document.getElementById('fechaExamenGuardia').value = guardia.fechaExamen;
+            document.getElementById('fechaExamenGuardia').value = guardia.curso.fechaRealizacion;
         }
     } else {
         title.textContent = 'Nuevo Guardia';
@@ -587,19 +679,35 @@ function closeGuardiaModal() {
 function handleGuardiaFormSubmit(event) {
     event.preventDefault();
     const id = document.getElementById('guardiaId').value;
-    const guardiaData = {
-        nombre: document.getElementById('nombreGuardia').value,
-        rut: document.getElementById('rutGuardia').value,
-        email: document.getElementById('emailGuardia').value,
-        fechaExamen: document.getElementById('fechaExamenGuardia').value
-    };
+    const nombre = document.getElementById('nombreGuardia').value;
+    const rut = document.getElementById('rutGuardia').value;
+    const email = document.getElementById('emailGuardia').value;
+    const fechaExamen = document.getElementById('fechaExamenGuardia').value;
 
     if (id) {
+        // Update existing guard
         const index = mockData.guardias.findIndex(g => g.id == id);
-        mockData.guardias[index] = { ...mockData.guardias[index], ...guardiaData };
+        if (index !== -1) {
+            mockData.guardias[index].nombre = nombre;
+            mockData.guardias[index].rut = rut;
+            mockData.guardias[index].email = email;
+            mockData.guardias[index].curso.fechaRealizacion = fechaExamen;
+        }
     } else {
-        guardiaData.id = Date.now(); // Simple unique ID
-        mockData.guardias.push(guardiaData);
+        // Add new guard
+        const newGuardia = {
+            id: Date.now(), // Simple unique ID
+            nombre: nombre,
+            rut: rut,
+            email: email,
+            curso: {
+                nombre: 'OS-10 Formación (Nuevo)',
+                fechaRealizacion: fechaExamen,
+                institucion: 'Pendiente'
+            },
+            contrato: 'Contrato pendiente de redacción.'
+        };
+        mockData.guardias.push(newGuardia);
     }
 
     closeGuardiaModal();
@@ -731,6 +839,93 @@ function renderMisTurnos() {
         </div>
     `;
 }
+
+function renderMisCursosGuardia() {
+    const guardia = mockData.guardias[0]; // Simulating logged in user as Juan Pérez
+    const curso = guardia.curso;
+
+    if (!curso) {
+        return `
+            <h2 class="text-3xl font-bold mb-8">Mis Cursos</h2>
+            <div class="card"><div class="card-content"><p>No tienes cursos asignados.</p></div></div>
+        `;
+    }
+
+    const fechaRealizacion = new Date(curso.fechaRealizacion);
+    const fechaVencimiento = new Date(fechaRealizacion.valueOf());
+    fechaVencimiento.setFullYear(fechaVencimiento.getFullYear() + 3);
+
+    const hoy = new Date();
+    // Set hours to 0 to compare dates only
+    hoy.setHours(0, 0, 0, 0);
+    fechaVencimiento.setHours(0, 0, 0, 0);
+
+    const diffTime = fechaVencimiento - hoy;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    let statusClass = '';
+    let statusText = '';
+    let diasRestantesText = '';
+
+    if (diffDays < 0) {
+        statusClass = 'status-rojo';
+        statusText = 'VENCIDO';
+        diasRestantesText = `Venció hace ${Math.abs(diffDays)} días`;
+    } else if (diffDays <= 30) {
+        statusClass = 'status-amarillo';
+        statusText = 'POR VENCER';
+        diasRestantesText = `Quedan ${diffDays} días`;
+    } else {
+        statusClass = 'status-verde';
+        statusText = 'VIGENTE';
+        diasRestantesText = `Quedan ${diffDays} días`;
+    }
+
+    return `
+        <h2 class="text-3xl font-bold mb-8">Mis Cursos</h2>
+        <div class="course-card-guardia">
+            <div class="course-header">
+                <h3>${curso.nombre}</h3>
+                <span class="course-status-badge ${statusClass}">${statusText}</span>
+            </div>
+            <div class="course-body">
+                <p><strong><i class="fas fa-building"></i> Institución:</strong> ${curso.institucion}</p>
+                <p><strong><i class="fas fa-calendar-alt"></i> Fecha Realización:</strong> ${new Date(curso.fechaRealizacion).toLocaleDateString('es-CL')}</p>
+                <p><strong><i class="fas fa-calendar-times"></i> Fecha Vencimiento:</strong> ${fechaVencimiento.toLocaleDateString('es-CL')}</p>
+            </div>
+            <div class="course-footer ${statusClass}">
+                <p><i class="fas fa-hourglass-half"></i> ${diasRestantesText}</p>
+            </div>
+        </div>
+    `;
+}
+
+function renderMiContrato() {
+    const guardia = mockData.guardias[0]; // Simulating logged in user
+    const contrato = guardia.contrato || 'No se ha cargado un contrato.';
+
+    return `
+        <h2 class="text-3xl font-bold mb-8">Mi Contrato</h2>
+        <div class="card">
+            <div class="card-content">
+                <div class="contract-container">
+                    <div class="contract-header">
+                        <h3>Contrato de Trabajo Individual</h3>
+                        <p><strong>Empleado:</strong> ${guardia.nombre}</p>
+                        <p><strong>RUT:</strong> ${guardia.rut}</p>
+                    </div>
+                    <div class="contract-body">
+                        <pre>${contrato}</pre>
+                    </div>
+                     <div class="contract-footer">
+                        <button class="btn btn-primary"><i class="fas fa-download"></i> Descargar Copia</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 
 function renderMisCursos() {
     const coursesHtml = mockData.cursos.map(curso => `
@@ -1023,3 +1218,4 @@ function closeExamModal() {
         userAnswers = {};
     }
 }
+
