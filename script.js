@@ -1007,7 +1007,7 @@ function renderMiContrato() {
                         <pre>${contrato}</pre>
                     </div>
                      <div class="contract-footer">
-                        <button class="btn btn-primary"><i class="fas fa-download"></i> Descargar Copia</button>
+                        <button class="btn btn-primary" onclick="downloadContractAsPDF()"><i class="fas fa-download"></i> Descargar Copia en PDF</button>
                     </div>
                 </div>
             </div>
@@ -1308,3 +1308,44 @@ function closeExamModal() {
     }
 }
 
+// Función para descargar el contrato en PDF
+function downloadContractAsPDF() {
+    try {
+        const { jsPDF } = window.jspdf;
+        const guard = mockData.guardias[0]; // Simula que Juan Pérez ha iniciado sesión
+        const contractText = guard.contrato || 'No hay contrato disponible.';
+        const fileName = `Contrato_${guard.nombre.replace(' ', '_')}.pdf`;
+        
+        const pdf = new jsPDF({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(10);
+        
+        // Márgenes
+        const margin = 15;
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const usableWidth = pageWidth - (margin * 2);
+        
+        // Encabezado
+        pdf.setFontSize(14);
+        pdf.setFont("helvetica", "bold");
+        pdf.text("Contrato de Trabajo", pageWidth / 2, margin, { align: 'center' });
+        pdf.setFontSize(10);
+        pdf.setFont("helvetica", "normal");
+        pdf.text(`Empleado: ${guard.nombre}`, margin, margin + 10);
+        pdf.text(`RUT: ${guard.rut}`, margin, margin + 15);
+        
+        // Cuerpo del contrato
+        const textLines = pdf.splitTextToSize(contractText, usableWidth);
+        pdf.text(textLines, margin, margin + 25);
+        
+        pdf.save(fileName);
+    } catch (error) {
+        console.error("Error al generar PDF:", error);
+        alert("No se pudo generar el PDF. Asegúrese de que la librería jsPDF está cargada correctamente.");
+    }
+}
