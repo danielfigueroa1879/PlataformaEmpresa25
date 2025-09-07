@@ -145,8 +145,16 @@ const mockData = {
         { id: 2, nombre: 'Seguridad Industrial', fechaInicio: '2025-09-20', duracion: '60 horas', precio: 200000, estudiantes: 18 }
     ],
     turnos: [
-        { id: 1, fecha: '2025-08-29', hora: '08:00-20:00', ubicacion: 'Mall Plaza La Serena', guardia: 'Juan Pérez', estado: 'asignado' },
-        { id: 2, fecha: '2025-08-30', hora: '20:00-08:00', ubicacion: 'Edificio Corporativo', guardia: 'María González', estado: 'asignado' }
+        // Semana para Juan Pérez (Total: 44 horas)
+        { id: 1, fecha: '2025-09-08', horaInicio: '08:00', horaFin: '16:00', ubicacion: 'Mall Plaza La Serena', guardia: 'Juan Pérez', estado: 'asignado' }, // 8h
+        { id: 2, fecha: '2025-09-09', horaInicio: '08:00', horaFin: '16:00', ubicacion: 'Mall Plaza La Serena', guardia: 'Juan Pérez', estado: 'asignado' }, // 8h
+        { id: 3, fecha: '2025-09-10', horaInicio: '08:00', horaFin: '16:00', ubicacion: 'Edificio Corporativo', guardia: 'Juan Pérez', estado: 'asignado' }, // 8h
+        { id: 4, fecha: '2025-09-11', horaInicio: '14:00', horaFin: '22:00', ubicacion: 'Condominio El Muelle', guardia: 'Juan Pérez', estado: 'asignado' }, // 8h
+        { id: 5, fecha: '2025-09-12', horaInicio: '14:00', horaFin: '22:00', ubicacion: 'Condominio El Muelle', guardia: 'Juan Pérez', estado: 'asignado' }, // 8h
+        { id: 6, fecha: '2025-09-13', horaInicio: '09:00', horaFin: '13:00', ubicacion: 'Mall Plaza La Serena', guardia: 'Juan Pérez', estado: 'asignado' }, // 4h
+        // Semana para María González
+        { id: 7, fecha: '2025-09-08', horaInicio: '20:00', horaFin: '04:00', ubicacion: 'Edificio Corporativo', guardia: 'María González', estado: 'asignado' }, // 8h
+        { id: 8, fecha: '2025-09-09', horaInicio: '20:00', horaFin: '04:00', ubicacion: 'Edificio Corporativo', guardia: 'María González', estado: 'asignado' }, // 8h
     ],
     notifications: [
         { id: 1, tipo: 'warning', mensaje: 'Curso OS-10 de Juan Pérez vence en 15 días', fecha: '2025-08-28' },
@@ -497,6 +505,9 @@ function updateMainContent() {
         case 'mis-cursos-guardia':
             mainContent.innerHTML = renderMisCursosGuardia();
             break;
+        case 'ordenes-trabajo':
+            mainContent.innerHTML = renderOrdenesTrabajo();
+            break;
         case 'mi-contrato':
             mainContent.innerHTML = renderMiContrato();
             break;
@@ -827,7 +838,7 @@ function renderMisTurnos() {
                             ${mockData.turnos.map(turno => `
                                 <tr>
                                     <td>${turno.fecha}</td>
-                                    <td>${turno.hora}</td>
+                                    <td>${turno.horaInicio} - ${turno.horaFin}</td>
                                     <td>${turno.ubicacion}</td>
                                     <td><span class="badge badge-success">${turno.estado}</span></td>
                                 </tr>
@@ -895,6 +906,84 @@ function renderMisCursosGuardia() {
             </div>
             <div class="course-footer ${statusClass}">
                 <p><i class="fas fa-hourglass-half"></i> ${diasRestantesText}</p>
+            </div>
+        </div>
+    `;
+}
+
+function renderOrdenesTrabajo() {
+    const guardiaNombre = 'Juan Pérez'; // Simulating logged in user
+    
+    // Helper to get the start of the current week (Monday)
+    const getStartOfWeek = (date) => {
+        const d = new Date(date);
+        const day = d.getDay();
+        const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+        return new Date(d.setDate(diff));
+    };
+
+    // Forcing a date to ensure we get the right week for the demo data
+    const today = new Date('2025-09-10T12:00:00'); 
+    const startOfWeek = getStartOfWeek(today);
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999);
+
+    const turnosSemanales = mockData.turnos.filter(turno => {
+        const fechaTurno = new Date(turno.fecha + "T00:00:00");
+        return turno.guardia === guardiaNombre && fechaTurno >= startOfWeek && fechaTurno <= endOfWeek;
+    });
+
+    const calcularHoras = (inicio, fin) => {
+        const [h1, m1] = inicio.split(':').map(Number);
+        const [h2, m2] = fin.split(':').map(Number);
+        const fechaInicio = new Date(0, 0, 0, h1, m1);
+        const fechaFin = new Date(0, 0, 0, h2, m2);
+        if (fechaFin < fechaInicio) { // Turno nocturno que pasa la medianoche
+            fechaFin.setDate(fechaFin.getDate() + 1);
+        }
+        return (fechaFin - fechaInicio) / (1000 * 60 * 60);
+    };
+
+    let totalHorasSemanales = 0;
+    const turnosHtml = turnosSemanales.map(turno => {
+        const horasTurno = calcularHoras(turno.horaInicio, turno.horaFin);
+        totalHorasSemanales += horasTurno;
+        const diaSemana = new Date(turno.fecha + 'T12:00:00').toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'short' });
+
+        return `
+            <li class="turno-item">
+                <div class="turno-fecha">
+                    <span class="dia-semana">${diaSemana.split(',')[0]}</span>
+                    <span class="fecha-num">${diaSemana.split(' ')[1]} ${diaSemana.split(' ')[3]}</span>
+                </div>
+                <div class="turno-info">
+                    <p class="ubicacion"><i class="fas fa-map-marker-alt"></i> ${turno.ubicacion}</p>
+                    <p class="horario"><i class="fas fa-clock"></i> ${turno.horaInicio} - ${turno.horaFin}</p>
+                </div>
+                <div class="turno-horas">
+                    <span>${horasTurno.toFixed(1)} hrs</span>
+                </div>
+            </li>
+        `;
+    }).join('');
+
+    const totalHorasClass = totalHorasSemanales > 44 ? 'horas-excedidas' : 'horas-ok';
+
+    return `
+        <h2 class="text-3xl font-bold mb-8">Órdenes de Trabajo Semanales</h2>
+        <div class="card ordenes-trabajo-container">
+            <div class="card-content">
+                <h3 class="week-title">Semana del ${startOfWeek.toLocaleDateString('es-CL')} al ${endOfWeek.toLocaleDateString('es-CL')}</h3>
+                <ul class="turnos-list">
+                    ${turnosHtml.length ? turnosHtml : '<li class="no-turnos">No hay turnos asignados para esta semana.</li>'}
+                </ul>
+                <div class="total-horas-summary ${totalHorasClass}">
+                    <h4>Total Horas Semanales</h4>
+                    <p>${totalHorasSemanales.toFixed(1)} / 44.0 hrs</p>
+                </div>
             </div>
         </div>
     `;
