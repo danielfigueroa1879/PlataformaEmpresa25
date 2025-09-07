@@ -1715,7 +1715,7 @@ img {
     }
     
     .card:has(.contract-container) {
-        width: 96%;
+        width: 99%;
         margin: 0 auto;
     }
 
