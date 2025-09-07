@@ -1414,43 +1414,199 @@ nav a:hover {
 }
 
 /* ============================================= */
-/* ====== CORRECCIONES RESPONSIVE DEFINITIVAS ====== */
+/* ====== NUEVOS ESTILOS Y OPTIMIZACIONES ====== */
 /* ============================================= */
 
-/* Mejora general: Asegura que las imágenes nunca se desborden de su contenedor. */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Solución global para evitar el desbordamiento horizontal en toda la web */
 html, body {
     overflow-x: hidden;
     width: 100%;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ====== GESTION GUARDIAS COMPACT VIEW ====== */
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 0.6rem 0.4rem;
+        font-size: 0.8rem;
+        vertical-align: middle;
+    }
+    
+    .table .btn-sm {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .table .btn-sm .fas {
+        margin-right: 0;
+    }
+    
+    .rut-column, .date-column {
+        display: none; /* Oculta columnas menos críticas en móvil */
+    }
+    
+    .btn i {
+        margin-right: 4px;
+    }
+}
+
+/* ====== GUARDIA - MIS CURSOS VIEW ====== */
+.course-card-guardia {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.course-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    flex-wrap: wrap;
+}
+
+.course-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #1a3a6e;
+    font-weight: 600;
+}
+
+.course-status-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.course-body {
+    padding: 1.5rem;
+    line-height: 1.8;
+    color: #4b5563;
+}
+
+.course-body p {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.course-body p:last-child {
+    margin-bottom: 0;
+}
+
+.course-body .fas {
+    color: #3b82f6;
+    width: 20px;
+    text-align: center;
+}
+
+.course-footer {
+    padding: 1rem 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.course-footer .fas {
+    margin-right: 8px;
+}
+
+/* Colores de estado para cursos */
+.status-verde { background-color: #dcfce7; color: #166534; }
+.course-footer.status-verde { background-color: #10b981; color: white; }
+
+.status-amarillo { background-color: #fef3c7; color: #92400e; }
+.course-footer.status-amarillo { background-color: #f59e0b; color: white; }
+
+.status-rojo { background-color: #fee2e2; color: #991b1b; }
+.course-footer.status-rojo { background-color: #ef4444; color: white; }
+
+
+/* ====== GUARDIA - MI CONTRATO VIEW ====== */
+.contract-container {
+    background: #fff;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.contract-header {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.contract-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a3a6e;
+    margin-bottom: 0.5rem;
+}
+
+.contract-body pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: justify;
+    line-height: 1.7;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    color: #333;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: #f9fafb;
+    border: 1px dashed #ddd;
+    border-radius: 4px;
+}
+
+.contract-footer {
+    margin-top: 2rem;
+    text-align: right;
+}
 
 @media (max-width: 768px) {
-
-    /* 1. Ajuste del contenedor principal en el área privada */
-    /* Se asegura de que el contenido principal tenga un pequeño margen
-       en los costados, lo que ayuda a prevenir que los elementos internos
-       se peguen a los bordes. */
+    /* Ajustes finales de responsive */
     #mainContent {
         width: 98%;
         margin-left: auto;
         margin-right: auto;
-        padding: 1rem 0; /* Ajusta el padding para evitar doble margen */
+        padding: 1rem 0;
     }
 
-    /* 2. Solución para los botones del examen */
-    /* El problema original es que el contenedor de los botones (.options-container)
-       intentaba ponerlos en fila, mientras que los botones
-       intentaban ocupar el 100% del ancho. Esta regla obliga al contenedor
-       a apilar los botones verticalmente en TODOS los dispositivos móviles,
-       solucionando el desbordamiento. */
     .options-container {
         flex-direction: column;
     }
 
+    .course-header {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .course-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .course-body {
+        padding: 1rem;
+    }
+
+    .contract-container {
+        padding: 1rem;
+    }
+
+    .contract-body pre {
+        font-size: 0.9rem;
+    }
 }
