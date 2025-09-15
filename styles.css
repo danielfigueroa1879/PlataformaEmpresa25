@@ -11,7 +11,7 @@ body {
     background-color: #f4f6f9;
     color: #333;
     line-height: 1.6;
-    padding-top: 80px; /* AJUSTADO: para compensar el header más alto */
+    padding-top: 70px; /* AJUSTADO: para compensar el header más alto */
 }
 
 .hidden {
@@ -30,13 +30,13 @@ body {
     background: rgba(255, 255, 255, 0.75);      /* Fondo blanco semitransparente */
     backdrop-filter: blur(10px);               /* Efecto de desenfoque */
     -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
-    padding: 10px 0;                           /* ALTURA DEL HEADER AUMENTADA */
-    position: fixed; /* CAMBIO: de sticky a fixed para que siempre esté fijo */
-    width: 100%; /* AÑADIDO: para que ocupe todo el ancho */
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Borde inferior sutil */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .header-content {
@@ -283,13 +283,11 @@ nav a:hover {
 
 /* Hero Section - MODIFICADO */
 .hero {
-    background-color: #e5eaf1; /* Fondo blanco semitransparente */
-    backdrop-filter: blur(10px);               /* Efecto de desenfoque */
-    -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
-    color: #1a3a6e;                            /* Color de texto oscuro para legibilidad */
-    padding: 120px 0;                          /* Altura normal para PC */
+    background-color: #1a3a6e;
+    color: #ffffff;
+    padding: 120px 0;
     text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Borde sutil opcional */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .hero h1 {
@@ -725,7 +723,7 @@ nav a:hover {
 
 /* Footer */
 .footer {
-    background-color: #1a3a6e;
+    background-color: #000000;
     color: #fff;
     padding: 60px 0 30px;
     margin-top: 80px;
@@ -1749,4 +1747,176 @@ img {
         flex-basis: 25%;
         text-align: right;
     }
+}
+
+
+/* Estilos para el chatbot */
+#chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    max-width: 90%;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+#chatbot-header {
+    background-color: #1a3a6e;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+#chatbot-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+#chatbot-toggle {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#chatbot-body {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+#chatbot-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f4f6f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatbot-message {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 80%;
+    line-height: 1.4;
+}
+
+.user-message {
+    background-color: #3b82f6;
+    color: #fff;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.bot-message {
+    background-color: #e5e7eb;
+    color: #333;
+    align-self: flex-start;
+}
+
+#chatbot-input-container {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e5e7eb;
+    align-items: center;
+}
+
+#chatbot-input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #f4f6f9;
+    font-family: 'Poppins', sans-serif;
+}
+
+#chatbot-input:focus {
+    outline: none;
+}
+
+#chatbot-send {
+    background: none;
+    border: none;
+    color: #1a3a6e;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 0;
+    line-height: 1;
+}
+
+#chatbot-container.minimized #chatbot-body {
+    display: none;
+}
+
+#chatbot-container.minimized {
+    height: auto;
+}
+
+#capacitacion {
+    background-color: #1a3a6e;
+    color: #ffffff;
+}
+
+#capacitacion .section-title, #capacitacion .section-subtitle {
+    color: #ffffff;
+}
+
+#capacitacion .tab-btn {
+    background: #e0e0e0;
+    color: #333;
+}
+
+#capacitacion .tab-btn.active {
+    background: #ffffff;
+    color: #1a3a6e;
+}
+
+#capacitacion .tab-content {
+    background: #1a3a6e;
+    color: #ffffff;
+}
+
+#capacitacion .card {
+    background: #1a3a6e;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+#capacitacion .card h3 {
+    color: #ffffff;
+}
+
+#capacitacion .card p, #capacitacion .card ul li {
+    color: #ffffff;
+}
+
+#contacto {
+    background-color: #1a3a6e;
+    color: #ffffff;
+}
+
+#contacto .section-title, #contacto .section-subtitle {
+    color: #ffffff;
+}
+
+#contacto .card {
+    background-color: #1a3a6e;
+    border: 1px solid #fff;
+}
+
+#contacto .form-group label {
+    color: #ffffff;
 }

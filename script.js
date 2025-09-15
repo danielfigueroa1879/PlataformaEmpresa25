@@ -293,6 +293,84 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     setTimeout(showNotification, 3000);
+
+    const chatbotContainer = document.getElementById('chatbot-container');
+    const chatbotHeader = document.getElementById('chatbot-header');
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotSend = document.getElementById('chatbot-send');
+
+    if (chatbotHeader) {
+        chatbotHeader.addEventListener('click', () => {
+            chatbotContainer.classList.toggle('minimized');
+            if (chatbotContainer.classList.contains('minimized')) {
+                chatbotToggle.textContent = '+';
+            } else {
+                chatbotToggle.textContent = '-';
+            }
+        });
+    }
+
+    if (chatbotSend) {
+        chatbotSend.addEventListener('click', sendMessage);
+    }
+
+    if (chatbotInput) {
+        chatbotInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+
+    function sendMessage() {
+        const messageText = chatbotInput.value.trim();
+        if (messageText === '') return;
+
+        appendMessage(messageText, 'user-message');
+        chatbotInput.value = '';
+
+        setTimeout(() => {
+            botResponse(messageText);
+        }, 500);
+    }
+
+    function appendMessage(text, className) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('chatbot-message', className);
+        messageElement.textContent = text;
+        chatbotMessages.appendChild(messageElement);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    function botResponse(userMessage) {
+        const lowerCaseMessage = userMessage.toLowerCase();
+        let response = 'No entiendo tu pregunta. ¿Puedes reformularla?';
+
+        if (lowerCaseMessage.includes('hola') || lowerCaseMessage.includes('buenos dias')) {
+            response = '¡Hola! Soy el asistente virtual. ¿En qué puedo ayudarte?';
+        } else if (lowerCaseMessage.includes('servicios')) {
+            response = 'Ofrecemos servicios de Seguridad Privada y Capacitación OTEC. ¿Cuál te interesa?';
+        } else if (lowerCaseMessage.includes('seguridad')) {
+            response = 'Nuestros servicios de seguridad incluyen guardias, gestión de turnos y más. Puedes encontrar más información en la sección de Seguridad.';
+        } else if (lowerCaseMessage.includes('capacitación') || lowerCaseMessage.includes('cursos')) {
+            response = 'Tenemos una variedad de cursos de capacitación, incluyendo la certificación OS10. Visita nuestra sección de Capacitación para más detalles.';
+        } else if (lowerCaseMessage.includes('contacto')) {
+            response = 'Puedes contactarnos a través del formulario en la sección de Contacto, o llamarnos al +56 9 1234 5678.';
+        } else if (lowerCaseMessage.includes('gracias')) {
+            response = '¡De nada! Estoy aquí para ayudarte.';
+        }
+
+        appendMessage(response, 'bot-message');
+    }
+    
+    // Initial bot message
+    setTimeout(() => {
+        if(chatbotMessages && !chatbotMessages.hasChildNodes()) {
+             appendMessage('¡Hola! Soy tu asistente virtual. ¿Cómo puedo ayudarte hoy?', 'bot-message');
+        }
+    }, 2000);
 });
 
 function initPublicSite() {
