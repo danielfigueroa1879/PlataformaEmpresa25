@@ -294,21 +294,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setTimeout(showNotification, 3000);
 
-    const chatbotContainer = document.getElementById('chatbot-container');
-    const chatbotHeader = document.getElementById('chatbot-header');
-    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotFab = document.getElementById('chatbot-fab');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatbotClose = document.getElementById('chatbot-close');
     const chatbotMessages = document.getElementById('chatbot-messages');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotSend = document.getElementById('chatbot-send');
 
-    if (chatbotHeader) {
-        chatbotHeader.addEventListener('click', () => {
-            chatbotContainer.classList.toggle('minimized');
-            if (chatbotContainer.classList.contains('minimized')) {
-                chatbotToggle.textContent = '+';
-            } else {
-                chatbotToggle.textContent = '-';
-            }
+    if (chatbotFab) {
+        chatbotFab.addEventListener('click', () => {
+            chatbotWindow.classList.toggle('open');
+        });
+    }
+
+    if (chatbotClose) {
+        chatbotClose.addEventListener('click', () => {
+            chatbotWindow.classList.remove('open');
         });
     }
 

@@ -11,7 +11,7 @@ body {
     background-color: #f4f6f9;
     color: #333;
     line-height: 1.6;
-    padding-top: 70px; /* AJUSTADO: para compensar el header más alto */
+    padding-top: 60px; /* AJUSTADO: para compensar el header más alto */
 }
 
 .hidden {
@@ -30,7 +30,7 @@ body {
     background: rgba(255, 255, 255, 0.75);      /* Fondo blanco semitransparente */
     backdrop-filter: blur(10px);               /* Efecto de desenfoque */
     -webkit-backdrop-filter: blur(10px);       /* Compatibilidad con Safari */
-    padding: 30px 0;
+    padding: 20px 0;
     position: fixed;
     width: 100%;
     top: 0;
@@ -1750,7 +1750,6 @@ img {
 }
 
 
-/* Estilos para el chatbot */
 .chatbot-fab {
     position: fixed;
     bottom: 20px;
@@ -1921,7 +1920,7 @@ img {
 }
 
 #contacto {
-    background-color: #1a3a6e;
+    background-color: #10b981;
     color: #ffffff;
 }
 
@@ -1930,7 +1929,7 @@ img {
 }
 
 #contacto .card {
-    background-color: #1a3a6e;
+    background-color: #10b981;
     border: 1px solid #fff;
 }
 
