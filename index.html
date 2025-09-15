@@ -93,7 +93,7 @@
             </div>
         </section>
 
-        <section class="section" id="capacitacion" style="background-color: #f8f9fa;">
+        <section class="section" id="capacitacion">
             <div class="container">
                 <h2 class="section-title">Plataforma de Capacitación OTEC</h2>
                 <p class="section-subtitle">Portal educativo completo para la gestión y realización de cursos de capacitación</p>
@@ -152,12 +152,12 @@
             </div>
         </section>
 
-        <section class="section" id="contacto" style="background-color: #f8f9fa;">
+        <section class="section" id="contacto">
             <div class="container">
                 <h2 class="section-title">Contáctanos</h2>
                 <p class="section-subtitle">Estamos aquí para ayudarte. Completa el formulario y uno de nuestros ejecutivos se pondrá en contacto contigo.</p>
                 
-                <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="nombre">Nombre Completo</label>
@@ -300,6 +300,22 @@
 
         <main id="mainContent" class="main-content">
             </main>
+    </div>
+
+    <div id="chatbot-container">
+        <div id="chatbot-header">
+            <h3>Asistente Virtual</h3>
+            <button id="chatbot-toggle">-</button>
+        </div>
+        <div id="chatbot-body">
+            <div id="chatbot-messages">
+                <!-- Messages will be appended here -->
+            </div>
+            <div id="chatbot-input-container">
+                <input type="text" id="chatbot-input" placeholder="Escribe un mensaje...">
+                <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
     </div>
 
     <script src="examen.js" defer></script>
