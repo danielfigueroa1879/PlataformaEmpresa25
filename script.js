@@ -173,7 +173,7 @@ const mockData = {
 const menuConfig = {
     admin: [
         { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
-        { id: 'gestionar-guardias', label: 'Gestionar Guardias', icon: 'fas fa-shield-alt' },
+        { id: 'administracion-alumnos', label: 'Administración de Alumnos', icon: 'fas fa-user-graduate' },
         { id: 'gestionar-cursos', label: 'Gestionar Cursos', icon: 'fas fa-book' },
         { id: 'turnos', label: 'Gestión de Turnos', icon: 'fas fa-calendar' },
         { id: 'servicios', label: 'Servicios', icon: 'fas fa-briefcase' },
