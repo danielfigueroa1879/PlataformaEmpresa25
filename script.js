@@ -414,13 +414,25 @@ function renderCursos() {
 
 function showNotification() {
     const notif = document.createElement('div');
+    notif.style.position = 'fixed';
+    notif.style.top = '20px';
+    notif.style.left = '20px';
+    notif.style.background = '#ff6d00';
+    notif.style.color = 'white';
+    notif.style.padding = '15px 20px';
+    notif.style.borderRadius = '8px';
+    notif.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+    notif.style.zIndex = '1000';
+    notif.style.maxWidth = '300px';
+    notif.style.fontFamily = "'Poppins', sans-serif";
     notif.innerHTML = `
-        <div style="position: fixed; bottom: 20px; right: 20px; background: #ff6d00; color: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; max-width: 300px; font-family: 'Poppins', sans-serif;">
-            <strong>¡Bienvenido!</strong> Explora nuestros servicios de seguridad y capacitación.
-            <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">×</button>
-        </div>
+        <strong>¡Bienvenido!</strong> Explora nuestros servicios de seguridad y capacitación.
+        <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">×</button>
     `;
     document.body.appendChild(notif);
+    setTimeout(() => {
+        notif.remove();
+    }, 25000);
 }
 
 function handleLogin(event) {
